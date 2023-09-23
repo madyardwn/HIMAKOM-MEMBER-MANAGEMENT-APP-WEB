@@ -149,19 +149,6 @@ return [
             'icon' => 'ti ti-home',
             'url' => '#'
         ],
-        [
-            'text' => 'Support',
-            'url' => '#',
-            'icon' => 'ti ti-help',
-            'submenu' => [
-                [
-                    'text' => 'Ticket',
-                    'url' => '#',
-                    'icon' => 'ti ti-article'
-                ]
-            ],
-        ],
-
     ],
 
     /*

@@ -19,7 +19,7 @@
                     <div class="btn-list">
                   <span class="d-none d-sm-inline">
                     <a href="#" class="btn btn-white">
-                      New Anzing
+                      New view
                     </a>
                   </span>
                         <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
