@@ -4,8 +4,9 @@
     <div class="container container-tight py-4">
         <div class="text-center mb-1 mt-5">
             <a href="" class="navbar-brand navbar-brand-autodark">
-                <img src="{{asset(config('tablar.auth_logo.img.path','assets/logo.svg'))}}" height="36"
-                     alt=""></a>
+                <img src="{{asset(config('tablar.custom.logo.path'))}}" height="36"
+                     alt="" class="bg-white rounded-circle">
+            </a>
         </div>
         <div class="card card-md">
             <div class="card-body">
@@ -59,7 +60,7 @@
                     </div>
                 </form>
             </div>
-            <div class="hr-text">or</div>
+            {{-- <div class="hr-text">or</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col"><a href="#" class="btn btn-white w-100">
@@ -85,10 +86,10 @@
                             Login with Twitter
                         </a></div>
                 </div>
-            </div>
+            </div> --}}
         </div>
-        <div class="text-center text-muted mt-3">
+        {{-- <div class="text-center text-muted mt-3">
             Don't have account yet? <a href="{{route('register')}}" tabindex="-1">Sign up</a>
-        </div>
+        </div> --}}
     </div>
 @endsection

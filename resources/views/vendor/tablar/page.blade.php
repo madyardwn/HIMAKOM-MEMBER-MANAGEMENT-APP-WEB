@@ -22,7 +22,8 @@
     </div>
 @stop
 
-@section('tablar_js')
+@section('tablar_js')    
+    @include('tablar::_scripts')
     @stack('js')
     @yield('js')
 @stop

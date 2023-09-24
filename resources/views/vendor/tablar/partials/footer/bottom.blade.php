@@ -3,7 +3,7 @@
         <div class="row text-center align-items-center flex-row-reverse">
             <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                    <li class="list-inline-item"><a href="https://github.com/takielias/tablar" target="_blank"
+                    {{-- <li class="list-inline-item"><a href="https://github.com/takielias/tablar" target="_blank"
                                                     class="link-secondary" rel="noopener">Source code</a></li>
                     <li class="list-inline-item">
                         <a href="https://www.buymeacoffee.com/takielias" target="_blank" class="link-secondary"
@@ -19,15 +19,15 @@
                             </svg>
                             Sponsor
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                 <ul class="list-inline list-inline-dots mb-0">
                     <li class="list-inline-item">
-                        Copyright &copy; 2022
-                        <a href="https://ebuz.xyz"
-                           class="link-secondary">{{config('tablar.bottom_title', 'TabLar')}}</a>.
+                        Copyright &copy; 2023
+                        <a href="#"
+                           class="link-secondary">{{config('tablar.bottom_title', 'Himakom Polban')}}</a>.
                         All rights reserved.
                     </li>
                     <li class="list-inline-item">

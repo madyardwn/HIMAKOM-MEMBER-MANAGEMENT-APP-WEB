@@ -10,11 +10,11 @@ return [
     |
     */
 
-    'title' => 'Tablar',
+    'title' => 'Himakom',
     'title_prefix' => '',
     'title_postfix' => '',
-    'bottom_title' => 'Tablar',
-    'current_version' => 'v2.9',
+    'bottom_title' => 'Himakom Polban',
+    'current_version' => 'v0.9.1',
 
 
     /*
@@ -42,7 +42,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'assets/logo.svg',
+            'path' => 'assets/himakom.svg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -63,7 +63,7 @@ return [
     'layout_topnav' => false,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
-    'layout_light_sidebar' => null,
+    'layout_light_sidebar' => 'light',
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -145,9 +145,56 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'text' => 'Home',
+            'text' => 'Dashboard',
             'icon' => 'ti ti-home',
-            'url' => '#'
+            'url' => 'home',
+        ],
+        [
+            'text' => 'User Management',
+            'icon' => 'ti ti-user',
+            'submenu' => [
+                [
+                    'text' => 'Users',
+                    'icon' => 'ti ti-user',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Permision',
+                    'icon' => 'ti ti-lock',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Role',
+                    'icon' => 'ti ti-key',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Periode',
+            'icon' => 'ti ti-calendar',
+            'submenu' => [
+                [
+                    'text' => 'Cabinet',
+                    'icon' => 'ti ti-calendar',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Department',
+                    'icon' => 'ti ti-calendar',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Program',
+                    'icon' => 'ti ti-calendar',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Event',
+                    'icon' => 'ti ti-calendar',
+                    'url' => '#',
+                ]
+            ],
         ],
     ],
 
@@ -185,4 +232,20 @@ return [
     */
 
     'vite' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Customization
+    |--------------------------------------------------------------------------
+    |
+    | Here we can customize the admin panel.
+    |
+    */
+    'custom' => [
+        'logo' => [
+            'path' => 'assets/himakom.png',
+            'name' => 'Himakom',
+            'alt' => 'Himakom Logo',
+        ],
+    ],    
 ];

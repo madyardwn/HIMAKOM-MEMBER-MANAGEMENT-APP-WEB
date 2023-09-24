@@ -4,8 +4,13 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
+
+    {{-- Tablar CSS --}}
+    <link rel="icon" href="{{asset(config('tablar.custom.logo.path'))}}" type="image/x-icon"/>
+
     {{-- Title --}}
     <title>
         @yield('title_prefix', config('tablar.title_prefix', ''))
