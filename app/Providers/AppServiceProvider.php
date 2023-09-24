@@ -19,6 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('*', function ($view) {
+            $view->with('activeMenu', request()->segment(1));
+        });
+
+        view()->composer('*', function ($view) {
+            $view->with('activeSubMenu', request()->segment(2));
+        });
     }
 }

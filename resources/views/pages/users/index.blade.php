@@ -1,7 +1,7 @@
 @extends('tablar::page')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
+    
 @endsection
 
 @section('content')
@@ -12,10 +12,10 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        {{ __('Users Management') }}
+                        {{ ucwords($activeMenu) }}
                     </div>
                     <h2 class="page-title">
-                        {{ __('Users') }}
+                        {{ ucwords($activeSubMenu) }}
                     </h2>
                 </div>
             </div>
@@ -25,7 +25,7 @@
     <div class="page-body">
         <div class="container">
             <div class="card">
-                <div class="card-header">Manage Users</div>
+                <div class="card-header">Data {{ ucwords($activeSubMenu) }}</div>
                 <div class="card-body">
                     <table id="users-table" class="table table-bordered responsive w-100">
                         <thead>
@@ -46,21 +46,5 @@
 @endsection
 
 @section('js')
-    <script type="module" src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
-    <script type="module">
-        $(function () {
-            let table = new DataTable('#users-table', {
-                processing: true,
-                responsive: true,
-                serverSide: true,
-                ajax: "{{ route('admin.users.index') }}",
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-                ],
-            });         
-        });
-    </script>
+    @include('pages.users._scripts')
 @endsection

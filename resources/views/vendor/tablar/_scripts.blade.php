@@ -1,3 +1,4 @@
+<script type="module" src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
 <script type="module">    
     $(document).ready(function () {
         if (sessionStorage.getItem('theme')) {

@@ -8,7 +8,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Overview
+                        {{ ucwords($activeMenu) }}
                     </div>
                     <h2 class="page-title">
                         Welcome, {{ Auth::user()->name }}!

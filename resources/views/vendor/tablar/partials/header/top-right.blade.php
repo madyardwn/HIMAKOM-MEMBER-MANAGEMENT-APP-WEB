@@ -27,8 +27,9 @@
         {{-- <a href="#" class="dropdown-item">Status</a> --}}
         <a href="{{$profile_url}}" class="dropdown-item">Profile</a>
         {{-- <a href="#" class="dropdown-item">Feedback</a> --}}
+        <a href="#" class="dropdown-item">Help</a>
         <div class="dropdown-divider"></div>
-        <a href="{{$setting_url}}" class="dropdown-item">Settings</a>
+        {{-- <a href="{{$setting_url}}" class="dropdown-item">Settings</a> --}}
         <a class="dropdown-item"
            href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fa fa-fw fa-power-off text-red"></i>

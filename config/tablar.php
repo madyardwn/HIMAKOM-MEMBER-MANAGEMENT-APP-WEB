@@ -143,11 +143,10 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
         [
             'text' => 'Dashboard',
             'icon' => 'ti ti-home',
-            'url' => 'home',
+            'route' => 'dashboard',
         ],
         [
             'text' => 'User Management',
@@ -156,7 +155,7 @@ return [
                 [
                     'text' => 'Users',
                     'icon' => 'ti ti-user',
-                    'url' => '#',
+                    'route' => 'users.index',
                 ],
                 [
                     'text' => 'Permision',

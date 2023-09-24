@@ -3,6 +3,7 @@
 @inject('layoutHelper', 'TakiElias\Tablar\Helpers\LayoutHelper')
 
 @section('tablar_css')
+    @include('tablar::_styles')
     @stack('css')
     @yield('css')
 @stop
