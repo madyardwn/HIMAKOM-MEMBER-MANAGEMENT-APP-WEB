@@ -31,7 +31,7 @@
                         All rights reserved.
                     </li>
                     <li class="list-inline-item">
-                        <a href="https://ebuz.xyz" class="link-secondary" rel="noopener">
+                        <a href="#" class="link-secondary" rel="noopener">
                             {{config('tablar.current_version', '1.0')}}
                         </a>
                     </li>
