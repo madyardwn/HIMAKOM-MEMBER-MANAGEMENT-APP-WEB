@@ -217,6 +217,7 @@ return [
         TakiElias\Tablar\Menu\Filters\ClassesFilter::class,
         TakiElias\Tablar\Menu\Filters\LangFilter::class,
         TakiElias\Tablar\Menu\Filters\DataFilter::class,
+        App\Filter\RolePermissionMenuFilter::class,
     ],
 
     /*

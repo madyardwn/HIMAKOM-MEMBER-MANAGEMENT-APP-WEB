@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nia',
+        'nim',
+        'nama_bagus',
+        'picture',
+        'year',
+        'device_token',
     ];
 
     /**
@@ -42,4 +49,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function cabinets()
+    {
+        return $this->belongsToMany(Cabinet::class, 'periodes', 'user_id', 'cabinet_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+    }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'periodes', 'user_id', 'department_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'periodes', 'user_id', 'role_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+    }
+
+    public function periodes()
+    {
+        return $this->hasMany(Periode::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereHas('periodes', function ($query) {
+            $query->where('is_active', true);
+        });
+    }
 }
