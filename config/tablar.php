@@ -231,13 +231,7 @@ return [
             ],
         ],
         [
-            'text' => 'Curriculum Vitae',
-            'icon' => 'ti ti-id-badge',
-            'url' => '#',
-            'label' => 'CV',
-        ],
-        [
-            'text' => 'Content',
+            'text' => 'Content (Soon)',
             'icon' => 'ti ti-aspect-ratio',
             'submenu' => [
                 [
@@ -268,7 +262,7 @@ return [
             ],
         ],
         [
-            'text' => 'Log',
+            'text' => 'Logs (Soon)',
             'icon' => 'ti ti-file',
             'submenu' => [
                 [
@@ -282,6 +276,11 @@ return [
                     'url' => '#',
                 ],
             ],
+        ],
+        [
+            'text' => 'Curriculum Vitae (Soon)',
+            'icon' => 'ti ti-id-badge',
+            'url' => '#',
         ],
     ],
 
