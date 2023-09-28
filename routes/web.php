@@ -26,5 +26,5 @@ Auth::routes([
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/users-management/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
+    Route::get('/users-management/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 });

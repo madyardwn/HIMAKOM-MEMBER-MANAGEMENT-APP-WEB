@@ -158,14 +158,38 @@ return [
                     'route' => 'users.index',
                 ],
                 [
-                    'text' => 'Permision',
+                    'text' => 'Autorization Web',
                     'icon' => 'ti ti-lock',
                     'url' => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Permission',
+                            'icon' => 'ti ti-square-key',
+                            'url' => '#',
+                        ],
+                        [
+                            'text' => 'Role',
+                            'icon' => 'ti ti-key',
+                            'url' => '#',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Role',
-                    'icon' => 'ti ti-key',
+                    'text' => 'Autorization API',
+                    'icon' => 'ti ti-lock',
                     'url' => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Permission',
+                            'icon' => 'ti ti-square-key',
+                            'url' => '#',
+                        ],
+                        [
+                            'text' => 'Role',
+                            'icon' => 'ti ti-key',
+                            'url' => '#',
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -204,6 +228,59 @@ return [
                     'icon' => 'ti ti-calendar-event',
                     'url' => '#',
                 ]
+            ],
+        ],
+        [
+            'text' => 'Curriculum Vitae',
+            'icon' => 'ti ti-id-badge',
+            'url' => '#',
+            'label' => 'CV',
+        ],
+        [
+            'text' => 'Content',
+            'icon' => 'ti ti-aspect-ratio',
+            'submenu' => [
+                [
+                    'text' => 'News',
+                    'icon' => 'ti ti-article',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Article',
+                    'icon' => 'ti ti-file-text',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Gallery',
+                    'icon' => 'ti ti-photo',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Video',
+                    'icon' => 'ti ti-player-play',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Document',
+                    'icon' => 'ti ti-file',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Log',
+            'icon' => 'ti ti-file',
+            'submenu' => [
+                [
+                    'text' => 'Activity Log',
+                    'icon' => 'ti ti-file-text',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Error Log',
+                    'icon' => 'ti ti-file-text',
+                    'url' => '#',
+                ],
             ],
         ],
     ],
