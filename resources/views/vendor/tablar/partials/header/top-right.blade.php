@@ -22,7 +22,7 @@
             @php( $profile_url = $profile_url ? url($profile_url) : '' )
             @php( $logout_url = $logout_url ? url($logout_url) : '' )
             @php( $setting_url = $setting_url ? url($setting_url) : '' )
-        @endif
+        @endif    
 
         {{-- <a href="#" class="dropdown-item">Status</a> --}}
         <a href="{{$profile_url}}" class="dropdown-item">Profile</a>
@@ -31,17 +31,15 @@
         <div class="dropdown-divider"></div>
         {{-- <a href="{{$setting_url}}" class="dropdown-item">Settings</a> --}}
         <a class="dropdown-item"
-           href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+           href="#" onclick="event.preventDefault(); $('#form-logout').submit();">
             <i class="fa fa-fw fa-power-off text-red"></i>
             {{ __('tablar::tablar.log_out') }}
         </a>
-
-        <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">
+        <form class="dropdown-item" id="form-logout" action="{{ $logout_url }}" method="POST" style="display: none;">
             @if(config('tablar.logout_method'))
                 {{ method_field(config('tablar.logout_method')) }}
             @endif
             {{ csrf_field() }}
         </form>
-
     </div>
 </div>

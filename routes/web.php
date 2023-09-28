@@ -18,7 +18,13 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'verify' => false,
+]);
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-Route::get('/users-management/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/users-management/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
+});

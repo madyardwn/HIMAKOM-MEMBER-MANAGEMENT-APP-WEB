@@ -154,7 +154,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Users',
-                    'icon' => 'ti ti-user',
+                    'icon' => 'ti ti-users-group',
                     'route' => 'users.index',
                 ],
                 [
@@ -171,26 +171,37 @@ return [
         ],
         [
             'text' => 'Periode',
-            'icon' => 'ti ti-calendar',
+            'icon' => 'ti ti-a-b-2',
             'submenu' => [
                 [
                     'text' => 'Cabinet',
-                    'icon' => 'ti ti-calendar',
-                    'url' => '#',
+                    'icon' => 'ti ti-category-filled',
+                    'submenu' => [
+                        [
+                            'text' => 'Cabinet',
+                            'icon' => 'ti ti-category-2',
+                            'url' => '#',
+                        ],
+                        [
+                            'text' => 'Filosophy',
+                            'icon' => 'ti ti-360',
+                            'url' => '#',
+                        ],
+                    ],
                 ],
                 [
                     'text' => 'Department',
-                    'icon' => 'ti ti-calendar',
+                    'icon' => 'ti ti-building-bank',
                     'url' => '#',
                 ],
                 [
                     'text' => 'Program',
-                    'icon' => 'ti ti-calendar',
+                    'icon' => 'ti ti-file-check',
                     'url' => '#',
                 ],
                 [
                     'text' => 'Event',
-                    'icon' => 'ti ti-calendar',
+                    'icon' => 'ti ti-calendar-event',
                     'url' => '#',
                 ]
             ],

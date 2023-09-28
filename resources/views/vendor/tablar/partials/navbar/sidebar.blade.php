@@ -140,6 +140,7 @@
                     </div>
                 </div>
             </div>
+            @include('tablar::partials.header.theme-mode')
             @include('tablar::partials.header.top-right')
         </div>
 

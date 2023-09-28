@@ -19,15 +19,12 @@
     </title>
     <title>Dashboard</title>
     <!-- CSS files -->
-    @if(config('tablar','vite'))
-        @vite('resources/js/app.js')
-    @endif
+    @vite('resources/js/app.js')
     {{-- Custom Stylesheets (post Tablar) --}}
     @yield('tablar_css')
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>
 @yield('body')
-@include('tablar::extra.modal')
 @yield('tablar_js')
 </body>
 </html>
