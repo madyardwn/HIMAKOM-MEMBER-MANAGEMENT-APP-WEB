@@ -13,15 +13,9 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $data = User::select('*');
+            
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    return '
-                        <a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> 
-                        <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>
-                    ';
-                })
-                ->rawColumns(['action'])
                 ->make(true);
         }
  

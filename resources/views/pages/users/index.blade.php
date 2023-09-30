@@ -1,7 +1,7 @@
 @extends('tablar::page')
 
 @section('css')
-    
+
 @endsection
 
 @section('content')
@@ -55,16 +55,6 @@
                 </div>
                 <div class="card-body">
                     <table id="users-table" class="table table-bordered responsive w-100">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
                     </table>
                 </div>
             </div>

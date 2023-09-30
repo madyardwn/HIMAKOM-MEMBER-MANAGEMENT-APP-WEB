@@ -158,7 +158,7 @@ return [
                     'route' => 'users.index',
                 ],
                 [
-                    'text' => 'Autorization Web',
+                    'text' => 'Auth Web',
                     'icon' => 'ti ti-lock',
                     'url' => '#',
                     'submenu' => [
@@ -175,7 +175,7 @@ return [
                     ],
                 ],
                 [
-                    'text' => 'Autorization API',
+                    'text' => 'Auth API\'s (Soon)',
                     'icon' => 'ti ti-lock',
                     'url' => '#',
                     'submenu' => [
@@ -278,7 +278,7 @@ return [
             ],
         ],
         [
-            'text' => 'Curriculum Vitae (Soon)',
+            'text' => 'CV Himakom (Soon)',
             'icon' => 'ti ti-id-badge',
             'url' => '#',
         ],
