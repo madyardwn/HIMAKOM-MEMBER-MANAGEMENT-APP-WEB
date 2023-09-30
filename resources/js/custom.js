@@ -43,5 +43,7 @@ const currentUrl = window.location.href;
 const activeDropdownItem = $('.nav-item.dropdown a.dropdown-item').filter(function () {
     return $(this).attr('href') === currentUrl;
 });
+
+activeDropdownItem.addClass('active');
 activeDropdownItem.parents('.dropdown-menu').addClass('show').attr('data-bs-popper', 'static');
 activeDropdownItem.parents('.dropdown-menu').siblings('.dropdown-toggle').addClass('show').attr('aria-expanded', 'true');
