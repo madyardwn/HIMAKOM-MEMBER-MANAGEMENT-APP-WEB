@@ -19,12 +19,12 @@ class Department extends Model
 
     public function cabinets()
     {
-        return $this->belongsToMany(Cabinet::class, 'periodes', 'department_id', 'cabinet_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(Cabinet::class, 'periodes', 'department_id', 'cabinet_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'periodes', 'department_id', 'user_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(User::class, 'periodes', 'department_id', 'user_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function periodes()

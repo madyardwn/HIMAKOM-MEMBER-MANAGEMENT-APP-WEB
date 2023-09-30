@@ -52,17 +52,12 @@ class User extends Authenticatable
 
     public function cabinets()
     {
-        return $this->belongsToMany(Cabinet::class, 'periodes', 'user_id', 'cabinet_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(Cabinet::class, 'periodes', 'user_id', 'cabinet_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'periodes', 'user_id', 'department_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'periodes', 'user_id', 'role_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(Department::class, 'periodes', 'user_id', 'department_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function periodes()

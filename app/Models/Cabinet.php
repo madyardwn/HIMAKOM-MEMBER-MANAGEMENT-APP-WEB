@@ -26,12 +26,12 @@ class Cabinet extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'periodes', 'cabinet_id', 'user_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(User::class, 'periodes', 'cabinet_id', 'user_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'periodes', 'cabinet_id', 'department_id')->withPivot('id', 'periode', 'is_active')->withTimestamps();
+        return $this->belongsToMany(Department::class, 'periodes', 'cabinet_id', 'department_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
     public function periodes()

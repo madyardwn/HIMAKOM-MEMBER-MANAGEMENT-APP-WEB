@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,12 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(DefaultPermissionsSeeder::class);
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
+        // Create Super Admin Role
+        $role = Role::create(['name' => 'super-admin']);
+
+        // Create Super Admin User
+        $user = User::create([
+            'name' => 'Super Admin',
+            'email' => 'admin@polban.ac.id',
+            'password' => bcrypt('neracietas36'),
         ]);
+
+        // Assign Super Admin Role to Super Admin User
+        $user->assignRole($role->name);
     }
 }

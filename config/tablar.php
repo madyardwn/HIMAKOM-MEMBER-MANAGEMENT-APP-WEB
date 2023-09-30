@@ -154,7 +154,7 @@ return [
                 [
                     'text' => 'Users',
                     'icon' => 'ti ti-users-group',
-                    'route' => 'users.index',
+                    'route' => 'users-management.users.index',
                 ],
                 [
                     'text' => 'Auth Web',
