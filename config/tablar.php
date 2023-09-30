@@ -141,7 +141,6 @@ return [
     | For detailed instructions you can look here:
     |
     */
-
     'menu' => [
         [
             'text' => 'Dashboard',

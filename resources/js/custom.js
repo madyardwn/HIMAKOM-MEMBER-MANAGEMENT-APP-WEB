@@ -1,5 +1,7 @@
 /*
     * This dark mode script is taken from
+    *
+    * 
 */
 const themeStorageKey = 'theme-storage-key'
 setTheme(sessionStorage.getItem(themeStorageKey) ? sessionStorage.getItem(themeStorageKey) : 'light');
@@ -19,6 +21,8 @@ $('.hide-theme-light').click(function (event) {
 
 /*
     * This password toggle script is taken from    
+    *
+    * 
 */
 $('.link-secondary').click(function() {
     var passwordInput = $(this).closest('.input-group').find('.type-password');
@@ -29,3 +33,15 @@ $('.link-secondary').click(function() {
     }
     return false;
 });
+
+/*
+    * Active dropdown menu script is taken from
+    *
+    * 
+*/
+const currentUrl = window.location.href;
+const activeDropdownItem = $('.nav-item.dropdown a.dropdown-item').filter(function () {
+    return $(this).attr('href') === currentUrl;
+});
+activeDropdownItem.parents('.dropdown-menu').addClass('show').attr('data-bs-popper', 'static');
+activeDropdownItem.parents('.dropdown-menu').siblings('.dropdown-toggle').addClass('show').attr('aria-expanded', 'true');
