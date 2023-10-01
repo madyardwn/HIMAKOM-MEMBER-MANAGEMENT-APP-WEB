@@ -15,7 +15,7 @@
                         {{ ucwords($activeMenu) }}
                     </div>
                     <h2 class="page-title">
-                        {{ ucwords($activeSubMenu) }}
+                        {{ ucwords($activeSubMenu) }} @isset($activeSubSubMenu) / {{ ucwords($activeSubSubMenu) }} @endisset
                     </h2>
                 </div>
             </div>

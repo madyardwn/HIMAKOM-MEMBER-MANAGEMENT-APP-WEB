@@ -169,11 +169,20 @@
                             if (response.status === 'success') {
                                 table.draw();
                             } else {
-                                alert(response.message);
+                                Swal.fire(
+                                    'Error!',
+                                    response.message,
+                                    'error'
+                                );
                             }
                         },
                         error: function (response) {
-                            alert('Something went wrong!');
+                            Swal.fire(
+                                'Error!',
+                                'Something went wrong!',
+                                'error'
+                            );
+                            console.log(response);
                         }
                     });
                 }
@@ -197,11 +206,19 @@
                     if (response.status === 'success') {
                         table.draw();
                     } else {
-                        alert(response.message);
+                        Swal.fire(
+                            'Error!',
+                            response.message,
+                            'error'
+                        );
                     }
                 },
                 error: function (response) {
-                    alert('Something went wrong!');
+                    Swal.fire(
+                        'Error!',
+                        'Something went wrong!',
+                        'error'
+                    );
                     console.log(response);
                 }
             });
@@ -223,11 +240,19 @@
                     if (response.status === 'success') {
                         table.draw();
                     } else {
-                        alert(response.message);
+                        Swal.fire(
+                            'Error!',
+                            response.message,
+                            'error'
+                        );
                     }
                 },
                 error: function (response) {
-                    alert('Something went wrong!');
+                    Swal.fire(
+                        'Error!',
+                        'Something went wrong!',
+                        'error'
+                    );
                     console.log(response);
                 }
             });
