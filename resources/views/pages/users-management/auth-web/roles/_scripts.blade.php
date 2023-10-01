@@ -28,7 +28,7 @@
                                 </button>
                                 <ul class="dropdown-menu">                                    
                                     <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-roles"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                    <li><a class="dropdown-item btn-delete" href="{{ route('users-management.users.index') }}/${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                                    <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>
                         `;

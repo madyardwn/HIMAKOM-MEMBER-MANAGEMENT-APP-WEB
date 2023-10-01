@@ -142,6 +142,18 @@ class AuthWebRoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        try {
+            $role->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Role deleted successfully!',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',
+            ], 500);
+        }
     }
 }

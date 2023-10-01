@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store');
             Route::get('/roles/{role}/edit', [\App\Http\Controllers\AuthWebRoleController::class, 'edit'])->name('roles.edit');
             Route::put('/roles/{role}/update', [\App\Http\Controllers\AuthWebRoleController::class, 'update'])->name('roles.update');
-            Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebPermissionController::class, 'destroy'])->name('roles.destroy');
+            Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebRoleController::class, 'destroy'])->name('roles.destroy');
         });        
     });
     
