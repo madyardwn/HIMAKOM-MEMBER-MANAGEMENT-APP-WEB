@@ -62,9 +62,9 @@
     </div>
     <form id="form-test">
     </form>
-    @include('pages.users._add')
+    @include('pages.users-management.users._add')
 @endsection
 
 @section('js')
-    @include('pages.users._scripts')
+    @include('pages.users-management.users._scripts')
 @endsection

@@ -21,10 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('*', function ($view) {
             $view->with('activeMenu', request()->segment(1));
-        });
-
-        view()->composer('*', function ($view) {
             $view->with('activeSubMenu', request()->segment(2));
+            $view->with('activeSubSubMenu', request()->segment(3));
         });
     }
 }

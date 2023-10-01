@@ -19,7 +19,7 @@ class UserController extends Controller
                 ->make(true);
         }
  
-        return view('pages.users.index');
+        return view('pages.users-management.users.index');
     }
 }
 

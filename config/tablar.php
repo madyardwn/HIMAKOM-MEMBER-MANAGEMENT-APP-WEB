@@ -164,12 +164,12 @@ return [
                         [
                             'text' => 'Permission',
                             'icon' => 'ti ti-square-key',
-                            'url' => '#',
+                            'route' => 'users-management.auth-web.permissions.index',
                         ],
                         [
                             'text' => 'Role',
                             'icon' => 'ti ti-key',
-                            'url' => '#',
+                            'route' => 'users-management.auth-web.roles.index',
                         ],
                     ],
                 ],

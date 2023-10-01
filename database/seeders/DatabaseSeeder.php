@@ -30,5 +30,9 @@ class DatabaseSeeder extends Seeder
 
         // Assign Super Admin Role to Super Admin User
         $user->assignRole($role->name);
+
+        // Assign All Permissions to Super Admin Role
+        $permissions = Permission::pluck('id', 'id')->all();
+        $role->syncPermissions($permissions);
     }
 }

@@ -13,7 +13,7 @@ class Periode extends Model
         'user_id',
         'department_id',
         'cabinet_id',
-        'role_id',
+        'position',
         'is_active',        
     ];
 
@@ -34,9 +34,7 @@ class Periode extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->withDefault([
-            'name' => 'Deleted User',
-        ]);
+        return $this->belongsTo(User::class);
     }
 
     public function scopeActive($query)

@@ -3,16 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
-class PermissionController extends Controller
+class AuthWebPermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Permission::select('*');
+            
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+ 
+        return view('pages.users-management.auth-web.permissions.index');
     }
 
     /**
