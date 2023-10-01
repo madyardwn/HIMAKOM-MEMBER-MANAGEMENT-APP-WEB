@@ -1,4 +1,5 @@
 <script type="module">
+    // DataTable, Modal, Form
     let table, formAdd, formEdit;
 
     // tomSelect
@@ -43,9 +44,6 @@
             valueField: 'id',            
             labelField: 'name',
             searchField: 'name',
-            create: false,
-            persist: false,
-            maxItems: 5,
             placeholder: 'Select permissions',    
             plugins: {
                 remove_button:{
@@ -92,9 +90,6 @@
                 remove_button:{
                     title:'Remove this item',
                 }
-            },  
-            onDelete: function(values) {
-                return confirm(values.length > 1 ? 'Are you sure you want to remove these ' + values.length + ' items?' : 'Are you sure you want to remove "' + values[0] + '"?');
             },
             load: function (query, callback) {
                 if (!query.length) return callback();
@@ -157,22 +152,32 @@
         table.on('click', '.btn-delete', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
-            if (confirm('Are you sure want to delete this data?')) {
-                $.ajax({
-                    url: "{{ route('users-management.auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
-                    method: 'DELETE',
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            table.draw();
-                        } else {
-                            alert(response.message);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',                
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',                
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {                    
+                    $.ajax({
+                        url: "{{ route('users-management.auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
+                        method: 'DELETE',
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                table.draw();
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function (response) {
+                            alert('Something went wrong!');
                         }
-                    },
-                    error: function (response) {
-                        alert('Something went wrong!');
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     }
 
@@ -234,7 +239,5 @@
         initDtTable();
         initDtEvents();
         initDtSubmit();
-
-        // $('#form-add-roles').parsley();
     });
 </script>

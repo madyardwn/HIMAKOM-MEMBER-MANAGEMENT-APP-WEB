@@ -28,5 +28,8 @@
         "tinymce": "^6.4.2",
         "tom-select": "^2.2.2",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "sweetalert2": "^11.7.31"
     }
 }

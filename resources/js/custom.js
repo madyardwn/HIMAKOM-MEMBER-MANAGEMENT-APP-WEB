@@ -1,4 +1,12 @@
 /*
+    * This script is package/plugins from
+    *
+    * 
+*/
+import swal from 'sweetalert2';
+window.Swal = swal;
+
+/*
     * This dark mode script is taken from
     *
     * 
