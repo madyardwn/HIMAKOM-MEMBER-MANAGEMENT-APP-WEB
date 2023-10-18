@@ -22,7 +22,7 @@ class AuthWebPermissionController extends Controller
                 ->make(true);
         }
  
-        return view('pages.users-management.auth-web.permissions.index');
+        return view('pages.auth-web-permissions.index');
     }
 
     /**

@@ -155,62 +155,56 @@ return [
                     'text' => 'Users',
                     'icon' => 'ti ti-users-group',
                     'route' => 'users-management.users.index',
+                ],                                
+            ],
+        ],
+        [
+            'text' => 'Auth Web',
+            'icon' => 'ti ti-lock',
+            'url' => '#',
+            'submenu' => [
+                [
+                    'text' => 'Permission',
+                    'icon' => 'ti ti-square-key',
+                    'route' => 'auth-web.permissions.index',
                 ],
                 [
-                    'text' => 'Auth Web',
-                    'icon' => 'ti ti-lock',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Permission',
-                            'icon' => 'ti ti-square-key',
-                            'route' => 'users-management.auth-web.permissions.index',
-                        ],
-                        [
-                            'text' => 'Role',
-                            'icon' => 'ti ti-key',
-                            'route' => 'users-management.auth-web.roles.index',
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Auth API\'s (Soon)',
-                    'icon' => 'ti ti-lock',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Permission',
-                            'icon' => 'ti ti-square-key',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'Role',
-                            'icon' => 'ti ti-key',
-                            'url' => '#',
-                        ],
-                    ],
+                    'text' => 'Role',
+                    'icon' => 'ti ti-key',
+                    'route' => 'auth-web.roles.index',
                 ],
             ],
         ],
         [
-            'text' => 'Periode',
-            'icon' => 'ti ti-a-b-2',
+            'text' => 'Auth API\'s (Soon)',
+            'icon' => 'ti ti-lock',
+            'url' => '#',
+            'submenu' => [
+                [
+                    'text' => 'Permission',
+                    'icon' => 'ti ti-square-key',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Role',
+                    'icon' => 'ti ti-key',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Cabinet',
+            'icon' => 'ti ti-category-filled',
             'submenu' => [
                 [
                     'text' => 'Cabinet',
-                    'icon' => 'ti ti-category-filled',
-                    'submenu' => [
-                        [
-                            'text' => 'Cabinet',
-                            'icon' => 'ti ti-category-2',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'Filosophy',
-                            'icon' => 'ti ti-360',
-                            'url' => '#',
-                        ],
-                    ],
+                    'icon' => 'ti ti-category-2',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Filosophy',
+                    'icon' => 'ti ti-360',
+                    'url' => '#',
                 ],
                 [
                     'text' => 'Department',

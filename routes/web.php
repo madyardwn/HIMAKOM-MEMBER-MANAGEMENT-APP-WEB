@@ -28,18 +28,23 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 Route::group(['middleware' => ['auth']], function () {
     // Route::get('/users-management/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     
-    // route group name
+    // route users-management group
     Route::group(['prefix' => 'users-management', 'as' => 'users-management.'], function () {
-        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::group(['prefix' => 'auth-web', 'as' => 'auth-web.'], function () {
-            Route::get('/permissions', [\App\Http\Controllers\AuthWebPermissionController::class, 'index'])->name('permissions.index');
-            
-            Route::get('/roles', [\App\Http\Controllers\AuthWebRoleController::class, 'index'])->name('roles.index');
-            Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store');
-            Route::get('/roles/{role}/edit', [\App\Http\Controllers\AuthWebRoleController::class, 'edit'])->name('roles.edit');
-            Route::put('/roles/{role}/update', [\App\Http\Controllers\AuthWebRoleController::class, 'update'])->name('roles.update');
-            Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebRoleController::class, 'destroy'])->name('roles.destroy');
-        });        
+        // Users
+        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');           
+    });
+
+    // route auth-web group
+    Route::group(['prefix' => 'auth-web', 'as' => 'auth-web.'], function () {
+        // Permissions
+        Route::get('/permissions', [\App\Http\Controllers\AuthWebPermissionController::class, 'index'])->name('permissions.index');
+        
+        // Roles
+        Route::get('/roles', [\App\Http\Controllers\AuthWebRoleController::class, 'index'])->name('roles.index');
+        Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store');
+        Route::get('/roles/{role}/edit', [\App\Http\Controllers\AuthWebRoleController::class, 'edit'])->name('roles.edit');
+        Route::put('/roles/{role}/update', [\App\Http\Controllers\AuthWebRoleController::class, 'update'])->name('roles.update');
+        Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebRoleController::class, 'destroy'])->name('roles.destroy');
     });
     
     // tom-select

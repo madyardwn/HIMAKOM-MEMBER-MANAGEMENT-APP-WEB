@@ -15,7 +15,7 @@
                         {{ ucwords($activeMenu) }}
                     </div>
                     <h2 class="page-title">
-                        {{ ucwords($activeSubMenu) }} @isset($activeSubSubMenu) / {{ ucwords($activeSubSubMenu) }} @endisset
+                        {{ ucwords($activeSubMenu) }}
                     </h2>
                 </div>
             </div>
@@ -37,5 +37,5 @@
 @endsection
 
 @section('js')
-    @include('pages.users-management.auth-web.permissions._scripts')
+    @include('pages.auth-web-permissions._scripts')
 @endsection

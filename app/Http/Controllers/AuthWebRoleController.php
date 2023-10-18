@@ -22,7 +22,7 @@ class AuthWebRoleController extends Controller
                  ->make(true);
          }
   
-         return view('pages.users-management.auth-web.roles.index');
+         return view('pages.auth-web-roles.index');
      }
      
     /**

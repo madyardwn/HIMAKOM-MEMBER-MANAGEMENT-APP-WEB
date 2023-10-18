@@ -10,7 +10,7 @@
             processing: true,
             responsive: true,
             serverSide: true,
-            ajax: "{{ route('users-management.auth-web.roles.index') }}",            
+            ajax: "{{ route('auth-web.roles.index') }}",            
             columns: [
                 {data: 'id', name: 'id', title: 'No', width: '1%'},
                 {data: 'name', name: 'name', title: 'Name'},
@@ -143,7 +143,7 @@
             $('#edit-id').val(id);      
 
             $.ajax({
-                url: "{{ route('users-management.auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
+                url: "{{ route('auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
                 method: 'GET',
                 success: function (response) {
                     if (response.status === 'success') {
@@ -184,7 +184,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {                    
                     $.ajax({
-                        url: "{{ route('users-management.auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
+                        url: "{{ route('auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
                         method: 'DELETE',
                         success: function (response) {
                             if (response.status === 'success') {
@@ -242,7 +242,7 @@
             const name = $('#add-name').val();
             const permissions = addPermissions.getValue();
             $.ajax({
-                url: "{{ route('users-management.auth-web.roles.store') }}",
+                url: "{{ route('auth-web.roles.store') }}",
                 method: 'POST',
                 data: {
                     name: name,
@@ -319,7 +319,7 @@
             const permissions = editPermissions.getValue();
             const id = $('#edit-id').val();
             $.ajax({
-                url: "{{ route('users-management.auth-web.roles.update', ['role' => 'id']) }}".replace('id', id),
+                url: "{{ route('auth-web.roles.update', ['role' => 'id']) }}".replace('id', id),
                 method: 'PUT',
                 data: {
                     name: name,

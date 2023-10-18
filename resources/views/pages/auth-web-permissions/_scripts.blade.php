@@ -6,7 +6,7 @@
             processing: true,
             responsive: true,
             serverSide: true,
-            ajax: "{{ route('users-management.auth-web.permissions.index') }}",            
+            ajax: "{{ route('auth-web.permissions.index') }}",            
             columns: [
                 {data: 'id', name: 'id', title: 'No', width: '1%'},
                 {data: 'name', name: 'name', title: 'Name'},
