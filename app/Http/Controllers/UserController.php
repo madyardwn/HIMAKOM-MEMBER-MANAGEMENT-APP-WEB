@@ -12,7 +12,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::select('*');
+            $data = User::select('*')
+                ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
+                    return $query->where('id', '!=', 1);
+                });
             
             return DataTables::of($data)
                 ->addIndexColumn()

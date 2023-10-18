@@ -15,6 +15,7 @@ class DefaultPermissionsSeeder extends Seeder
     {
         // Create Permissions
         $permission = [
+            'access',
             'read',
             'create',
             'update',
@@ -22,13 +23,24 @@ class DefaultPermissionsSeeder extends Seeder
         ];
 
         $models = [
-            'user',
-            'auth-web',
-            'cabinet',
-            'filosofie',
-            'department',
-            'program',
-            'event',
+            'users',
+            'auth-web-roles',
+            'auth-web-permissions',
+            'auth-api-roles',
+            'auth-api-permissions',
+            'cabinets',
+            'filosofies',
+            'departments',
+            'programs',
+            'events',
+            'news',
+            'articles',
+            'galleries',
+            'videos',
+            'documents',
+            'activity-logs',
+            'error-logs',
+            'cv-himakom'
         ];
 
         foreach ($models as $model) {

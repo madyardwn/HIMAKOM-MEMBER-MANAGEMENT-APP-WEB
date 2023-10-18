@@ -20,18 +20,17 @@ Route::get('/', function () {
 
 Auth::routes([
     'register' => false,
-    'verify' => false,
+    'verify' => false,    
 ]);
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-
 Route::group(['middleware' => ['auth']], function () {
-    // Route::get('/users-management/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    // dashboard
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
     // route users-management group
     Route::group(['prefix' => 'users-management', 'as' => 'users-management.'], function () {
         // Users
-        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');           
+        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index')->middleware('permission:read-users');
     });
 
     // route auth-web group
