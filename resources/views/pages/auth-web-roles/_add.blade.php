@@ -9,13 +9,13 @@
                 <form action="" method="POST" id="form-add-roles">
                     <div class="mb-3">
                         <label class="form-label" for="add-name">Name</label>
-                        <input type="text" name="add_name" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>                        
+                        <input type="text" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>                        
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label class="form-label" for="add-permissions">Permissions</label>
-                                <select name="add_permissions" id="add-permissions" multiple>                                    
+                                <select id="add-permissions" multiple>                                    
                                 </select>
                             </div>
                         </div>

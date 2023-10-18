@@ -45,18 +45,22 @@
                     searchable: false, 
                     responsivePriority: 1,
                     width: '1%',
-                    render: function (data, type, row) {
-                        return `
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-roles"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                    <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
-                                </ul>
-                            </div>
-                        `;
+                    render: function (data, type, row) {                        
+                        let html = '';                        
+                        if (data.id != 1){
+                            html = `
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu">                                    
+                                        <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-roles"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                        <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                                    </ul>
+                                </div>
+                            `;
+                        }
+                        return html;
                     }
                 },
             ],
@@ -147,25 +151,30 @@
         });
 
         $('#modal-add-roles').on('hidden.bs.modal', function (e) {
-            $('#add-name').val('');
-            addPermissions.clear();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
+
+            $('#add-name').val('');
+            $('#add-permissions').val('');
+            addPermissions.clear();
         });
 
         $('#modal-edit-roles').on('hidden.bs.modal', function (e) {
-            $('#edit-name').val('');
-            editPermissions.clear();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
+
+            $('#edit-name').val('');
+            $('#edit-permissions').val('');
+            editPermissions.clear();
         });
 
         table.on('click', '.btn-edit', function (e) {
             e.preventDefault();            
             
             const id = $(this).data('id');
-            $('#edit-id').val(id);      
-
+            
+            $('#edit-id').val(id);
+            
             $.ajax({
                 url: "{{ route('auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
                 method: 'GET',
@@ -264,7 +273,8 @@
             $('#submit-add-role').addClass('btn-loading');
 
             const name = $('#add-name').val();
-            const permissions = addPermissions.getValue();
+            const permissions = $('#add-permissions').val();
+            
             $.ajax({
                 url: "{{ route('auth-web.roles.store') }}",
                 method: 'POST',
@@ -339,9 +349,10 @@
             $('#submit-edit-role').attr('disabled', true);
             $('#submit-edit-role').addClass('btn-loading');
 
-            const name = $('#edit-name').val();
-            const permissions = editPermissions.getValue();
             const id = $('#edit-id').val();
+            const name = $('#edit-name').val();
+            const permissions = $('#edit-permissions').val();
+
             $.ajax({
                 url: "{{ route('auth-web.roles.update', ['role' => 'id']) }}".replace('id', id),
                 method: 'PUT',

@@ -24,7 +24,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <Button type="button" class="btn" data-bs-dismiss="modal">Cancel</Button>
+                <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ms-auto" id="submit-edit-role">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
