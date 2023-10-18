@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {            
             $table->string('nim')->nullable()->unique();
-            $table->string('nia')->nullable()->unique();
+            $table->string('npa')->nullable()->unique();
             $table->string('name_bagus')->nullable();
             $table->string('picture')->nullable();
             $table->year('year')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['nim', 'nia', 'name_bagus', 'picture', 'year']);
+            $table->dropColumn(['nim', 'npa', 'name_bagus', 'picture', 'year']);
         });
     }
 };

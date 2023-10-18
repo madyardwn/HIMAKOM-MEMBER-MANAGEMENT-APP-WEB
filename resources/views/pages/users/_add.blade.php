@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-add-users" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-add-users" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,53 +7,32 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" id="form-add-users">
-                    {{-- Name --}}
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter name" autocomplete="off" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="name" class="form-control" placeholder="Enter name" autocomplete="off" required>                        
                     </div>
-                    {{-- Nama Bagus --}}
                     <div class="mb-3">
                         <label class="form-label">Nama Bagus</label>
-                        <input type="text" name="nama_bagus" class="form-control @error('nama_bagus') is-invalid @enderror" placeholder="Enter nama bagus">
-                        @error('nama_bagus')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="nama_bagus" class="form-control" placeholder="Enter nama bagus">                        
                     </div>
-                    {{-- Nim --}}
                     <div class="mb-3">
                         <label class="form-label">NIM <small class="text-muted">(Nomor Induk Mahasiswa)</small></label>
-                        <input type="text" name="nim" class="form-control @error('nim') is-invalid @enderror" placeholder="Enter nim">
-                        @error('nim')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="nim" class="form-control" placeholder="Enter nim">                        
                     </div>
-                    {{-- NIA --}}
                     <div class="mb-3">
-                        <label class="form-label">NIA <small class="text-muted">(Nomor Induk Anggota)</small></label>
-                        <input type="text" name="nia" class="form-control @error('nia') is-invalid @enderror" placeholder="Enter nia">
-                        @error('nia')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label class="form-label">NPA <small class="text-muted">(Nomor Pokok Anggota)</small></label>
+                        <input type="text" name="npa" class="form-control" placeholder="Enter npa">                        
                     </div>
-                    {{-- Email --}}
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email">
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="email" class="form-control" placeholder="Enter email">
                     </div>
-                    {{-- Password --}}
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
                                 <div class="input-group input-group-flat">
-                                    <input type="password" name="password" class="type-password form-control @error('password') is-invalid @enderror" placeholder="Password" autocomplete="off">
+                                    <input type="password" name="password" class="type-password form-control" placeholder="Password" autocomplete="off">
                                     <span class="input-group-text">
                                         <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -64,9 +43,6 @@
                                             </svg>
                                         </a>
                                     </span>
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -74,7 +50,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Confirm Password</label>
                                 <div class="input-group input-group-flat">
-                                    <input type="password" name="password_confirmation" class="type-password form-control @error('password_confirmation') is-invalid @enderror" placeholder="Password" autocomplete="off">
+                                    <input type="password" name="password_confirmation" class="type-password form-control" placeholder="Password" autocomplete="off">
                                     <span class="input-group-text">
                                         <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -85,9 +61,6 @@
                                             </svg>
                                         </a>
                                     </span>
-                                    @error('password_confirmation')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
