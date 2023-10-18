@@ -1,12 +1,11 @@
 <div class="nav-item dropdown">
     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
        aria-label="Open user menu">
-                        <span class="avatar avatar-sm rounded-circle"
-                              style="background-image: url({{asset('assets/avatars/anonym.png')}})"></span>
-        <div class="d-none d-xl-block ps-2">
-            <div>{{Auth()->user()->name}}</div>
+        <span class="avatar avatar-sm rounded-circle" style="background-image: url({{asset('assets/avatars/anonym.png')}})"></span>
+        <div class="d-none d-lg-block px-2">
+            <div>{{Auth()->user()->name}} ({{Auth()->user()->roles->first()->name}})</div>
             <div class="mt-1 small text-muted">{{Auth()->user()->email}}</div>
-        </div>
+        </div>        
     </a>
     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
@@ -22,7 +21,13 @@
             @php( $profile_url = $profile_url ? url($profile_url) : '' )
             @php( $logout_url = $logout_url ? url($logout_url) : '' )
             @php( $setting_url = $setting_url ? url($setting_url) : '' )
-        @endif    
+        @endif
+
+        <div class="d-lg-none px-3 py-3">
+            <div>{{Auth()->user()->name}}</div>
+            <div class="mt-1 small text-muted">{{Auth()->user()->email}}</div>
+            <div class="mt-1 small text-muted"><span class="badge bg-blue-lt">{{Auth()->user()->roles->first()->name}}</span></div>
+        </div>
 
         {{-- <a href="#" class="dropdown-item">Status</a> --}}
         <a href="{{$profile_url}}" class="dropdown-item">Profile</a>

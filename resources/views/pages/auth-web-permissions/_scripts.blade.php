@@ -37,6 +37,5 @@
             create: true
         });
 
-        $('#form-add-users').parsley();
     });
 </script>
