@@ -122,29 +122,50 @@
             },
         });
 
-        table.on('click', '.btn-edit', function (e) {
-            e.preventDefault();
+        $('#modal-add-roles').on('hidden.bs.modal', function (e) {
+            $('#add-name').val('');
+            addPermissions.clear();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+        });
+
+        $('#modal-edit-roles').on('hidden.bs.modal', function (e) {
             $('#edit-name').val('');
             editPermissions.clear();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+        });
+
+        table.on('click', '.btn-edit', function (e) {
+            e.preventDefault();            
             
             const id = $(this).data('id');
-            $('#edit-id').val(id);
+            $('#edit-id').val(id);      
+
             $.ajax({
                 url: "{{ route('users-management.auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
                 method: 'GET',
                 success: function (response) {
                     if (response.status === 'success') {
-                        const role = response.data;
-                        $('#edit-name').val(role.name);
-                        editPermissions.addOption(role.permissions.map(p => ({id: p.id, name: p.name})));
-                        editPermissions.addItems(role.permissions.map(p => p.id));
+                        $('#edit-name').val(response.data.name);
+                        editPermissions.addOption(response.data.permissions);
+                        editPermissions.setValue(response.data.permissions.map(function (item) {
+                            return item.id;
+                        }));
                     } else {
-                        alert(response.message);
+                        Swal.fire(
+                            'Error!',
+                            response.message,
+                            'error'
+                        );
                     }
                 },
-                error: function (response) {
-                    alert('Something went wrong!');
-                    console.log(response);
+                error: function (xhr, ajaxOptions, thrownError) {
+                    Swal.fire(
+                        'Error!',
+                        thrownError,
+                        'error'
+                    );
                 }
             });
         });
@@ -167,22 +188,41 @@
                         method: 'DELETE',
                         success: function (response) {
                             if (response.status === 'success') {
-                                table.draw();
-                            } else {
-                                Swal.fire(
-                                    'Error!',
-                                    response.message,
-                                    'error'
-                                );
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                .then(() => {
+                                    table.draw();
+                                    $('.card').before(
+                                        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                                            '<strong>Success!</strong> ' + response.message +
+                                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                        '</div>'
+                                    );
+
+                                    $('.alert').delay(3000).slideUp(300);
+                                });
                             }
                         },
-                        error: function (response) {
+                        error: function (xhr, ajaxOptions, thrownError) {
                             Swal.fire(
                                 'Error!',
-                                'Something went wrong!',
+                                thrownError,
                                 'error'
                             );
-                            console.log(response);
+
+                            $('.card').before(
+                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                    '<strong>Error!</strong> ' + thrownError +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                '</div>'
+                            );
+
+                            $('.alert').delay(3000).slideUp(300);
                         }
                     });
                 }
@@ -193,6 +233,12 @@
     function initDtSubmit() {
         $('#submit-add-role').on('click', function (e) {
             e.preventDefault();
+            
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+            $('#submit-add-role').attr('disabled', true);
+            $('#submit-add-role').addClass('btn-loading');
+
             const name = $('#add-name').val();
             const permissions = addPermissions.getValue();
             $.ajax({
@@ -203,9 +249,34 @@
                     permissions: permissions,
                 },
                 success: function (response) {
+                    $('#submit-add-role').attr('disabled', false);
+                    $('#submit-add-role').removeClass('btn-loading');
                     if (response.status === 'success') {
-                        table.draw();
-                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then(() => {                            
+                            $('#modal-add-roles').attr('data-bs-dismiss', 'modal').trigger('click');
+                            $('#modal-add-roles').removeAttr('data-bs-dismiss');                            
+
+                            // Reload Datatable
+                            table.draw();
+
+                            // Show Alert
+                            $('.card').before(
+                                '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                                    '<strong>Success!</strong> ' + response.message +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                '</div>'
+                            );
+
+                            $('.alert').delay(3000).slideUp(300);
+                        })
+                    }else{
                         Swal.fire(
                             'Error!',
                             response.message,
@@ -213,19 +284,37 @@
                         );
                     }
                 },
-                error: function (response) {
-                    Swal.fire(
-                        'Error!',
-                        'Something went wrong!',
-                        'error'
-                    );
-                    console.log(response);
+                error: function (response) {          
+                    $('#submit-add-role').attr('disabled', false);
+                    $('#submit-add-role').removeClass('btn-loading');      
+                    if (response.status === 422) {
+                        const errors = response.responseJSON.errors;
+                        for (const key in errors) {
+                            if (Object.hasOwnProperty.call(errors, key)) {
+                                const element = errors[key];
+                                $(`#add-${key}`).addClass('is-invalid');
+                                $(`#add-${key}`).after(`<div class="invalid-feedback">${element[0]}</div>`);
+                            }
+                        }
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong!',
+                            'error'
+                        );
+                    }
                 }
             });
         });
 
         $('#submit-edit-role').on('click', function (e) {
             e.preventDefault();
+            
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+            $('#submit-edit-role').attr('disabled', true);
+            $('#submit-edit-role').addClass('btn-loading');
+
             const name = $('#edit-name').val();
             const permissions = editPermissions.getValue();
             const id = $('#edit-id').val();
@@ -237,9 +326,34 @@
                     permissions: permissions,
                 },
                 success: function (response) {
+                    $('#submit-edit-role').attr('disabled', false);
+                    $('#submit-edit-role').removeClass('btn-loading');
                     if (response.status === 'success') {
-                        table.draw();
-                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then(() => {
+                            $('#modal-edit-roles').attr('data-bs-dismiss', 'modal').trigger('click');
+                            $('#modal-edit-roles').removeAttr('data-bs-dismiss');                            
+
+                            // Reload Datatable
+                            table.draw();
+
+                            // Show Alert
+                            $('.card').before(
+                                '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                                    '<strong>Success!</strong> ' + response.message +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                '</div>'
+                            );
+
+                            $('.alert').delay(3000).slideUp(300);
+                        })
+                    }else{
                         Swal.fire(
                             'Error!',
                             response.message,
@@ -248,12 +362,24 @@
                     }
                 },
                 error: function (response) {
-                    Swal.fire(
-                        'Error!',
-                        'Something went wrong!',
-                        'error'
-                    );
-                    console.log(response);
+                    $('#submit-edit-role').attr('disabled', false);
+                    $('#submit-edit-role').removeClass('btn-loading');
+                    if (response.status === 422) {
+                        const errors = response.responseJSON.errors;
+                        for (const key in errors) {
+                            if (Object.hasOwnProperty.call(errors, key)) {
+                                const element = errors[key];
+                                $(`#edit-${key}`).addClass('is-invalid');
+                                $(`#edit-${key}`).after(`<div class="invalid-feedback">${element[0]}</div>`);
+                            }
+                        }
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong!',
+                            'error'
+                        );
+                    }
                 }
             });
         });

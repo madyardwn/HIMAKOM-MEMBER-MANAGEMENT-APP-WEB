@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-add-roles" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-add-roles" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,20 +9,14 @@
                 <form action="" method="POST" id="form-add-roles">
                     <div class="mb-3">
                         <label class="form-label" for="add-name">Name</label>
-                        <input type="text" name="add_name" id="add-name" class="form-control @error('add_name') is-invalid @enderror" placeholder="Enter name" autocomplete="off" required>
-                        @error('add_name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="add_name" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>                        
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label class="form-label" for="add-permissions">Permissions</label>
-                                <select name="add_permissions" id="add-permissions" @error('add_permissions') is-invalid @enderror multiple>                                    
+                                <select name="add_permissions" id="add-permissions" multiple>                                    
                                 </select>
-                                @error('add_permissions')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                     </div>   
@@ -30,7 +24,7 @@
             </div>
             <div class="modal-footer">
                 <Button type="button" class="btn" data-bs-dismiss="modal">Cancel</Button>
-                <button type="button" class="btn btn-primary ms-auto" id="submit-add-role" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-primary ms-auto" id="submit-add-role">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                          stroke-linejoin="round">

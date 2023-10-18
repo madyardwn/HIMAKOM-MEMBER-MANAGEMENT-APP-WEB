@@ -60,7 +60,7 @@ class AuthWebRoleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:roles,name',
-            'permissions' => 'required|array',
+            'permissions' => 'array',
         ]);
 
         if ($validator->fails()) {
@@ -106,7 +106,7 @@ class AuthWebRoleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:roles,name,' . $role->id,
-            'permissions' => 'required|array',
+            'permissions' => 'array',
         ]);
 
         if ($validator->fails()) {
