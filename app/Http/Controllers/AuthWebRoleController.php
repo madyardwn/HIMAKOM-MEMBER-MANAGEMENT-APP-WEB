@@ -68,7 +68,7 @@ class AuthWebRoleController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name',
+            'name' => 'required|unique:roles,name|max:50',
             'permissions' => 'array',
         ]);
 
@@ -114,7 +114,7 @@ class AuthWebRoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name,' . $role->id,
+            'name' => 'required|unique:roles,name,' . $role->id . '|max:50',
             'permissions' => 'array',
         ]);
 
