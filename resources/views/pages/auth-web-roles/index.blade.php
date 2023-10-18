@@ -12,10 +12,10 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        {{ ucwords($activeMenu) }}
+                        {{ ucwords($activeMenu) ?? '' }}
                     </div>
                     <h2 class="page-title">
-                        {{ ucwords($activeSubMenu) }}
+                        {{ ucwords($activeSubMenu) ?? '' }}
                     </h2>
                 </div>
             </div>

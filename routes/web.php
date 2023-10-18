@@ -25,8 +25,11 @@ Auth::routes([
 
 Route::group(['middleware' => ['auth']], function () {
     // dashboard
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');    
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
+
     // route users-management group
     Route::group(['prefix' => 'users-management', 'as' => 'users-management.'], function () {
         // Users

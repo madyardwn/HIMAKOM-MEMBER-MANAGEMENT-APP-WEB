@@ -49,7 +49,13 @@ $('.link-secondary').click(function() {
 */
 const currentUrl = window.location.href;
 const activeDropdownItem = $('.nav-item.dropdown a.dropdown-item').filter(function () {
-    return $(this).attr('href') === currentUrl;
+    // return $(this).attr('href') === currentUrl;
+
+    // exclude effect to sidebar active link on dropdown top-right
+    const topRightLink = ['profile', 'about', 'logout'];
+    const currentUrlSplit = currentUrl.split('/');
+    const currentUrlLastSegment = currentUrlSplit[currentUrlSplit.length - 1];
+    return $(this).attr('href') === currentUrl && !topRightLink.includes(currentUrlLastSegment);
 });
 
 activeDropdownItem.addClass('active');

@@ -118,7 +118,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password.request',
     'password_email_url' => 'password.email',
-    'profile_url' => false,
+    'profile_url' => 'profile.show',
     'setting_url' => false,
 
     /*
