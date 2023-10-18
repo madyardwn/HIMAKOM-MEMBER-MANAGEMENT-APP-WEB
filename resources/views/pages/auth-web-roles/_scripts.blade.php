@@ -10,10 +10,34 @@
             processing: true,
             responsive: true,
             serverSide: true,
-            ajax: "{{ route('auth-web.roles.index') }}",            
-            columns: [
-                {data: 'id', name: 'id', title: 'No', width: '1%'},
-                {data: 'name', name: 'name', title: 'Name'},
+            ajax: "{{ route('auth-web.roles.index') }}",
+            columns: [        
+                {
+                    title: 'No',
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    responsivePriority: 1,
+                    width: '1%',
+                    className: 'dt-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%'},
+                {
+                    data: 'permissions', 
+                    name: 'permissions.name', 
+                    title: 'Permissions',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        let html = '';
+                        data.forEach(function (item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
+                },
                 {
                     data: null, 
                     title: 'Action',

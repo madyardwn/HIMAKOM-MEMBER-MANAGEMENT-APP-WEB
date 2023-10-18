@@ -15,14 +15,20 @@ class AuthWebRoleController extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = Role::select('*')
+             $data = Role::with('permissions:id,name')
                 ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
                     return $query->where('id', '!=', 1);
-                });
+                })
+                ->when($request->search['value'], function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhereHas('permissions', function ($query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
+                    });
+                })
+                ->orderBy('id', 'asc');
              
              return DataTables::of($data)
-                 ->addIndexColumn()
-                 ->make(true);
+                ->make(true);
          }
   
          return view('pages.auth-web-roles.index');
@@ -34,7 +40,7 @@ class AuthWebRoleController extends Controller
     public function edit(Role $role)
     {
         try {
-            $role->load('permissions');
+            $role->load('permissions:id,name');
             
             return response()->json([
                 'status' => 'success',
