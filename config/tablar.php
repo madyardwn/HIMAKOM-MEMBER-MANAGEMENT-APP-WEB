@@ -141,34 +141,6 @@ return [
     | For detailed instructions you can look here:
     |
     */
-    // $permission = [
-    //     'access',
-    //     'read',
-    //     'create',
-    //     'update',
-    //     'delete',
-    // ];
-
-    // $models = [
-    //     'users',
-    //     'auth-web-roles',
-    //     'auth-web-permissions',
-    //     'auth-api-roles',
-    //     'auth-api-permissions',
-    //     'cabinets',
-    //     'filosofies',
-    //     'departments',
-    //     'programs',
-    //     'events',
-    //     'news',
-    //     'articles',
-    //     'galleries',
-    //     'videos',
-    //     'documents',
-    //     'activity-logs',
-    //     'error-logs',
-    //     'cv-himakom'
-    // ];
     'menu' => [
         [
             'text' => 'Dashboard',
@@ -178,144 +150,144 @@ return [
         [
             'text' => 'User Management',
             'icon' => 'ti ti-user',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-users'],
             'submenu' => [
                 [
                     'text' => 'Users',
                     'icon' => 'ti ti-users-group',
                     'route' => 'users-management.users.index',
-                    'can' => 'access-users',
+                    'hasAnyPermission' => ['access-users'],
                 ],                                
             ],
         ],
         [
             'text' => 'Auth Web',
             'icon' => 'ti ti-lock',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-auth-web-permissions', 'access-auth-web-roles'],
             'submenu' => [
                 [
                     'text' => 'Permission',
                     'icon' => 'ti ti-square-key',
                     'route' => 'auth-web.permissions.index',
-                    'can' => 'access-auth-web-permissions',
+                    'hasAnyPermission' => ['access-auth-web-permissions'],
                 ],
                 [
                     'text' => 'Role',
                     'icon' => 'ti ti-key',
                     'route' => 'auth-web.roles.index',
-                    'can' => 'access-auth-web-roles',
+                    'hasAnyPermission' => ['access-auth-web-roles'],
                 ],
             ],
         ],
         [
             'text' => 'Auth API\'s (Soon)',
             'icon' => 'ti ti-lock',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-auth-api-permissions', 'access-auth-api-roles'],
             'submenu' => [
                 [
                     'text' => 'Permission',
                     'icon' => 'ti ti-square-key',
                     'url' => '#',
-                    'can' => 'access-auth-api-permissions',
+                    'hasAnyPermission' => ['access-auth-api-permissions'],
                 ],
                 [
                     'text' => 'Role',
                     'icon' => 'ti ti-key',
                     'url' => '#',
-                    'can' => 'access-auth-api-roles',
+                    'hasAnyPermission' => ['access-auth-api-roles'],
                 ],
             ],
         ],
         [
             'text' => 'Cabinet',
             'icon' => 'ti ti-category-filled',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-cabinets', 'access-filosofies', 'access-departments', 'access-programs', 'access-events'],
             'submenu' => [
                 [
                     'text' => 'Cabinet',
                     'icon' => 'ti ti-category-2',
                     'url' => '#',
-                    'can' => 'access-cabinets',
+                    'hasAnyPermission' => ['access-cabinets'],
                 ],
                 [
                     'text' => 'Filosophy',
                     'icon' => 'ti ti-360',
                     'url' => '#',
-                    'can' => 'access-filosofies',
+                    'hasAnyPermission' => ['access-filosofies'],
                 ],
                 [
                     'text' => 'Department',
                     'icon' => 'ti ti-building-bank',
                     'url' => '#',
-                    'can' => 'access-departments',
+                    'hasAnyPermission' => ['access-departments'],
                 ],
                 [
                     'text' => 'Program',
                     'icon' => 'ti ti-file-check',
                     'url' => '#',
-                    'can' => 'access-programs',
+                    'hasAnyPermission' => ['access-programs'],
                 ],
                 [
                     'text' => 'Event',
                     'icon' => 'ti ti-calendar-event',
                     'url' => '#',
-                    'can' => 'access-events',
+                    'hasAnyPermission' => ['access-events'],
                 ]
             ],
         ],
         [
             'text' => 'Content (Soon)',
             'icon' => 'ti ti-aspect-ratio',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-news', 'access-articles', 'access-galleries', 'access-videos', 'access-documents'],
             'submenu' => [
                 [
                     'text' => 'News',
                     'icon' => 'ti ti-article',
                     'url' => '#',
-                    'can' => 'access-news',
+                    'hasAnyPermission' => ['access-news'],
                 ],
                 [
                     'text' => 'Article',
                     'icon' => 'ti ti-file-text',
                     'url' => '#',
-                    'can' => 'access-articles',
+                    'hasAnyPermission' => ['access-articles'],
                 ],
                 [
                     'text' => 'Gallery',
                     'icon' => 'ti ti-photo',
                     'url' => '#',
-                    'can' => 'access-galleries',
+                    'hasAnyPermission' => ['access-galleries'],
                 ],
                 [
                     'text' => 'Video',
                     'icon' => 'ti ti-player-play',
                     'url' => '#',
-                    'can' => 'access-videos',
+                    'hasAnyPermission' => ['access-videos'],
                 ],
                 [
                     'text' => 'Document',
                     'icon' => 'ti ti-file',
                     'url' => '#',
-                    'can' => 'access-documents',
+                    'hasAnyPermission' => ['access-documents'],
                 ],
             ],
         ],
         [
             'text' => 'Logs (Soon)',
             'icon' => 'ti ti-file',
-            'hasAnyRoles' => ['super-admin'],
+            'hasAnyPermission' => ['access-activity-logs', 'access-error-logs'],
             'submenu' => [
                 [
                     'text' => 'Activity Log',
                     'icon' => 'ti ti-file-text',
                     'url' => '#',
-                    'can' => 'access-activity-logs',
+                    'hasAnyPermission' => ['access-activity-logs'],
                 ],
                 [
                     'text' => 'Error Log',
                     'icon' => 'ti ti-file-text',
                     'url' => '#',
-                    'can' => 'access-error-logs',
+                    'hasAnyPermission' => ['access-error-logs'],
                 ],
             ],
         ],
@@ -323,7 +295,7 @@ return [
             'text' => 'CV Himakom (Soon)',
             'icon' => 'ti ti-id-badge',
             'url' => '#',            
-            'can' => 'access-cv-himakom',
+            'hasAnyPermission' => ['access-cv-himakom'],
         ],
     ],
 
