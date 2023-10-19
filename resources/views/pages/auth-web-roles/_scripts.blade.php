@@ -11,8 +11,7 @@
             responsive: true,
             serverSide: true,
             ajax: "{{ route('auth-web.roles.index') }}",
-            columns: [        
-                {
+            columns: [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -20,34 +19,40 @@
                     responsivePriority: 1,
                     width: '1%',
                     className: 'dt-center',
-                    render: function (data, type, row, meta) {
+                    render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-                {data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%'},
                 {
-                    data: 'permissions', 
-                    name: 'permissions.name', 
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 1,
+                    width: '20%'
+                },
+                {
+                    data: 'permissions',
+                    name: 'permissions.name',
                     title: 'Permissions',
                     orderable: false,
-                    render: function (data, type, row) {
+                    render: function(data, type, row) {
                         let html = '';
-                        data.forEach(function (item, index) {
-                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        data.forEach(function(item, index) {
+                            html +=`<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
                         });
                         return html;
                     }
                 },
                 {
-                    data: null, 
+                    data: null,
                     title: 'Action',
-                    orderable: false, 
-                    searchable: false, 
+                    orderable: false,
+                    searchable: false,
                     responsivePriority: 1,
                     width: '1%',
-                    render: function (data, type, row) {                        
-                        let html = '';                        
-                        if (data.id != 1){
+                    render: function(data, type, row) {
+                        let html = '';
+                        if (data.id != 1) {
                             html = `
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,21 +69,21 @@
                     }
                 },
             ],
-        });         
+        });
     }
 
     function initDtEvents() {
         addPermissions = new TomSelect("#add-permissions", {
-            valueField: 'id',            
+            valueField: 'id',
             labelField: 'name',
             searchField: 'name',
-            placeholder: 'Select permissions',    
+            placeholder: 'Select permissions',
             plugins: {
-                remove_button:{
-                    title:'Remove this item',
+                remove_button: {
+                    title: 'Remove this item',
                 }
             },
-            load: function (query, callback) {
+            load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
                     url: "{{ route('tom-select.permissions') }}",
@@ -87,39 +92,39 @@
                     data: {
                         q: query,
                     },
-                    error: function () {
+                    error: function() {
                         callback();
                     },
-                    success: function (res) {
+                    success: function(res) {
                         callback(res);
                     }
                 });
             },
             render: {
-                option: function (item, escape) {
-                    return '<div>' +
-                        '<span class="title">' + escape(item.name) + '</span>' +
-                        '</div>';
+                option: function(item, escape) {
+                    return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
                 },
-                item: function (item, escape) {
-                    return '<div>' +
-                        escape(item.name) +
-                        '</div>';
+                item: function(item, escape) {                    
+                    return `<div>
+                                ${escape(item.name)}
+                            </div>`;
                 }
             },
         });
 
         editPermissions = new TomSelect("#edit-permissions", {
-            valueField: 'id',            
+            valueField: 'id',
             labelField: 'name',
             searchField: 'name',
-            placeholder: 'Select permissions',          
+            placeholder: 'Select permissions',
             plugins: {
-                remove_button:{
-                    title:'Remove this item',
+                remove_button: {
+                    title: 'Remove this item',
                 }
             },
-            load: function (query, callback) {
+            load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
                     url: "{{ route('tom-select.permissions') }}",
@@ -128,29 +133,29 @@
                     data: {
                         q: query,
                     },
-                    error: function () {
+                    error: function() {
                         callback();
                     },
-                    success: function (res) {
+                    success: function(res) {
                         callback(res);
                     }
                 });
             },
             render: {
-                option: function (item, escape) {
-                    return '<div>' +
-                        '<span class="title">' + escape(item.name) + '</span>' +
-                        '</div>';
+                option: function(item, escape) {                    
+                    return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
                 },
-                item: function (item, escape) {
-                    return '<div>' +
-                        escape(item.name) +
-                        '</div>';
+                item: function(item, escape) {                    
+                    return `<div>
+                                ${escape(item.name)}
+                            </div>`;
                 }
             },
         });
 
-        $('#modal-add-roles').on('hidden.bs.modal', function (e) {
+        $('#modal-add-roles').on('hidden.bs.modal', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
@@ -159,7 +164,7 @@
             addPermissions.clear();
         });
 
-        $('#modal-edit-roles').on('hidden.bs.modal', function (e) {
+        $('#modal-edit-roles').on('hidden.bs.modal', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
@@ -168,21 +173,21 @@
             editPermissions.clear();
         });
 
-        table.on('click', '.btn-edit', function (e) {
-            e.preventDefault();            
-            
+        table.on('click', '.btn-edit', function(e) {
+            e.preventDefault();
+
             const id = $(this).data('id');
-            
+
             $('#edit-id').val(id);
-            
+
             $.ajax({
                 url: "{{ route('auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
                 method: 'GET',
-                success: function (response) {
+                success: function(response) {
                     if (response.status === 'success') {
                         $('#edit-name').val(response.data.name);
                         editPermissions.addOption(response.data.permissions);
-                        editPermissions.setValue(response.data.permissions.map(function (item) {
+                        editPermissions.setValue(response.data.permissions.map(function(item) {
                             return item.id;
                         }));
                     } else {
@@ -193,7 +198,7 @@
                         );
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function(xhr, ajaxOptions, thrownError) {
                     Swal.fire(
                         'Error!',
                         thrownError,
@@ -203,23 +208,25 @@
             });
         });
 
-        table.on('click', '.btn-delete', function (e) {
+        table.on('click', '.btn-delete', function(e) {
             e.preventDefault();
+            
             const id = $(this).data('id');
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-                icon: 'warning',                
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',                
+                confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
-                if (result.isConfirmed) {                    
+                if (result.isConfirmed) {
                     $.ajax({
                         url: "{{ route('auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
                         method: 'DELETE',
-                        success: function (response) {
+                        success: function(response) {
                             if (response.status === 'success') {
                                 Swal.fire({
                                     icon: 'success',
@@ -230,30 +237,30 @@
                                 })
                                 .then(() => {
                                     table.draw();
-                                    $('.card').before(
-                                        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                                            '<strong>Success!</strong> ' + response.message +
-                                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                                        '</div>'
-                                    );
+                                    $('.card').before(`
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>Success!</strong> ${response.message}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    `);
 
                                     $('.alert').delay(3000).slideUp(300);
                                 });
                             }
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
+                        error: function(xhr, ajaxOptions, thrownError) {
                             Swal.fire(
                                 'Error!',
                                 thrownError,
                                 'error'
                             );
 
-                            $('.card').before(
-                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                                    '<strong>Error!</strong> ' + thrownError +
-                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                                '</div>'
-                            );
+                            $('.card').before(`
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> ${thrownError}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
 
                             $('.alert').delay(3000).slideUp(300);
                         }
@@ -264,9 +271,9 @@
     }
 
     function initDtSubmit() {
-        $('#submit-add-role').on('click', function (e) {
+        $('#submit-add-role').on('click', function(e) {
             e.preventDefault();
-            
+
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
             $('#submit-add-role').attr('disabled', true);
@@ -274,7 +281,7 @@
 
             const name = $('#add-name').val();
             const permissions = $('#add-permissions').val();
-            
+
             $.ajax({
                 url: "{{ route('auth-web.roles.store') }}",
                 method: 'POST',
@@ -282,7 +289,7 @@
                     name: name,
                     permissions: permissions,
                 },
-                success: function (response) {
+                success: function(response) {
                     $('#submit-add-role').attr('disabled', false);
                     $('#submit-add-role').removeClass('btn-loading');
                     if (response.status === 'success') {
@@ -293,24 +300,24 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        .then(() => {                            
+                        .then(() => {
                             $('#modal-add-roles').attr('data-bs-dismiss', 'modal').trigger('click');
-                            $('#modal-add-roles').removeAttr('data-bs-dismiss');                            
+                            $('#modal-add-roles').removeAttr('data-bs-dismiss');
 
                             // Reload Datatable
                             table.draw();
 
                             // Show Alert
-                            $('.card').before(
-                                '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                                    '<strong>Success!</strong> ' + response.message +
-                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                                '</div>'
-                            );
+                            $('.card').before(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> ${response.message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
 
                             $('.alert').delay(3000).slideUp(300);
                         })
-                    }else{
+                    } else {
                         Swal.fire(
                             'Error!',
                             response.message,
@@ -318,9 +325,9 @@
                         );
                     }
                 },
-                error: function (response) {          
+                error: function(response) {
                     $('#submit-add-role').attr('disabled', false);
-                    $('#submit-add-role').removeClass('btn-loading');      
+                    $('#submit-add-role').removeClass('btn-loading');
                     if (response.status === 422) {
                         const errors = response.responseJSON.errors;
                         for (const key in errors) {
@@ -341,9 +348,9 @@
             });
         });
 
-        $('#submit-edit-role').on('click', function (e) {
+        $('#submit-edit-role').on('click', function(e) {
             e.preventDefault();
-            
+
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
             $('#submit-edit-role').attr('disabled', true);
@@ -360,35 +367,35 @@
                     name: name,
                     permissions: permissions,
                 },
-                success: function (response) {
+                success: function(response) {
                     $('#submit-edit-role').attr('disabled', false);
                     $('#submit-edit-role').removeClass('btn-loading');
                     if (response.status === 'success') {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        .then(() => {
-                            $('#modal-edit-roles').attr('data-bs-dismiss', 'modal').trigger('click');
-                            $('#modal-edit-roles').removeAttr('data-bs-dismiss');                            
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            .then(() => {
+                                $('#modal-edit-roles').attr('data-bs-dismiss', 'modal').trigger('click');
+                                $('#modal-edit-roles').removeAttr('data-bs-dismiss');
 
-                            // Reload Datatable
-                            table.draw();
+                                // Reload Datatable
+                                table.draw();
 
-                            // Show Alert
-                            $('.card').before(
-                                '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                                    '<strong>Success!</strong> ' + response.message +
-                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                                '</div>'
-                            );
+                                // Show Alert
+                                $('.card').before(`
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success!</strong> ${response.message}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                `);
 
-                            $('.alert').delay(3000).slideUp(300);
-                        })
-                    }else{
+                                $('.alert').delay(3000).slideUp(300);
+                            })
+                    } else {
                         Swal.fire(
                             'Error!',
                             response.message,
@@ -396,7 +403,7 @@
                         );
                     }
                 },
-                error: function (response) {
+                error: function(response) {
                     $('#submit-edit-role').attr('disabled', false);
                     $('#submit-edit-role').removeClass('btn-loading');
                     if (response.status === 422) {
@@ -419,9 +426,9 @@
             });
         });
     }
-    
+
     // docuemnt on ready
-    $(document).ready(function () {
+    $(document).ready(function() {
         initDtTable();
         initDtEvents();
         initDtSubmit();
