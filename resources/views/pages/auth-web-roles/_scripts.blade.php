@@ -1,195 +1,268 @@
 <script type="module">
-    // DataTable, Modal, Form
-    let table, formAdd, formEdit;
+    // Datatable Variables
+    let table
+    let tableId, tableDataUrl, tableColumns;
+    tableId = '#auth-web-roles-table'; // id tabel for datatable
+    tableDataUrl = "{{ route('auth-web.roles.index') }}"; // url get datatable
+    tableColumns = [{ // datatable columns configuration
+            title: 'No',
+            data: null,
+            orderable: false,
+            searchable: false,
+            responsivePriority: 1,
+            width: '1%',
+            className: 'dt-center',
+            render: function(data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
+            }
+        },
+        {
+            data: 'name',
+            name: 'name',
+            title: 'Name',
+            responsivePriority: 1,
+            width: '20%'
+        },
+        {
+            data: 'permissions',
+            name: 'permissions.name',
+            title: 'Permissions',
+            orderable: false,
+            render: function(data, type, row) {
+                let html = '';
+                data.forEach(function(item, index) {
+                    html +=`<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                });
+                return html;
+            }
+        },
+        {
+            data: null,
+            title: 'Action',
+            orderable: false,
+            searchable: false,
+            responsivePriority: 1,
+            width: '1%',
+            render: function(data, type, row) {
+                let html = '';
+                if (data.id != 1) {
+                    html = `
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu">                                    
+                                <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-roles"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                            </ul>
+                        </div>
+                    `;
+                }
+                return html;
+            }
+        },
+    ];
 
-    // tomSelect
-    let addPermissions, editPermissions;
+    // Events Variables
+    let modalAdd, modalEdit;
+    let formAdd, formEdit;
+    let inputs, tomSelects;
+    let editUrl;
+    let deleteUrl;
+    modalAdd = '#modal-add-roles'; // id modal add
+    modalEdit = '#modal-edit-roles'; // id modal edit
+    formAdd = '#form-add-roles'; // id form add, for reset form
+    formEdit = '#form-edit-roles'; // id form edit, for reset form
+    tomSelects = { // tom select configuration for add and edit with ajax search
+        add: [{
+                element: '#add-permissions',
+                url: "{{ route('tom-select.permissions') }}",
+                variable: null,
+                name: 'permissions',
+        }],
+        edit: [{
+                element: '#edit-permissions',
+                url: "{{ route('tom-select.permissions') }}",
+                variable: null,
+                name: 'permissions',
+        }]
+    }
+    inputs = { // input configuration for add and edit, standard input: text, number, textarea, select, checkbox, radio
+        add: [{ // add have many input
+            element: '#add-name',
+            type: 'text',
+            name: 'name',
+            variable: '',
+        }],
+        edit: [{ // edit have many input
+            element: '#edit-name',
+            type: 'text',
+            name: 'name',
+            variable: '',
+        }]
+    };
+    editUrl = "{{ route('auth-web.roles.edit', ':id') }}"; // url for edit data
+    deleteUrl = "{{ route('auth-web.roles.destroy', ':id') }}"; // url for delete data
 
+    // Submit Variables
+    let submitAdd, submitEdit;
+    let submitAddUrl, submitEditUrl;
+    submitAdd = '#submit-add-roles'; // id submit add
+    submitEdit = '#submit-edit-roles'; // id submit edit
+    submitAddUrl = "{{ route('auth-web.roles.store') }}"; // url for submit add
+    submitEditUrl = "{{ route('auth-web.roles.update', ':id') }}"; // url for submit edit
+    
     function initDtTable() {
-        table = new DataTable('#auth-web-roles-table', {
+        table = new DataTable(tableId, {
             processing: true,
             responsive: true,
             serverSide: true,
-            ajax: "{{ route('auth-web.roles.index') }}",
-            columns: [{
-                    title: 'No',
-                    data: null,
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 1,
-                    width: '1%',
-                    className: 'dt-center',
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name',
-                    title: 'Name',
-                    responsivePriority: 1,
-                    width: '20%'
-                },
-                {
-                    data: 'permissions',
-                    name: 'permissions.name',
-                    title: 'Permissions',
-                    orderable: false,
-                    render: function(data, type, row) {
-                        let html = '';
-                        data.forEach(function(item, index) {
-                            html +=`<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
-                        });
-                        return html;
-                    }
-                },
-                {
-                    data: null,
-                    title: 'Action',
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 1,
-                    width: '1%',
-                    render: function(data, type, row) {
-                        let html = '';
-                        if (data.id != 1) {
-                            html = `
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">                                    
-                                        <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-roles"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                        <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
-                                    </ul>
-                                </div>
-                            `;
-                        }
-                        return html;
-                    }
-                },
-            ],
+            ajax: tableDataUrl,
+            columns: tableColumns,
         });
-    }
+    }    
 
     function initDtEvents() {
-        addPermissions = new TomSelect("#add-permissions", {
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            placeholder: 'Select permissions',
-            plugins: {
-                remove_button: {
-                    title: 'Remove this item',
-                }
-            },
-            load: function(query, callback) {
-                if (!query.length) return callback();
-                $.ajax({
-                    url: "{{ route('tom-select.permissions') }}",
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
-                        q: query,
-                    },
-                    error: function() {
-                        callback();
-                    },
-                    success: function(res) {
-                        callback(res);
+        tomSelects.add.forEach(function(item, index) {
+            item.variable = new TomSelect(item.element, {
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                placeholder: 'Select permissions',
+                plugins: {
+                    remove_button: {
+                        title: 'Remove this item',
                     }
-                });
-            },
-            render: {
-                option: function(item, escape) {
-                    return `<div>
-                                <span class="title">${escape(item.name)}</span>
-                            </div>`;
                 },
-                item: function(item, escape) {                    
-                    return `<div>
-                                ${escape(item.name)}
-                            </div>`;
-                }
-            },
+                load: function(query, callback) {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: item.url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            q: query,
+                        },
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        }
+                    });
+                },
+                render: {
+                    option: function(item, escape) {                    
+                        return `<div>
+                                    <span class="title">${escape(item.name)}</span>
+                                </div>`;
+                    },
+                    item: function(item, escape) {                    
+                        return `<div>
+                                    ${escape(item.name)}
+                                </div>`;
+                    }
+                },
+            });
         });
 
-        editPermissions = new TomSelect("#edit-permissions", {
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            placeholder: 'Select permissions',
-            plugins: {
-                remove_button: {
-                    title: 'Remove this item',
-                }
-            },
-            load: function(query, callback) {
-                if (!query.length) return callback();
-                $.ajax({
-                    url: "{{ route('tom-select.permissions') }}",
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
-                        q: query,
-                    },
-                    error: function() {
-                        callback();
-                    },
-                    success: function(res) {
-                        callback(res);
+        tomSelects.edit.forEach(function(item, index) {
+            item.variable = new TomSelect(item.element, {
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                placeholder: 'Select permissions',
+                plugins: {
+                    remove_button: {
+                        title: 'Remove this item',
                     }
-                });
-            },
-            render: {
-                option: function(item, escape) {                    
-                    return `<div>
-                                <span class="title">${escape(item.name)}</span>
-                            </div>`;
                 },
-                item: function(item, escape) {                    
-                    return `<div>
-                                ${escape(item.name)}
-                            </div>`;
-                }
-            },
+                load: function(query, callback) {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: item.url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            q: query,
+                        },
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        }
+                    });
+                },
+                render: {
+                    option: function(item, escape) {                    
+                        return `<div>
+                                    <span class="title">${escape(item.name)}</span>
+                                </div>`;
+                    },
+                    item: function(item, escape) {                    
+                        return `<div>
+                                    ${escape(item.name)}
+                                </div>`;
+                    }
+                },
+            });
         });
 
-        $('#modal-add-roles').on('hidden.bs.modal', function(e) {
+        
+        $(modalAdd).on('hidden.bs.modal', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
-            $('#add-name').val('');
-            $('#add-permissions').val('');
-            addPermissions.clear();
+            $(formAdd)[0].reset();
+            tomSelects.add.forEach(function(item, index) {
+                item.variable.clear();
+            });
         });
 
-        $('#modal-edit-roles').on('hidden.bs.modal', function(e) {
+        $(modalEdit).on('hidden.bs.modal', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
-            $('#edit-name').val('');
-            $('#edit-permissions').val('');
-            editPermissions.clear();
+            $(formEdit)[0].reset();
+            tomSelects.edit.forEach(function(item, index) {
+                item.variable.clear();
+            });
         });
 
         table.on('click', '.btn-edit', function(e) {
             e.preventDefault();
 
-            const id = $(this).data('id');
-
-            $('#edit-id').val(id);
+            $('#edit-id').val($(this).data('id'));
 
             $.ajax({
-                url: "{{ route('auth-web.roles.edit', ['role' => 'id']) }}".replace('id', id),
+                url: editUrl.replace(':id', $('#edit-id').val()),
                 method: 'GET',
                 success: function(response) {
                     if (response.status === 'success') {
-                        $('#edit-name').val(response.data.name);
-                        editPermissions.addOption(response.data.permissions);
-                        editPermissions.setValue(response.data.permissions.map(function(item) {
-                            return item.id;
-                        }));
+                        inputs.edit.forEach(function(item, index) {
+                            // $(item.element).val(response.data[item.name]);
+                            switch (item.type) {
+                                case 'text':
+                                    $(item.element).val(response.data[item.name]);
+                                    break;
+                                case 'checkbox':
+                                    $(item.element).prop('checked', response.data[item.name]);
+                                    break;
+                                case 'radio':
+                                    $(item.element).prop('checked', response.data[item.name]);
+                                    break;
+                                default:
+                                    $(item.element).val(response.data[item.name]);
+                                    break;
+                            }
+                        });
+                        tomSelects.edit.forEach(function(item, index) {
+                            item.variable.addOption(response.data[item.name]);
+                            item.variable.setValue(response.data[item.name].map(function(item) {
+                                return item.id;
+                            }));
+                        });
                     } else {
                         Swal.fire(
                             'Error!',
@@ -224,7 +297,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('auth-web.roles.destroy', ['role' => 'id']) }}".replace('id', id),
+                        url: deleteUrl.replace(':id', id),
                         method: 'DELETE',
                         success: function(response) {
                             if (response.status === 'success') {
@@ -271,27 +344,44 @@
     }
 
     function initDtSubmit() {
-        $('#submit-add-roles').on('click', function(e) {
+        $(submitAdd).on('click', function(e) {
             e.preventDefault();
 
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
-            $('#submit-add-roles').attr('disabled', true);
-            $('#submit-add-roles').addClass('btn-loading');
+            $(submitAdd).attr('disabled', true);
+            $(submitAdd).addClass('btn-loading');
 
-            const name = $('#add-name').val();
-            const permissions = $('#add-permissions').val();
+            const data = {};
+
+            inputs.add.forEach(function(item, index) {
+                switch (item.type) {
+                    case 'text':
+                        data[item.name] = $(item.element).val();
+                        break;
+                    case 'checkbox':
+                        data[item.name] = $(item.element).prop('checked');
+                        break;
+                    case 'radio':
+                        data[item.name] = $(item.element).prop('checked');
+                        break;
+                    default:
+                        data[item.name] = $(item.element).val();
+                        break;
+                }
+            });
+
+            tomSelects.add.forEach(function(item, index) {
+                data[item.name] = item.variable.getValue();
+            });
 
             $.ajax({
-                url: "{{ route('auth-web.roles.store') }}",
+                url: submitAddUrl,
                 method: 'POST',
-                data: {
-                    name: name,
-                    permissions: permissions,
-                },
+                data: data,
                 success: function(response) {
-                    $('#submit-add-roles').attr('disabled', false);
-                    $('#submit-add-roles').removeClass('btn-loading');
+                    $(submitAdd).attr('disabled', false);
+                    $(submitAdd).removeClass('btn-loading');
                     if (response.status === 'success') {
                         Swal.fire({
                             icon: 'success',
@@ -301,8 +391,8 @@
                             timer: 1500
                         })
                         .then(() => {
-                            $('#modal-add-roles').attr('data-bs-dismiss', 'modal').trigger('click');
-                            $('#modal-add-roles').removeAttr('data-bs-dismiss');
+                            $(modalAdd).attr('data-bs-dismiss', 'modal').trigger('click');
+                            $(modalAdd).removeAttr('data-bs-dismiss');
 
                             // Reload Datatable
                             table.draw();
@@ -326,8 +416,8 @@
                     }
                 },
                 error: function(response) {
-                    $('#submit-add-roles').attr('disabled', false);
-                    $('#submit-add-roles').removeClass('btn-loading');
+                    $(submitAdd).attr('disabled', false);
+                    $(submitAdd).removeClass('btn-loading');
                     if (response.status === 422) {
                         const errors = response.responseJSON.errors;
                         for (const key in errors) {
@@ -348,28 +438,46 @@
             });
         });
 
-        $('#submit-edit-roles').on('click', function(e) {
+        $(submitEdit).on('click', function(e) {
             e.preventDefault();
 
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
-            $('#submit-edit-roles').attr('disabled', true);
-            $('#submit-edit-roles').addClass('btn-loading');
+            $(submitEdit).attr('disabled', true);
+            $(submitEdit).addClass('btn-loading');
 
             const id = $('#edit-id').val();
-            const name = $('#edit-name').val();
-            const permissions = $('#edit-permissions').val();
+
+            const data = {};
+
+            inputs.edit.forEach(function(item, index) {
+                switch (item.type) {
+                    case 'text':
+                        data[item.name] = $(item.element).val();
+                        break;
+                    case 'checkbox':
+                        data[item.name] = $(item.element).prop('checked');
+                        break;
+                    case 'radio':
+                        data[item.name] = $(item.element).prop('checked');
+                        break;
+                    default:
+                        data[item.name] = $(item.element).val();
+                        break;
+                }
+            });
+
+            tomSelects.edit.forEach(function(item, index) {
+                data[item.name] = item.variable.getValue();
+            });
 
             $.ajax({
-                url: "{{ route('auth-web.roles.update', ['role' => 'id']) }}".replace('id', id),
+                url: submitEditUrl.replace(':id', id),
                 method: 'PUT',
-                data: {
-                    name: name,
-                    permissions: permissions,
-                },
+                data: data,
                 success: function(response) {
-                    $('#submit-edit-roles').attr('disabled', false);
-                    $('#submit-edit-roles').removeClass('btn-loading');
+                    $(submitEdit).attr('disabled', false);
+                    $(submitEdit).removeClass('btn-loading');
                     if (response.status === 'success') {
                         Swal.fire({
                                 icon: 'success',
@@ -379,8 +487,8 @@
                                 timer: 1500
                             })
                             .then(() => {
-                                $('#modal-edit-roles').attr('data-bs-dismiss', 'modal').trigger('click');
-                                $('#modal-edit-roles').removeAttr('data-bs-dismiss');
+                                $(modalEdit).attr('data-bs-dismiss', 'modal').trigger('click');
+                                $(modalEdit).removeAttr('data-bs-dismiss');
 
                                 // Reload Datatable
                                 table.draw();
@@ -404,8 +512,8 @@
                     }
                 },
                 error: function(response) {
-                    $('#submit-edit-roles').attr('disabled', false);
-                    $('#submit-edit-roles').removeClass('btn-loading');
+                    $(submitEdit).attr('disabled', false);
+                    $(submitEdit).removeClass('btn-loading');
                     if (response.status === 422) {
                         const errors = response.responseJSON.errors;
                         for (const key in errors) {
