@@ -10,14 +10,14 @@
                     <input type="hidden" name="edit_id" id="edit-id">
                     <div class="mb-3">
                         <label class="form-label" for="edit-name">Name</label>
-                        <input type="text" name="edit_name" id="edit-name" class="form-control"
+                        <input type="text" id="edit-name" class="form-control"
                             placeholder="Enter name" autocomplete="off" required>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label class="form-label" for="edit-permissions">Permissions</label>
-                                <select name="edit_permissions" id="edit-permissions" multiple>
+                                <select id="edit-permissions" multiple>
                                 </select>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary ms-auto" id="submit-edit-role">
+                <button type="button" class="btn btn-primary ms-auto" id="submit-edit-roles">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">

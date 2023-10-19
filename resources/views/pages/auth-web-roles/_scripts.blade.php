@@ -271,13 +271,13 @@
     }
 
     function initDtSubmit() {
-        $('#submit-add-role').on('click', function(e) {
+        $('#submit-add-roles').on('click', function(e) {
             e.preventDefault();
 
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
-            $('#submit-add-role').attr('disabled', true);
-            $('#submit-add-role').addClass('btn-loading');
+            $('#submit-add-roles').attr('disabled', true);
+            $('#submit-add-roles').addClass('btn-loading');
 
             const name = $('#add-name').val();
             const permissions = $('#add-permissions').val();
@@ -290,8 +290,8 @@
                     permissions: permissions,
                 },
                 success: function(response) {
-                    $('#submit-add-role').attr('disabled', false);
-                    $('#submit-add-role').removeClass('btn-loading');
+                    $('#submit-add-roles').attr('disabled', false);
+                    $('#submit-add-roles').removeClass('btn-loading');
                     if (response.status === 'success') {
                         Swal.fire({
                             icon: 'success',
@@ -326,8 +326,8 @@
                     }
                 },
                 error: function(response) {
-                    $('#submit-add-role').attr('disabled', false);
-                    $('#submit-add-role').removeClass('btn-loading');
+                    $('#submit-add-roles').attr('disabled', false);
+                    $('#submit-add-roles').removeClass('btn-loading');
                     if (response.status === 422) {
                         const errors = response.responseJSON.errors;
                         for (const key in errors) {
@@ -348,13 +348,13 @@
             });
         });
 
-        $('#submit-edit-role').on('click', function(e) {
+        $('#submit-edit-roles').on('click', function(e) {
             e.preventDefault();
 
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
-            $('#submit-edit-role').attr('disabled', true);
-            $('#submit-edit-role').addClass('btn-loading');
+            $('#submit-edit-roles').attr('disabled', true);
+            $('#submit-edit-roles').addClass('btn-loading');
 
             const id = $('#edit-id').val();
             const name = $('#edit-name').val();
@@ -368,8 +368,8 @@
                     permissions: permissions,
                 },
                 success: function(response) {
-                    $('#submit-edit-role').attr('disabled', false);
-                    $('#submit-edit-role').removeClass('btn-loading');
+                    $('#submit-edit-roles').attr('disabled', false);
+                    $('#submit-edit-roles').removeClass('btn-loading');
                     if (response.status === 'success') {
                         Swal.fire({
                                 icon: 'success',
@@ -404,8 +404,8 @@
                     }
                 },
                 error: function(response) {
-                    $('#submit-edit-role').attr('disabled', false);
-                    $('#submit-edit-role').removeClass('btn-loading');
+                    $('#submit-edit-roles').attr('disabled', false);
+                    $('#submit-edit-roles').removeClass('btn-loading');
                     if (response.status === 422) {
                         const errors = response.responseJSON.errors;
                         for (const key in errors) {

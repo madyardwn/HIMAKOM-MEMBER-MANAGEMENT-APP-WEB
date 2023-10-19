@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <Button type="button" class="btn" data-bs-dismiss="modal">Cancel</Button>
-                <button type="button" class="btn btn-primary ms-auto" id="submit-add-role">
+                <button type="button" class="btn btn-primary ms-auto" id="submit-add-roles">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                         stroke-linejoin="round">
