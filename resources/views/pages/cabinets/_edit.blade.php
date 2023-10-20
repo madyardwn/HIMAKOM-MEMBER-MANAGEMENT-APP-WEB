@@ -9,9 +9,8 @@
                 <form action="" method="POST" id="form-edit-cabinets">
                     <input type="hidden" name="id" id="edit-id-cabinets">
                     <div class="mb-3">
-                        <label class="form-label" for="edit-name">Name</label>
-                        <input type="text" name="name" id="edit-name" class="form-control" placeholder="Enter name"
-                            autocomplete="off" required>
+                        <label class="form-label" for="edit-name">Name</label>                        
+                        <input type="text" name="name" id="edit-name" class="form-control" placeholder="Enter name" autocomplete="off" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="edit-description">Description</label>
@@ -32,8 +31,9 @@
                     </div>                    
                     <div class="mb-3">
                         <label class="form-label" for="edit-logo">Logo</label>
-                        <input name="logo" type="file" id="edit-logo" class="form-control" placeholder="Enter logo"
-                            autocomplete="off" required>
+                        {{-- Preview : Image, Input have same category (logo) --}}
+                        <img src="{{ asset(config('tablar.custom.preview.path')) }}" id="preview-edit-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.custom.preview.name') }}">
+                        <input name="logo" type="file" id="edit-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
                     </div>
                     <div class="mb-3">
                         <div class="divide-y">

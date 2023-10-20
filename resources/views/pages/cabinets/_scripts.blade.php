@@ -103,6 +103,18 @@
                     url: $(this).attr('data-url'),
                     variable: null,
                 });
+            } else if ($(this).is('input[type="file"]')) {
+                $(this).on('change', function() {
+                    const file = $(this)[0].files[0] // get file
+                    const name = $(this)[0].name // name of input file
+                    const reader = new FileReader() // create reader
+
+                    reader.onload = function(e) {
+                        // set image source to preview image name
+                        $(`#preview-add-${name}`).attr('src', e.target.result)
+                    }
+                    reader.readAsDataURL(file)
+                });
             }
         });
 
@@ -119,6 +131,18 @@
                     url: $(this).attr('data-url'),
                     variable: null,
                     name: $(this).attr('name'),
+                });
+            }else if ($(this).is('input[type="file"]')) {
+                $(this).on('change', function() {
+                    const file = $(this)[0].files[0] // get file
+                    const name = $(this)[0].name // name of input file
+                    const reader = new FileReader() // create reader
+
+                    reader.onload = function(e) {
+                        // set image source to preview image name
+                        $(`#preview-edit-${name}`).attr('src', e.target.result)
+                    }
+                    reader.readAsDataURL(file)
                 });
             }
         });
@@ -217,8 +241,12 @@
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
-            $(`#form-add-${subject}`)[0].reset();
-            tomSelects.add.forEach(function(item, index) {
+            // restore preview image
+            $(`#form-add-${subject} input[type="file"]`).each(function() {
+                $(`#preview-add-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.custom.preview.path')) }}');
+            });
+            $(`#form-add-${subject}`)[0].reset(); // reset form
+            tomSelects.add.forEach(function(item, index) { // clear tom select
                 item.variable.clear();
             });
         });
@@ -227,8 +255,11 @@
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
-            $(`#form-edit-${subject}`)[0].reset();
-            tomSelects.edit.forEach(function(item, index) {
+            $(`#form-edit-${subject} input[type="file"]`).each(function() { // restore preview image
+                $(`#preview-edit-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.custom.preview.path')) }}');
+            });
+            $(`#form-edit-${subject}`)[0].reset(); // reset form
+            tomSelects.edit.forEach(function(item, index) { // clear tom select
                 item.variable.clear();
             });
         });
@@ -295,7 +326,9 @@
                                     timer: 1500
                                 })
                                 .then(() => {
+                                    
                                     table.draw();
+
                                     $(`#card-${subject}`).before(`
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             <strong>Success!</strong> ${response.message}
@@ -515,7 +548,8 @@
     function handleInputTypeEdit(item, response) {
         switch (item.element.prop('type')) {            
             case 'file':
-                $(item.element).val('');
+                const file = response.data[item.name] ? `{{ asset('images/cabinets') }}/${response.data[item.name]}` : `{{ asset(config('tablar.custom.preview.path')) }}`;                
+                $(`#preview-edit-${item.name}`).attr('src', file);
                 break;
             case 'checkbox':
             case 'radio':

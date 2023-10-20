@@ -29,6 +29,8 @@
                     </div>                    
                     <div class="mb-3">
                         <label class="form-label" for="add-logo">Logo</label>
+                        {{-- Preview : Image, Input have same category (logo) --}}
+                        <img src="{{ asset(config('tablar.custom.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.custom.preview.name') }}">
                         <input type="file" name="logo" id="add-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
                     </div>
                     <div class="mb-3">

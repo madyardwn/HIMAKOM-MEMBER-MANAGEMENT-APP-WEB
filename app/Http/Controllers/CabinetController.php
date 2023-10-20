@@ -129,7 +129,6 @@ class CabinetController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:cabinets,name,' . $cabinet->id . '|max:50',
             'description' => 'required|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'year' => 'required|numeric',
             'is_active' => 'required|numeric',
             'visi' => 'required|max:255',

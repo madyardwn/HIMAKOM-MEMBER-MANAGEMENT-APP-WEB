@@ -42,7 +42,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'assets/himakom.svg',
+            'path' => 'assets/logo/himakom.svg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -345,9 +345,14 @@ return [
     */
     'custom' => [
         'logo' => [
-            'path' => 'assets/himakom.png',
+            'path' => 'assets/logo/himakom.png',
             'name' => 'Himakom',
             'alt' => 'Himakom Logo',
+        ],
+        'preview' => [
+            'path' => 'assets/concept-image-upload-landing-page/2941039.jpg',
+            'name' => 'Preview Image',
+            'alt' => 'Preview Image',
         ],
     ],    
 ];
