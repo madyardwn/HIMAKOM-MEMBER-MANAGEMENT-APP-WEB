@@ -69,7 +69,7 @@ class AuthWebRoleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:roles,name|max:50',
-            'permissions' => 'array',
+            'permissions' => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -96,6 +96,7 @@ class AuthWebRoleController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
+                'errors' => $e->getMessage(),
             ], 500);
         }
     }
@@ -115,7 +116,7 @@ class AuthWebRoleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:roles,name,' . $role->id . '|max:50',
-            'permissions' => 'array',
+            'permissions' => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -142,6 +143,7 @@ class AuthWebRoleController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
+                'errors' => $e->getMessage(),
             ], 500);
         }
     }

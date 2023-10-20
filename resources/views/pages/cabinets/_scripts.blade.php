@@ -6,13 +6,13 @@
     let editUrl, deleteUrl;
     let inputs = { add: [], edit: [], };
     let tomSelects = { add: [], edit: [], };
-    let subject = 'auth-web-roles'; // subject variable    
+    let subject = 'cabinets'; // subject variable    
     
-    editUrl = "{{ route('auth-web.roles.edit', ':id') }}"; // url for edit data
-    deleteUrl = "{{ route('auth-web.roles.destroy', ':id') }}"; // url for delete data
-    submitAddUrl = "{{ route('auth-web.roles.store') }}"; // url for submit add
-    submitEditUrl = "{{ route('auth-web.roles.update', ':id') }}"; // url for submit edit
-    tableDataUrl = "{{ route('auth-web.roles.index') }}"; // url get datatable
+    editUrl = "{{ route('periodes.cabinets.edit', ':id') }}"; // url for edit data
+    deleteUrl = "{{ route('periodes.cabinets.destroy', ':id') }}"; // url for delete data
+    submitAddUrl = "{{ route('periodes.cabinets.store') }}"; // url for submit add
+    submitEditUrl = "{{ route('periodes.cabinets.update', ':id') }}"; // url for submit edit
+    tableDataUrl = "{{ route('periodes.cabinets.index') }}"; // url get datatable
     tableColumns = [{ // datatable columns configuration
             title: 'No',
             data: null,
@@ -25,18 +25,30 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
-        { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%' },
         {
-            data: 'permissions',
-            name: 'permissions.name',
-            title: 'Permissions',
+            data: 'logo',
+            name: 'logo',
+            title: 'Logo',
             orderable: false,
+            searchable: false,
+            responsivePriority: 1,
+            width: '20%',
             render: function(data, type, row) {
-                let html = '';
-                data.forEach(function(item, index) {
-                    html +=`<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
-                });
-                return html;
+                return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
+            }
+        },
+        { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%' },
+        { data: 'description', name: 'description', title: 'Description', width: '20%' },
+        { data: 'visi', name: 'visi', title: 'Visi', width: '20%' },
+        { data: 'misi', name: 'misi', title: 'Misi', width: '20%' },
+        { data: 'year', name: 'year', title: 'Year', width: '20%' },
+        {
+            data: 'is_active',
+            name: 'is_active',
+            title: 'Status',
+            width: '20%',
+            render: function(data, type, row) {
+                return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
             }
         },
         {
@@ -47,7 +59,8 @@
             responsivePriority: 1,
             width: '1%',
             render: function(data, type, row) {
-                let html = `
+                let html = '';
+                html = `
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Action
@@ -58,7 +71,7 @@
                         </ul>
                     </div>
                 `;
-                return data.id == 1 ? '' : html;
+                return html;
             }
         },
     ];

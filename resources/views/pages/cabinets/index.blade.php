@@ -23,12 +23,12 @@
     <!-- Page body -->
     <div class="page-body">
         <div class="container">
-            <div class="card" id="card-auth-web-roles">
+            <div class="card" id="card-cabinets">
                 <div class="card-header p-2">
                     <div class="col-12 col-md-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                data-bs-target="#modal-add-auth-web-roles">
+                                data-bs-target="#modal-add-cabinets">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -39,7 +39,7 @@
                                 Add {{ ucwords($activeSubMenu) }}
                             </a>
                             <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                data-bs-target="#modal-add-auth-web-roles" aria-label="Create new report">
+                                data-bs-target="#modal-add-cabinets" aria-label="Create new report">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -52,16 +52,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="table-auth-web-roles" class="table table-bordered responsive w-100">
+                    <table id="table-cabinets" class="table table-bordered responsive w-100">
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    @include('pages.auth-web-roles._add')
-    @include('pages.auth-web-roles._edit')
+    @include('pages.cabinets._add')
+    @include('pages.cabinets._edit')
 @endsection
 
 @section('js')
-    @include('pages.auth-web-roles._scripts')
+    @include('pages.cabinets._scripts')
 @endsection

@@ -199,14 +199,14 @@ return [
             ],
         ],
         [
-            'text' => 'Cabinet',
+            'text' => 'Periodes',
             'icon' => 'ti ti-category-filled',
             'hasAnyPermission' => ['access-cabinets', 'access-filosofies', 'access-departments', 'access-programs', 'access-events'],
             'submenu' => [
                 [
                     'text' => 'Cabinet',
                     'icon' => 'ti ti-category-2',
-                    'url' => '#',
+                    'route' => 'periodes.cabinets.index',
                     'hasAnyPermission' => ['access-cabinets'],
                 ],
                 [
