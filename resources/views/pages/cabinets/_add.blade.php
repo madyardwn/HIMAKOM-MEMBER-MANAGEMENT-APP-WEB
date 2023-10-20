@@ -7,42 +7,40 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" id="form-add-cabinets">
-                    <div class="mb-3">
-                        <label class="form-label" for="add-name">Name</label>
-                        <input type="text" name="name" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="add-description">Description</label>
-                        <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="add-visi">Visi</label>
-                        <textarea name="visi" id="add-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="add-misi">Misi</label>
-                        <textarea name="misi" id="add-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="add-year">Year</label>
-                        <input type="text" name="year" id="add-year" class="form-control" placeholder="Enter year" autocomplete="off" required>
-                    </div>                    
-                    <div class="mb-3">
-                        <label class="form-label" for="add-logo">Logo</label>
-                        {{-- Preview : Image, Input have same category (logo) --}}
-                        <img src="{{ asset(config('tablar.custom.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.custom.preview.name') }}">
-                        <input type="file" name="logo" id="add-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
-                    </div>
-                    <div class="mb-3">
-                        <div class="divide-y">
-                            <div>
-                                <label class="row">
-                                    <span class="col">Active</span>
-                                    <span class="col-auto">
-                                        <label class="form-check form-check-single form-switch">
-                                            <input type="checkbox" name="is_active" class="form-check-input" checked="" id="add-is_active">
-                                        </label>
-                                    </span>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label" for="add-logo">Logo</label>
+                            <div class="mb-3">
+                                <img src="{{ asset(config('tablar.default.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.default.preview.name') }}">                                
+                            </div>
+                            <input type="file" name="logo" id="add-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="mb-3">
+                                <label class="form-label" for="add-name">Name</label>
+                                <input type="text" name="name" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-description">Description</label>
+                                <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-visi">Visi</label>
+                                <textarea name="visi" id="add-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-misi">Misi</label>
+                                <textarea name="misi" id="add-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-year">Year</label>
+                                <input type="text" name="year" id="add-year" class="form-control" placeholder="Enter year" autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-label" for="add-is_active">Status</div>
+                                <label class="form-check form-switch">
+                                <input type="checkbox" name="is_active" id="add-is_active" class="form-check-input">
+                                <span class="form-check-label">Active</span>
                                 </label>
                             </div>
                         </div>

@@ -10,6 +10,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CabinetController extends Controller
 {
+    // create variable and constructor for path photo
+    protected $path_logo;
+
+    public function __construct()
+    {
+        $this->path_logo = config('dirpath.cabinets.logo');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +32,7 @@ class CabinetController extends Controller
                 'is_active', 
                 'visi', 
                 'misi',
-                DB::raw("CONCAT('".asset('images/cabinets/')."/', logo) as logo")
+                DB::raw("CONCAT('".asset($this->path_logo)."/', logo) as logo")
             ]);
              
              return DataTables::of($data)
@@ -68,8 +76,8 @@ class CabinetController extends Controller
         try {
 
             $logo = $request->file('logo');
-            $logo_name = $request->name . '.' . $logo->extension();
-            $logo->move(public_path('images/cabinets'), $logo_name);
+            $logo_name = time() . '_' . $request->name . '.' . $logo->extension();
+            $logo->move(public_path($this->path_logo), $logo_name);
 
             $cabinet = Cabinet::create([
                 'logo' => $logo_name,
@@ -108,6 +116,9 @@ class CabinetController extends Controller
      */
     public function edit(Cabinet $cabinet)
     {
+        // map the logo path
+        $cabinet->logo = asset($this->path_logo) . '/' . $cabinet->logo;
+
         try {
             return response()->json([
                 'status' => 'success',
@@ -146,8 +157,8 @@ class CabinetController extends Controller
         try {
             if ($request->hasFile('logo')) {
                 $logo = $request->file('logo');
-                $logo_name = $request->name . '.' . $logo->extension();
-                $logo->move(public_path('images/cabinets'), $logo_name);
+                $logo_name = time() . '_' . $request->name . '.' . $logo->extension();
+                $logo->move(public_path($this->path_logo), $logo_name);
                 $cabinet->logo = $logo_name;
             }
 

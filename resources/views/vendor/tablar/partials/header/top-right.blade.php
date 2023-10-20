@@ -1,7 +1,7 @@
 <div class="nav-item dropdown">
     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
        aria-label="Open user menu">
-        <span class="avatar avatar-sm rounded-circle" style="background-image: url({{asset('assets/avatars/anonym.png')}})"></span>
+        <span class="avatar avatar-sm rounded-circle" style="background-image: url({{asset(config('tablar.default.male_avatar.path'))}})"></span>
         <div class="d-none d-lg-block px-2">
             <div>{{Auth()->user()->name}} ({{Auth()->user()->roles->first()->name}})</div>
             <div class="mt-1 small text-muted">{{Auth()->user()->email}}</div>

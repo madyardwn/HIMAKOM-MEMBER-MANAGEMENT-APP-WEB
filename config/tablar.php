@@ -343,16 +343,26 @@ return [
     | Here we can customize the admin panel.
     |
     */
-    'custom' => [
+    'default' => [
         'logo' => [
             'path' => 'assets/logo/himakom.png',
             'name' => 'Himakom',
             'alt' => 'Himakom Logo',
         ],
         'preview' => [
-            'path' => 'assets/concept-image-upload-landing-page/2941039.jpg',
+            'path' => 'assets/images/undraw_Upload_re_pasx.png',
             'name' => 'Preview Image',
             'alt' => 'Preview Image',
+        ],
+        'male_avatar' => [
+            'path' => 'assets/avatars/undraw_Pic_profile_re_7g2h.png',
+            'name' => 'Avatar',
+            'alt' => 'Avatar',
+        ],
+        'female_avatar' => [
+            'path' => 'assets/avatars/undraw_Female_avatar_efig.png',
+            'name' => 'Avatar',
+            'alt' => 'Avatar',
         ],
     ],    
 ];

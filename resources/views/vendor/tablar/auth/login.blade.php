@@ -4,7 +4,7 @@
     <div class="container container-tight py-4">
         <div class="text-center mb-1 mt-5">
             <a href="" class="navbar-brand navbar-brand-autodark">
-                <img src="{{asset(config('tablar.custom.logo.path'))}}" height="36"
+                <img src="{{asset(config('tablar.default.logo.path'))}}" height="36"
                      alt="" class="bg-white rounded-circle">
             </a>
         </div>

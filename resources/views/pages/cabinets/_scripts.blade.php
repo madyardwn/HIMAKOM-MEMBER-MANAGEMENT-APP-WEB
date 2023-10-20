@@ -243,7 +243,7 @@
 
             // restore preview image
             $(`#form-add-${subject} input[type="file"]`).each(function() {
-                $(`#preview-add-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.custom.preview.path')) }}');
+                $(`#preview-add-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.default.preview.path')) }}');
             });
             $(`#form-add-${subject}`)[0].reset(); // reset form
             tomSelects.add.forEach(function(item, index) { // clear tom select
@@ -256,7 +256,7 @@
             $('.invalid-feedback').remove();
 
             $(`#form-edit-${subject} input[type="file"]`).each(function() { // restore preview image
-                $(`#preview-edit-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.custom.preview.path')) }}');
+                $(`#preview-edit-${$(this).attr('name')}`).attr('src', '{{ asset(config('tablar.default.preview.path')) }}');
             });
             $(`#form-edit-${subject}`)[0].reset(); // reset form
             tomSelects.edit.forEach(function(item, index) { // clear tom select
@@ -548,7 +548,7 @@
     function handleInputTypeEdit(item, response) {
         switch (item.element.prop('type')) {            
             case 'file':
-                const file = response.data[item.name] ? `{{ asset('images/cabinets') }}/${response.data[item.name]}` : `{{ asset(config('tablar.custom.preview.path')) }}`;                
+                const file = response.data[item.name] ? response.data[item.name] : `{{ asset(config('tablar.default.preview.path')) }}`;                
                 $(`#preview-edit-${item.name}`).attr('src', file);
                 break;
             case 'checkbox':

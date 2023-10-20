@@ -10,7 +10,7 @@
     @yield('meta_tags')
 
     {{-- Tablar CSS --}}
-    <link rel="icon" href="{{asset(config('tablar.custom.logo.path'))}}" type="image/x-icon"/>
+    <link rel="icon" href="{{asset(config('tablar.default.logo.path'))}}" type="image/x-icon"/>
 
     {{-- Title --}}
     <title>
