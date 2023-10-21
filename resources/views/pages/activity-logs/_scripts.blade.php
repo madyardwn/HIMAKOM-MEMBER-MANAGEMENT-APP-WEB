@@ -25,6 +25,7 @@
             }
         },
         { title: 'Log Name', data: 'log_name', name: 'log_name', responsivePriority: 2, width: '5%' },
+        { title: 'Causer', data: 'causer.name', name: 'causer.name', responsivePriority: 2, width: '5%' },        
         { title: 'Description', data: 'description', name: 'description', responsivePriority: 2, width: '5%' },
         {
             data: 'properties',
