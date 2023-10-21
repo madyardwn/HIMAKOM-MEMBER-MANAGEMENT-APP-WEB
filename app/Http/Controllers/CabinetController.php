@@ -32,7 +32,7 @@ class CabinetController extends Controller
                 'is_active', 
                 'visi', 
                 'misi',
-                DB::raw("CONCAT('" . asset('storage/' . $this->path_logo_cabinets) . "/', logo) as logo"),
+                'logo'
             ]);
              
              return DataTables::of($data)
@@ -117,9 +117,6 @@ class CabinetController extends Controller
     public function edit(Cabinet $cabinet)
     {
         try {
-            // map the logo path
-            $cabinet->logo = asset('storage/' . $this->path_logo_cabinets) . '/' . $cabinet->logo;
-
             return response()->json([
                 'status' => 'success',
                 'data' => $cabinet,

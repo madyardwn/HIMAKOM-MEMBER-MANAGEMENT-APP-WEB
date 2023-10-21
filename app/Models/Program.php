@@ -9,12 +9,35 @@ class Program extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are logged.
+     *
+     */
+    
+     /**
+     * The attributes where the logo is stored.
+     * 
+    */
+    
+    /**
+     * The attributes that are mass assignable.
+     * 
+    */
     protected $fillable = [
         'name',
         'description',
         'department_id',
         'user_id',
     ];
+    
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS 
+    |--------------------------------------------------------------------------
+    |
+    | Here are the relations this model has with other models
+    |
+    */
 
     public function department()
     {

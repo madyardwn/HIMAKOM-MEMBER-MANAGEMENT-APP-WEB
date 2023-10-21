@@ -18,7 +18,6 @@ class User extends Authenticatable
     /**
      * The attributes that are logged.
      *
-     * @var array<int, string>
      */
     public function getActivitylogOptions(): LogOptions
     {
@@ -34,7 +33,6 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -51,7 +49,6 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -61,12 +58,21 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS 
+    |--------------------------------------------------------------------------
+    |
+    | Here are the relations this model has with other models
+    |
+    */
 
     public function cabinets()
     {

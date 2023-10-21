@@ -14,7 +14,6 @@ class Cabinet extends Model
     /**
      * The attributes that are logged.
      *
-     * @var array<int, string>
      */
     public function getActivitylogOptions(): LogOptions
     {
@@ -27,6 +26,10 @@ class Cabinet extends Model
             });
     }
 
+    /**
+     * The attributes that are mass assignable.
+     * 
+     */
     protected $fillable = [
         'name',
         'description',
@@ -37,6 +40,26 @@ class Cabinet extends Model
         'misi',        
     ];
 
+    /**
+     * The attributes where the logo is stored.
+     * 
+     */    
+    public function getLogoAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value);
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS 
+    |--------------------------------------------------------------------------
+    |
+    | Here are the relations this model has with other models
+    |
+    */
+    
     public function filosofies()
     {
         return $this->hasMany(Filosofie::class);

@@ -199,7 +199,7 @@ return [
                 [
                     'text' => 'Department',
                     'icon' => 'ti ti-building-bank',
-                    'url' => '#',
+                    'route' => 'periodes.departments.index',
                     'hasAnyPermission' => ['access-departments'],
                 ],
                 [

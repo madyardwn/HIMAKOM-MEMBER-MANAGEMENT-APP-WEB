@@ -4,15 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class DepartmentController extends Controller
 {
+    protected $path_logo_departments;
+
+    public function __construct()
+    {
+        $this->path_logo_departments = config('dirpath.departments.logo'); // departments/logos
+    }
+    
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Department::select([
+                'id',
+                'name', 
+                'short_name', 
+                'description', 
+                'is_active', 
+                'logo',
+            ]);
+
+            return DataTables::of($data)->make(true);
+        }
+
+        return view('pages.departments.index');
     }
 
     /**
@@ -28,7 +51,48 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:departments,name|max:50',
+            'short_name' => 'required|unique:departments,short_name|max:10',
+            'description' => 'required|max:255',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error!',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+
+            $logo = $request->file('logo');
+            $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
+            $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
+
+            $department = Department::create([
+                'name' => $request->name,
+                'short_name' => $request->short_name,
+                'description' => $request->description,
+                'logo' => $logo_name,
+                'is_active' => $request->is_active,            
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Department created successfully!',
+                'data' => $department,
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',                
+            ], 500);
+        }
     }
 
     /**
@@ -44,7 +108,18 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        try {
+            return response()->json([
+                'status' => 'success',
+                'data' => $department,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',                
+            ], 500);
+        }
     }
 
     /**
@@ -52,7 +127,53 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:departments,name,' . $department->id . '|max:50',
+            'short_name' => 'required|unique:departments,short_name,' . $department->id . '|max:10',
+            'description' => 'required|max:255',
+            'is_active' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error!',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            if ($request->hasFile('logo')) {
+
+                if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {                          
+                    logFile($this->path_logo_departments, $department->logo, 'UPDATED');
+                }
+
+                $logo = $request->file('logo');
+                $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
+                $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
+                $department->logo = $logo_name;
+            }
+
+            $department->update([
+                'name' => $request->name,
+                'short_name' => $request->short_name,
+                'description' => $request->description,
+                'is_active' => $request->is_active,                    
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Department updated successfully!',
+                'data' => $department,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',           
+            ], 500);
+        }
     }
 
     /**
@@ -60,6 +181,23 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        try {
+            if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {                          
+                logFile($this->path_logo_departments, $department->logo, 'DELETED');
+            }
+
+            $department->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Department deleted successfully!',
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',                
+            ], 500);
+        }
     }
 }

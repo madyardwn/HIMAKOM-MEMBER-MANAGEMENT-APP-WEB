@@ -8,7 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Periode extends Model
 {
     use HasFactory;
+    
+    /**
+     * The attributes that are logged.
+     *
+     */
 
+     /**
+     * The attributes where the logo is stored.
+     * 
+    */
+    
+    /**
+     * The attributes that are mass assignable.
+     * 
+    */
     protected $fillable = [
         'user_id',
         'department_id',
@@ -16,6 +30,15 @@ class Periode extends Model
         'position',
         'is_active',        
     ];
+    
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS 
+    |--------------------------------------------------------------------------
+    |
+    | Here are the relations this model has with other models
+    |
+    */
 
     public function cabinet()
     {

@@ -57,6 +57,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cabinets/{cabinet}/edit', [\App\Http\Controllers\CabinetController::class, 'edit'])->name('cabinets.edit');
         Route::put('/cabinets/{cabinet}/update', [\App\Http\Controllers\CabinetController::class, 'update'])->name('cabinets.update');
         Route::delete('/cabinets/{cabinet}/destroy', [\App\Http\Controllers\CabinetController::class, 'destroy'])->name('cabinets.destroy');
+
+        // Departments
+        Route::get('/departments', [\App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index');
+        Route::post('/departments/store', [\App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store');
+        Route::get('/departments/{department}/edit', [\App\Http\Controllers\DepartmentController::class, 'edit'])->name('departments.edit');
+        Route::put('/departments/{department}/update', [\App\Http\Controllers\DepartmentController::class, 'update'])->name('departments.update');
+        Route::delete('/departments/{department}/destroy', [\App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');        
     });
 
     // route logs
