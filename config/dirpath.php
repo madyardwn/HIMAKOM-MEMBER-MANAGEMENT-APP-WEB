@@ -2,6 +2,6 @@
 
 return [
     'cabinets' => [
-        'logo' => 'images/cabinets',
+        'logo' => 'cabinets/logos',
     ],
 ];

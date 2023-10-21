@@ -10,12 +10,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CabinetController extends Controller
 {
-    // create variable and constructor for path photo
-    protected $path_logo;
+    protected $path_logo_cabinets;
 
     public function __construct()
     {
-        $this->path_logo = config('dirpath.cabinets.logo');
+        $this->path_logo_cabinets = config('dirpath.cabinets.logo'); // cabinets/logos
     }
 
     /**
@@ -25,14 +24,14 @@ class CabinetController extends Controller
      {
          if ($request->ajax()) {
             $data = Cabinet::select([
-                'id', 
+                'id',
                 'name', 
                 'description', 
                 'year', 
                 'is_active', 
                 'visi', 
                 'misi',
-                DB::raw("CONCAT('".asset($this->path_logo)."/', logo) as logo")
+                DB::raw("CONCAT('" . asset('storage/' . $this->path_logo_cabinets) . "/', logo) as logo"),
             ]);
              
              return DataTables::of($data)
@@ -76,8 +75,8 @@ class CabinetController extends Controller
         try {
 
             $logo = $request->file('logo');
-            $logo_name = time() . '_' . $request->name . '.' . $logo->extension();
-            $logo->move(public_path($this->path_logo), $logo_name);
+            $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
+            $logo->storeAs($this->path_logo_cabinets, $logo_name, 'public');
 
             $cabinet = Cabinet::create([
                 'logo' => $logo_name,
@@ -117,7 +116,7 @@ class CabinetController extends Controller
     public function edit(Cabinet $cabinet)
     {
         // map the logo path
-        $cabinet->logo = asset($this->path_logo) . '/' . $cabinet->logo;
+        $cabinet->logo = asset('storage/' . $this->path_logo_cabinets) . '/' . $cabinet->logo;
 
         try {
             return response()->json([
@@ -128,6 +127,7 @@ class CabinetController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -156,9 +156,14 @@ class CabinetController extends Controller
 
         try {
             if ($request->hasFile('logo')) {
+
+                if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {                          
+                    logFile($this->path_logo_cabinets, $cabinet->logo, 'UPDATED');
+                }
+
                 $logo = $request->file('logo');
-                $logo_name = time() . '_' . $request->name . '.' . $logo->extension();
-                $logo->move(public_path($this->path_logo), $logo_name);
+                $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
+                $logo->storeAs($this->path_logo_cabinets, $logo_name, 'public');
                 $cabinet->logo = $logo_name;
             }
 
@@ -180,6 +185,7 @@ class CabinetController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -190,6 +196,9 @@ class CabinetController extends Controller
     public function destroy(Cabinet $cabinet)
     {
         try {
+            if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {                          
+                logFile($this->path_logo_cabinets, $cabinet->logo, 'DELETED');
+            }
             $cabinet->delete();
 
             return response()->json([
