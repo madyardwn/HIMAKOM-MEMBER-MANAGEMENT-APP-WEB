@@ -3,12 +3,12 @@
 @section('css')
 <style>
     iframe {
-        width: 100%; /* Menggunakan lebar viewport (viewport width) untuk mengisi seluruh lebar layar */
-        height: 100vh; /* Menggunakan tinggi viewport (viewport height) untuk mengisi seluruh tinggi layar */
-        transform: scale(0.8); /* Mengatur faktor zoom 0.8 (80% dari ukuran asli) */
-        transform-origin: 0 0; /* Mengatur titik asal transformasi ke sudut kiri atas */
-        position: absolute; /* Menempatkan iframe di luar aliran dokumen */
-        overflow: hidden; /* Menghapus scroll */
+        width: 100%;
+        height: 100vh;
+        transform: scale(0.8);
+        transform-origin: 0 0;
+        position: absolute;
+        overflow: hidden;
     } 
 </style>
 @endsection
