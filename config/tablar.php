@@ -364,5 +364,10 @@ return [
             'name' => 'Avatar',
             'alt' => 'Avatar',
         ],
+        'error' => [
+            'path' => 'assets/errors/undraw_void_3ggu.png',
+            'name' => 'Error Image',
+            'alt' => 'Error Image',
+        ],
     ],    
 ];
