@@ -24,13 +24,12 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
-        { title: 'Log Name', data: 'log_name', name: 'log_name', responsivePriority: 2, width: '10%' },
-        { title: 'Description', data: 'description', name: 'description', responsivePriority: 2, width: '10%' },
+        { title: 'Log Name', data: 'log_name', name: 'log_name', responsivePriority: 2, width: '5%' },
+        { title: 'Description', data: 'description', name: 'description', responsivePriority: 2, width: '5%' },
         {
             data: 'properties',
             name: 'properties',
             title: 'Properties',
-            width: '20%',
             responsivePriority: 4,
             render: (data) => {
                 return `<pre class="mb-0">${JSON.stringify(data, null, 2)}</pre>`;

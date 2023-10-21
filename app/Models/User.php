@@ -23,7 +23,12 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'nim', 'npa', 'nama_bagus', 'picture', 'year', 'device_token']);
+            ->logOnly(['name', 'email', 'nim', 'npa', 'nama_bagus', 'picture', 'year', 'device_token'])
+            ->logOnlyDirty()
+            ->useLogName('User')
+            ->setDescriptionForEvent(function (string $eventName) {
+                return "{$this->name} has been {$eventName}";
+            });
     }
 
     /**
