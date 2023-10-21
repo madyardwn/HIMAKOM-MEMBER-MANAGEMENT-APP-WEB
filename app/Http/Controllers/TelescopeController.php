@@ -9,7 +9,7 @@ class TelescopeController extends Controller
 {
     public function index(Request $request)
     {        
-        return view('pages.logs.telescope.index');
+        return view('pages.telescope.index');
     }
 }
 

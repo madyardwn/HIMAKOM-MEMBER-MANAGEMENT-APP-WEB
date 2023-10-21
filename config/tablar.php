@@ -180,25 +180,6 @@ return [
             ],
         ],
         [
-            'text' => 'Auth API\'s (Soon)',
-            'icon' => 'ti ti-lock',
-            'hasAnyPermission' => ['access-auth-api-permissions', 'access-auth-api-roles'],
-            'submenu' => [
-                [
-                    'text' => 'Permission',
-                    'icon' => 'ti ti-square-key',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-auth-api-permissions'],
-                ],
-                [
-                    'text' => 'Role',
-                    'icon' => 'ti ti-key',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-auth-api-roles'],
-                ],
-            ],
-        ],
-        [
             'text' => 'Periodes',
             'icon' => 'ti ti-category-filled',
             'hasAnyPermission' => ['access-cabinets', 'access-filosofies', 'access-departments', 'access-programs', 'access-events'],
@@ -233,6 +214,25 @@ return [
                     'url' => '#',
                     'hasAnyPermission' => ['access-events'],
                 ]
+            ],
+        ],
+        [
+            'text' => 'Logs',
+            'icon' => 'ti ti-file',
+            'hasAnyPermission' => ['access-activity-logs', 'access-telescope'],
+            'submenu' => [
+                [
+                    'text' => 'Activity Log',
+                    'icon' => 'ti ti-file-text',
+                    'route' => 'logs.activity-logs.index',
+                    'hasAnyPermission' => ['access-activity-logs'],
+                ],
+                [
+                    'text' => 'Telescope',
+                    'icon' => 'ti ti-telescope',
+                    'route' => 'logs.telescope.index',
+                    'hasAnyPermission' => ['access-telescope'],
+                ],
             ],
         ],
         [
@@ -273,21 +273,21 @@ return [
             ],
         ],
         [
-            'text' => 'Logs (Soon)',
-            'icon' => 'ti ti-file',
-            'hasAnyPermission' => ['access-activity-logs', 'access-telescope'],
+            'text' => 'Auth API\'s (Soon)',
+            'icon' => 'ti ti-lock',
+            'hasAnyPermission' => ['access-auth-api-permissions', 'access-auth-api-roles'],
             'submenu' => [
                 [
-                    'text' => 'Activity Log',
-                    'icon' => 'ti ti-file-text',
+                    'text' => 'Permission',
+                    'icon' => 'ti ti-square-key',
                     'url' => '#',
-                    'hasAnyPermission' => ['access-activity-logs'],
+                    'hasAnyPermission' => ['access-auth-api-permissions'],
                 ],
                 [
-                    'text' => 'Telescope',
-                    'icon' => 'ti ti-telescope',
-                    'route' => 'logs.telescope.index',
-                    'hasAnyPermission' => ['access-telescope'],
+                    'text' => 'Role',
+                    'icon' => 'ti ti-key',
+                    'url' => '#',
+                    'hasAnyPermission' => ['access-auth-api-roles'],
                 ],
             ],
         ],

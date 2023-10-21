@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // route logs
     Route::group(['prefix' => 'logs', 'as' => 'logs.'], function () {
+        // Activity Logs
+        Route::get('/activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity-logs.index');
         // Telescope
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index');
     });
