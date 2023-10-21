@@ -39,7 +39,7 @@ class DefaultPermissionsSeeder extends Seeder
             'videos',
             'documents',
             'activity-logs',
-            'error-logs',
+            'telescope',
             'cv-himakom'
         ];
 

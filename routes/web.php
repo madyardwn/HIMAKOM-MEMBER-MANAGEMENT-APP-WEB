@@ -58,6 +58,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/cabinets/{cabinet}/update', [\App\Http\Controllers\CabinetController::class, 'update'])->name('cabinets.update');
         Route::delete('/cabinets/{cabinet}/destroy', [\App\Http\Controllers\CabinetController::class, 'destroy'])->name('cabinets.destroy');
     });
+
+    // route logs
+    Route::group(['prefix' => 'logs', 'as' => 'logs.'], function () {
+        // Telescope
+        Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index');
+    });
     
     // tom-select
     Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions');

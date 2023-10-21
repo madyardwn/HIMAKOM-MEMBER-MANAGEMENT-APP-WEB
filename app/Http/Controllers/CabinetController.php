@@ -115,10 +115,10 @@ class CabinetController extends Controller
      */
     public function edit(Cabinet $cabinet)
     {
-        // map the logo path
-        $cabinet->logo = asset('storage/' . $this->path_logo_cabinets) . '/' . $cabinet->logo;
-
         try {
+            // map the logo path
+            $cabinet->logo = asset('storage/' . $this->path_logo_cabinets) . '/' . $cabinet->logo;
+
             return response()->json([
                 'status' => 'success',
                 'data' => $cabinet,

@@ -275,7 +275,7 @@ return [
         [
             'text' => 'Logs (Soon)',
             'icon' => 'ti ti-file',
-            'hasAnyPermission' => ['access-activity-logs', 'access-error-logs'],
+            'hasAnyPermission' => ['access-activity-logs', 'access-telescope'],
             'submenu' => [
                 [
                     'text' => 'Activity Log',
@@ -284,10 +284,10 @@ return [
                     'hasAnyPermission' => ['access-activity-logs'],
                 ],
                 [
-                    'text' => 'Error Log',
-                    'icon' => 'ti ti-file-text',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-error-logs'],
+                    'text' => 'Telescope',
+                    'icon' => 'ti ti-telescope',
+                    'route' => 'logs.telescope.index',
+                    'hasAnyPermission' => ['access-telescope'],
                 ],
             ],
         ],
