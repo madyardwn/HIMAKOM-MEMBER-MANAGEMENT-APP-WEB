@@ -21,7 +21,10 @@ class Cabinet extends Model
         return LogOptions::defaults()
             ->logOnly(['name', 'logo', 'year', 'is_active', 'visi', 'misi'])
             ->logOnlyDirty()
-            ->useLogName('Cabinet');
+            ->useLogName('Cabinet')
+            ->setDescriptionForEvent(function (string $eventName) {
+                return "{$this->name} has been {$eventName}";
+            });
     }
 
     protected $fillable = [

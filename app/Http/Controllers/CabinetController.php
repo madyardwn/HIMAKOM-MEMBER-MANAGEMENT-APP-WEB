@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cabinet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -94,6 +95,7 @@ class CabinetController extends Controller
                 'data' => $cabinet,
             ], 201);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',                
@@ -123,6 +125,7 @@ class CabinetController extends Controller
                 'data' => $cabinet,
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',                
@@ -180,9 +183,10 @@ class CabinetController extends Controller
                 'data' => $cabinet,
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',           
             ], 500);
         }
     }
@@ -203,6 +207,7 @@ class CabinetController extends Controller
                 'message' => 'Cabinet deleted successfully!',
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',

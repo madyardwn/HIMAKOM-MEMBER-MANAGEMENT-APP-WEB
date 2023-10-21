@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -47,6 +48,7 @@ class AuthWebRoleController extends Controller
                 'data' => $role,
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
@@ -93,10 +95,10 @@ class AuthWebRoleController extends Controller
                 'data' => $role,
             ], 201);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
-                'errors' => $e->getMessage(),
             ], 500);
         }
     }
@@ -140,10 +142,10 @@ class AuthWebRoleController extends Controller
                 'data' => $role,
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',
-                'errors' => $e->getMessage(),
             ], 500);
         }
     }
@@ -161,6 +163,7 @@ class AuthWebRoleController extends Controller
                 'message' => 'Role deleted successfully!',
             ], 200);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong!',

@@ -16,16 +16,17 @@ class ActivityLogController extends Controller
     public function index(Request $request)
      {
          if ($request->ajax()) {
-            $data = Activity::with('causer')
+            $data = Activity::with('causer:id,name')
                 ->select([
                     'id',
                     'log_name',
-                    'event',
+                    'description',
                     'causer_id',
                     'causer_type',
                     'properties',
                     'created_at',
-                ]);
+                ])
+                ->orderBy('created_at', 'desc');
              
              return DataTables::of($data)
                 ->make(true);
