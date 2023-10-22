@@ -54,31 +54,4 @@ class TomSelectController extends Controller
 
         return response()->json($departments);
     }
-
-    public function eventTypes(Request $request)
-    {
-        // $eventTypes = [
-        //     ['id' => 1, 'name' => 'kegiatan'],
-        //     ['id' => 2, 'name' => 'proker'],
-        //     ['id' => 3, 'name' => 'lomba'],
-        //     ['id' => 4, 'name' => 'project'],
-        // ];
-
-        foreach (Event::EVENT_TYPE as $key => $value) {
-            $eventTypes[] = [
-                'id' => $key,
-                'name' => $value,
-            ];
-        }
-
-        // search object by name
-        $eventTypes = array_filter($eventTypes, function ($item) use ($request) {
-            if (strpos(strtolower($item['name']), strtolower($request->q)) !== false) {
-                return true;
-            }
-            return false;
-        });
-
-        return response()->json($eventTypes);
-    }
 }

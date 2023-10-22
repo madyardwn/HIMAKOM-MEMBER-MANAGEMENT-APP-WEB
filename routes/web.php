@@ -99,6 +99,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions');
     Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets');
     Route::get('/tom-select/departments', [\App\Http\Controllers\TomSelectController::class, 'departments'])->name('tom-select.departments');
-    Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');
-    Route::get('/tom-select/event-types', [\App\Http\Controllers\TomSelectController::class, 'eventTypes'])->name('tom-select.event-types');
+    Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');    
 });

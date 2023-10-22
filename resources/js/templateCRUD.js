@@ -99,89 +99,155 @@ class TemplateCRUD {
     initEvents() {
         const self = this;
         this.tomSelects.add.forEach(function(item, index) {
-            item.variable = new TomSelect(item.element, {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                placeholder: `Select ${item.name}`,
-                plugins: {
-                    remove_button: {
-                        title: 'Remove this item',
-                    }
-                },
-                load: function(query, callback) {
-                    if (!query.length) return callback();
-                    $.ajax({
-                        url: item.url,
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {
-                            q: query,
-                        },
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res);
+            const options = item.element.find('option');
+            if (options.length) {
+                item.variable = new TomSelect(item.element, {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    placeholder: `Select ${item.name}`,
+                    options: options.map(function() {
+                        return {
+                            id: $(this).val(),
+                            name: $(this).text(),
                         }
-                    });
-                },
-                render: {
-                    option: function(item, escape) {                    
-                        return `<div>
-                                    <span class="title">${escape(item.name)}</span>
-                                </div>`;
+                    }),
+                    plugins: {
+                        remove_button: {
+                            title: 'Remove this item',
+                        }
                     },
-                    item: function(item, escape) {                    
-                        return `<div>
-                                    ${escape(item.name)}
-                                </div>`;
-                    }
-                },
-            });
+                    render: {
+                        option: function(item, escape) {                    
+                            return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                        },
+                        item: function(item, escape) {                    
+                            return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                        }
+                    },
+                });
+            }else {
+                item.variable = new TomSelect(item.element, {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    placeholder: `Select ${item.name}`,
+                    plugins: {
+                        remove_button: {
+                            title: 'Remove this item',
+                        }
+                    },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: item.url,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                q: query,
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                callback(res);
+                            }
+                        });
+                    },
+                    render: {
+                        option: function(item, escape) {                    
+                            return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                        },
+                        item: function(item, escape) {                    
+                            return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                        }
+                    },
+                });
+            }
         });
 
         this.tomSelects.edit.forEach(function(item, index) {
-            item.variable = new TomSelect(item.element, {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                placeholder: `Select ${item.name}`,
-                plugins: {
-                    remove_button: {
-                        title: 'Remove this item',
-                    }
-                },
-                load: function(query, callback) {
-                    if (!query.length) return callback();
-                    $.ajax({
-                        url: item.url,
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {
-                            q: query,
-                        },
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res);
+            const options = item.element.find('option');
+            if (options.length) {
+                item.variable = new TomSelect(item.element, {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    placeholder: `Select ${item.name}`,
+                    options: options.map(function() {
+                        return {
+                            id: $(this).val(),
+                            name: $(this).text(),
                         }
-                    });
-                },
-                render: {
-                    option: function(item, escape) {                    
-                        return `<div>
-                                    <span class="title">${escape(item.name)}</span>
-                                </div>`;
+                    }),
+                    plugins: {
+                        remove_button: {
+                            title: 'Remove this item',
+                        }
                     },
-                    item: function(item, escape) {                    
-                        return `<div>
-                                    ${escape(item.name)}
-                                </div>`;
-                    }
-                },
-            });
+                    render: {
+                        option: function(item, escape) {                    
+                            return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                        },
+                        item: function(item, escape) {                    
+                            return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                        }
+                    },
+                });
+            }else {
+                item.variable = new TomSelect(item.element, {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    placeholder: `Select ${item.name}`,
+                    plugins: {
+                        remove_button: {
+                            title: 'Remove this item',
+                        }
+                    },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: item.url,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                q: query,
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                callback(res);
+                            }
+                        });
+                    },
+                    render: {
+                        option: function(item, escape) {                    
+                            return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                        },
+                        item: function(item, escape) {                    
+                            return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                        }
+                    },
+                });
+            }
         });
 
         
@@ -533,7 +599,6 @@ class TemplateCRUD {
                 return item.id;
             }));
         } else { // single select
-            console.log(response.data);
             item.variable.addOption(response.data[item.name]);
             item.variable.setValue(response.data[item.name].id);
         }

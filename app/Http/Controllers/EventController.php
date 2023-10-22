@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,12 +31,31 @@ class EventController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Event::select('*');
+            
+            $typeExpression = 'CASE type ';
+            foreach (Event::EVENT_TYPE as $key => $value) {
+                $typeExpression .= 'WHEN ' . $key . ' THEN "' . $value . '" ';
+            }
+            $typeExpression .= 'END as type';
+
+            $data = Event::select([
+                'id',
+                'name',
+                'description',
+                'location',
+                'poster',
+                'date',
+                'time',
+                DB::raw($typeExpression),
+                'is_active',
+            ]);
 
             return DataTables::of($data)->make();
         }
 
-        return view('pages.events.index');
+        return view('pages.events.index', [
+            'events' => Event::EVENT_TYPE,
+        ]);
     }
 
     /**
@@ -58,7 +78,7 @@ class EventController extends Controller
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date',
             'time' => 'required',
-            'type' => 'required',
+            'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
         ]);
 
         if ($validator->fails()) {
@@ -112,10 +132,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $event_type = Event::EVENT_TYPE[$event->type];
+        $type_name = Event::EVENT_TYPE[$event->type];
         $event->type = [
             'id' => $event->type,
-            'name' => $event_type,
+            'name' => $type_name,
         ];
 
         try {

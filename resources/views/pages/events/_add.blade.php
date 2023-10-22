@@ -40,7 +40,10 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="add-type">type</label>
-                                        <select name="type" id="add-type" required data-url="{{ route('tom-select.event-types')}}">
+                                        <select name="type" id="add-type" required>
+                                            @foreach ($events as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
