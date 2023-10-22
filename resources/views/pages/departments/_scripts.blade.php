@@ -31,20 +31,20 @@
             title: 'Logo',
             orderable: false,
             searchable: false,
-            responsivePriority: 1,
-            width: '20%',
+            responsivePriority: 2,
+            width: '10%',
             render: function(data, type, row) {
                 return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
             }
         },
-        { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%' },
+        { data: 'name', name: 'name', title: 'Name', responsivePriority: 3, width: '10%' },
         { data: 'short_name', name: 'short_name', title: 'Short Name', responsivePriority: 1, width: '10%' },
         { data: 'description', name: 'description', title: 'Description' },
         {
             data: 'is_active',
             name: 'is_active',
             title: 'Status',
-            width: '20%',
+            width: '5%',
             render: function(data, type, row) {
                 return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
             }
