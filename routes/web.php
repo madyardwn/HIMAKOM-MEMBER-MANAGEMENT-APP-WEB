@@ -78,6 +78,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/programs/{program}/edit', [\App\Http\Controllers\ProgramController::class, 'edit'])->name('programs.edit');
         Route::put('/programs/{program}/update', [\App\Http\Controllers\ProgramController::class, 'update'])->name('programs.update');
         Route::delete('/programs/{program}/destroy', [\App\Http\Controllers\ProgramController::class, 'destroy'])->name('programs.destroy');
+
+        // Events
+        Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events.index');
+        Route::post('/events/store', [\App\Http\Controllers\EventController::class, 'store'])->name('events.store');
+        Route::get('/events/{event}/edit', [\App\Http\Controllers\EventController::class, 'edit'])->name('events.edit');
+        Route::put('/events/{event}/update', [\App\Http\Controllers\EventController::class, 'update'])->name('events.update');
+        Route::delete('/events/{event}/destroy', [\App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy');
     });
 
     // route logs
@@ -93,4 +100,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets');
     Route::get('/tom-select/departments', [\App\Http\Controllers\TomSelectController::class, 'departments'])->name('tom-select.departments');
     Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');
+    Route::get('/tom-select/event-types', [\App\Http\Controllers\TomSelectController::class, 'eventTypes'])->name('tom-select.event-types');
 });

@@ -13,4 +13,7 @@ return [
     'departments' => [
         'logo' => 'departments/logos',
     ],
+    'events' => [
+        'posters' => 'events/posters',
+    ],
 ];

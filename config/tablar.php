@@ -211,7 +211,7 @@ return [
                 [
                     'text' => 'Event',
                     'icon' => 'ti ti-calendar-event',
-                    'url' => '#',
+                    'route' => 'periodes.events.index',
                     'hasAnyPermission' => ['access-events'],
                 ]
             ],

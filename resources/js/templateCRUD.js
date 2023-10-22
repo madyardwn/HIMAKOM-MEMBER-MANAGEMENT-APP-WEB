@@ -69,6 +69,7 @@ class TemplateCRUD {
                 name: $(this).attr('name'),
                 element: $(this),
                 value: $(this).val(),
+                variable: null,
             });
 
             if ($(this).is('select')) {
@@ -478,6 +479,8 @@ class TemplateCRUD {
         });
     }
 
+
+
     handleInputType(item, formData) {
         switch (item.element.prop('type')) {
             case 'file':
@@ -509,6 +512,8 @@ class TemplateCRUD {
         }
     }
 
+
+    
     handleTomSelectType(item, formData) {
         const values = item.variable.getValue();
         if (typeof values === 'string') { // single select
@@ -528,6 +533,7 @@ class TemplateCRUD {
                 return item.id;
             }));
         } else { // single select
+            console.log(response.data);
             item.variable.addOption(response.data[item.name]);
             item.variable.setValue(response.data[item.name].id);
         }
