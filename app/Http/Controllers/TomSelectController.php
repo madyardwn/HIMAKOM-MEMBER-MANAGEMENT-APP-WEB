@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cabinet;
+use App\Models\Department;
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TomSelectController extends Controller
@@ -28,5 +30,27 @@ class TomSelectController extends Controller
             ->where('name', 'LIKE', "%{$request->q}%")->get();
 
         return response()->json($cabinets);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function users(Request $request)
+    {
+        $users = User::select('id', 'name')
+            ->where('name', 'LIKE', "%{$request->q}%")->get();
+
+        return response()->json($users);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function departments(Request $request)
+    {
+        $departments = Department::select('id', 'name')
+            ->where('name', 'LIKE', "%{$request->q}%")->get();
+
+        return response()->json($departments);
     }
 }

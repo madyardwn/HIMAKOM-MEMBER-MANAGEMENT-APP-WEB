@@ -205,7 +205,7 @@ return [
                 [
                     'text' => 'Program',
                     'icon' => 'ti ti-file-check',
-                    'url' => '#',
+                    'route' => 'periodes.programs.index',
                     'hasAnyPermission' => ['access-programs'],
                 ],
                 [

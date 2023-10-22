@@ -71,6 +71,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/departments/{department}/edit', [\App\Http\Controllers\DepartmentController::class, 'edit'])->name('departments.edit');
         Route::put('/departments/{department}/update', [\App\Http\Controllers\DepartmentController::class, 'update'])->name('departments.update');
         Route::delete('/departments/{department}/destroy', [\App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');        
+
+        // Programs
+        Route::get('/programs', [\App\Http\Controllers\ProgramController::class, 'index'])->name('programs.index');
+        Route::post('/programs/store', [\App\Http\Controllers\ProgramController::class, 'store'])->name('programs.store');
+        Route::get('/programs/{program}/edit', [\App\Http\Controllers\ProgramController::class, 'edit'])->name('programs.edit');
+        Route::put('/programs/{program}/update', [\App\Http\Controllers\ProgramController::class, 'update'])->name('programs.update');
+        Route::delete('/programs/{program}/destroy', [\App\Http\Controllers\ProgramController::class, 'destroy'])->name('programs.destroy');
     });
 
     // route logs
@@ -84,4 +91,6 @@ Route::group(['middleware' => ['auth']], function () {
     // tom-select
     Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions');
     Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets');
+    Route::get('/tom-select/departments', [\App\Http\Controllers\TomSelectController::class, 'departments'])->name('tom-select.departments');
+    Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');
 });

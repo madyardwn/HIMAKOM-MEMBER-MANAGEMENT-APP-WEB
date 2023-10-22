@@ -51,7 +51,7 @@ class FilosofieController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'cabinet' => 'required|numeric',
+            'cabinet' => 'required|exists:cabinets,id',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'label' => 'required|max:255',
         ]);
@@ -104,9 +104,9 @@ class FilosofieController extends Controller
      */
     public function edit(Filosofie $filosofie)
     {
-        $filosofie->load('cabinet:id,name');
-
         try {
+            $filosofie->load('cabinet:id,name');
+            
             return response()->json([
                 'status' => 'success',
                 'message' => 'Filosofie fetched successfully!',
@@ -127,7 +127,7 @@ class FilosofieController extends Controller
     public function update(Request $request, Filosofie $filosofie)
     {
         $validator = Validator::make($request->all(), [
-            'cabinet' => 'required|numeric',
+            'cabinet' => 'required|exists:cabinets,id',
             'label' => 'required|max:255',
         ]);
 
