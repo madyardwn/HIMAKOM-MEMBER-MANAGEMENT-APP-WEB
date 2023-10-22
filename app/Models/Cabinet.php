@@ -25,6 +25,17 @@ class Cabinet extends Model
                 return "{$this->name} has been {$eventName}";
             });
     }
+    
+    /**
+     * The attributes where the logo is stored.
+     * 
+     */    
+    public function getLogoAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value);
+        }
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -38,18 +49,7 @@ class Cabinet extends Model
         'is_active',
         'visi',
         'misi',        
-    ];
-
-    /**
-     * The attributes where the logo is stored.
-     * 
-     */    
-    public function getLogoAttribute($value)
-    {
-        if ($value) {
-            return asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value);
-        }
-    }
+    ];    
 
     /*
     |--------------------------------------------------------------------------

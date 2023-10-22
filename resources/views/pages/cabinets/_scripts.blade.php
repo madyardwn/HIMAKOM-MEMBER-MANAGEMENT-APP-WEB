@@ -76,6 +76,7 @@
         },
     ];
 
+
     // init datatable
     function initDtTable() {
         table = new DataTable(`#table-${subject}`, {
@@ -155,7 +156,7 @@
                 valueField: 'id',
                 labelField: 'name',
                 searchField: 'name',
-                placeholder: 'Select permissions',
+                placeholder: `Select ${item.name}`,
                 plugins: {
                     remove_button: {
                         title: 'Remove this item',
@@ -198,7 +199,7 @@
                 valueField: 'id',
                 labelField: 'name',
                 searchField: 'name',
-                placeholder: 'Select permissions',
+                placeholder: `Select ${item.name}`,
                 plugins: {
                     remove_button: {
                         title: 'Remove this item',
@@ -563,19 +564,26 @@
 
     function handleTomSelectType(item, formData) {
         const values = item.variable.getValue();
-        const itemName = item.name.concat('[]');
-        if (values.length > 0) {
-            values.forEach(function(value, index) {
+        if (typeof values === 'string') { // single select
+            formData.append(item.name, parseInt(values));
+        } else if (values.length >= 1) { // multiple select
+            const itemName = item.name.concat('[]');
+            values.forEach(function(value, index) { 
                 formData.append(itemName, value);
             });
         }
     }
 
     function handleTomSelectTypeEdit(item, response) {
-        item.variable.addOption(response.data[item.name]);
-        item.variable.setValue(response.data[item.name].map(function(item) {
-            return item.id;
-        }));
+        if (Array.isArray(response.data[item.name])) { // multiple select
+            item.variable.addOption(response.data[item.name]);
+            item.variable.setValue(response.data[item.name].map(function(item) {
+                return item.id;
+            }));
+        } else { // single select
+            item.variable.addOption(response.data[item.name]);
+            item.variable.setValue(response.data[item.name].id);
+        }
     }
 
     // docuemnt on ready

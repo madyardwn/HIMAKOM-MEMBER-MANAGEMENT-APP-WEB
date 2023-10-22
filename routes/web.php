@@ -58,6 +58,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/cabinets/{cabinet}/update', [\App\Http\Controllers\CabinetController::class, 'update'])->name('cabinets.update');
         Route::delete('/cabinets/{cabinet}/destroy', [\App\Http\Controllers\CabinetController::class, 'destroy'])->name('cabinets.destroy');
 
+        // Filosofies
+        Route::get('/filosofies', [\App\Http\Controllers\FilosofieController::class, 'index'])->name('filosofies.index');
+        Route::post('/filosofies/store', [\App\Http\Controllers\FilosofieController::class, 'store'])->name('filosofies.store');
+        Route::get('/filosofies/{filosofie}/edit', [\App\Http\Controllers\FilosofieController::class, 'edit'])->name('filosofies.edit');
+        Route::put('/filosofies/{filosofie}/update', [\App\Http\Controllers\FilosofieController::class, 'update'])->name('filosofies.update');
+        Route::delete('/filosofies/{filosofie}/destroy', [\App\Http\Controllers\FilosofieController::class, 'destroy'])->name('filosofies.destroy');        
+
         // Departments
         Route::get('/departments', [\App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index');
         Route::post('/departments/store', [\App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store');
@@ -76,4 +83,5 @@ Route::group(['middleware' => ['auth']], function () {
     
     // tom-select
     Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions');
+    Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets');
 });

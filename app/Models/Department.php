@@ -30,6 +30,17 @@ class Department extends Model
      * The attributes where the logo is stored.
      * 
     */
+    public function getLogoAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . config('dirpath.departments.logo') . '/' . $value);
+        }
+    }
+    
+    /**
+     * The attributes that are mass assignable.
+     * 
+    */
     protected $fillable = [
         'name',
         'short_name',
@@ -37,17 +48,6 @@ class Department extends Model
         'logo',
         'is_active',
     ];
-    
-    /**
-     * The attributes that are mass assignable.
-     * 
-    */
-    public function getLogoAttribute($value)
-    {
-        if ($value) {
-            return asset('storage/' . config('dirpath.departments.logo') . '/' . $value);
-        }
-    }
 
     /*
     |--------------------------------------------------------------------------

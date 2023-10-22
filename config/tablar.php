@@ -193,7 +193,7 @@ return [
                 [
                     'text' => 'Filosophy',
                     'icon' => 'ti ti-360',
-                    'url' => '#',
+                    'route' => 'periodes.filosofies.index',
                     'hasAnyPermission' => ['access-filosofies'],
                 ],
                 [
