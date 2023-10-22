@@ -11,11 +11,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CabinetController extends Controller
 {
+    /**
+     * Path to cabinet logos.
+     */
     protected $path_logo_cabinets;
 
+    /**
+     * Create a new controller instance.
+     */
     public function __construct()
     {
-        $this->path_logo_cabinets = config('dirpath.cabinets.logo'); // cabinets/logos
+        $this->path_logo_cabinets = config('dirpath.cabinets.logo');
     }
 
     /**

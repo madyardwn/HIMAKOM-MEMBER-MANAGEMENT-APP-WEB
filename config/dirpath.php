@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Path to directories for files.
+ * 
+ * @return array
+ */
 return [
     'cabinets' => [
         'logo' => 'cabinets/logos',

@@ -9,6 +9,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
         if ($request->ajax()) {

@@ -12,8 +12,33 @@ class Filosofie extends Model
     use HasFactory, LogsActivity;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array 
+    */
+    protected $fillable = [
+        'cabinet_id',
+        'logo',
+        'label',
+    ];
+    
+    /**
+     * The attributes where the logo is stored.
+     * 
+     * @param string $value
+     * @return string
+     */    
+    public function getLogoAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . config('dirpath.cabinets.filosofies') . '/' . $value);
+        }
+    }    
+
+    /**
      * The attributes that are logged.
      *
+     * @return LogOptions
      */
     public function getActivitylogOptions(): LogOptions
     {
@@ -26,27 +51,6 @@ class Filosofie extends Model
             });
     }
 
-    /**
-     * The attributes where the logo is stored.
-     * 
-     */    
-    public function getLogoAttribute($value)
-    {
-        if ($value) {
-            return asset('storage/' . config('dirpath.cabinets.filosofies') . '/' . $value);
-        }
-    }
-
-    /**
-     * The attributes that are mass assignable.
-     * 
-    */
-    protected $fillable = [
-        'cabinet_id',
-        'logo',
-        'label',
-    ];
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS 
@@ -56,6 +60,11 @@ class Filosofie extends Model
     |
     */
 
+    /**
+     * Get the cabinet that owns the filosofie.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function cabinet()
     {
         return $this->belongsTo(Cabinet::class);

@@ -13,8 +13,19 @@ class Permission extends ModelsPermission
     use HasFactory, LogsActivity;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array 
+    */
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
+
+    /**
      * The attributes that are logged.
      *
+     * @return LogOptions
      */
      public function getActivitylogOptions(): LogOptions
      {
@@ -26,23 +37,4 @@ class Permission extends ModelsPermission
                  return "{$this->name} has been {$eventName}";
              });
      }
-    
-     /**
-     * The attributes where the logo is stored.
-     * 
-    */
-    
-    /**
-     * The attributes that are mass assignable.
-     * 
-    */
-    
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS 
-    |--------------------------------------------------------------------------
-    |
-    | Here are the relations this model has with other models
-    |
-    */
 }

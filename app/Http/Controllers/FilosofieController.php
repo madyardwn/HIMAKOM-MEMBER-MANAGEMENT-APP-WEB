@@ -11,8 +11,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class FilosofieController extends Controller
 {
+    /**
+     * Path to filosofie logos.
+     */
     protected $path_logo_filosofies;
 
+    /**
+     * Create a new controller instance.
+     */
     public function __construct()
     {
         $this->path_logo_filosofies = config('dirpath.cabinets.filosofies');

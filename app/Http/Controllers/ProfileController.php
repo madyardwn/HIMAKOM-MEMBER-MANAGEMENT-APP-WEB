@@ -7,11 +7,17 @@ use Illuminate\Support\Facades\Hash;;
 
 class ProfileController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function show()
     {
         return view('auth.profile');
     }
-
+    
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(ProfileUpdateRequest $request)
     {
         if ($request->password) {

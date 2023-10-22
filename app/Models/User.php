@@ -16,23 +16,9 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasRoles, LogsActivity;
 
     /**
-     * The attributes that are logged.
-     *
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'nim', 'npa', 'nama_bagus', 'picture', 'year', 'device_token'])
-            ->logOnlyDirty()
-            ->useLogName('User')
-            ->setDescriptionForEvent(function (string $eventName) {
-                return "{$this->name} has been {$eventName}";
-            });
-    }
-
-    /**
      * The attributes that are mass assignable.
      *
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -49,6 +35,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -58,12 +45,28 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
+     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
+    /**
+     * The attributes that are logged.
+     *
+     * @return LogOptions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'nim', 'npa', 'nama_bagus', 'picture', 'year', 'device_token'])
+            ->logOnlyDirty()
+            ->useLogName('User')
+            ->setDescriptionForEvent(function (string $eventName) {
+                return "{$this->name} has been {$eventName}";
+            });
+    }    
 
     /*
     |--------------------------------------------------------------------------
@@ -74,21 +77,41 @@ class User extends Authenticatable
     |
     */
 
+    /**
+     * Get the user's role.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function cabinets()
     {
         return $this->belongsToMany(Cabinet::class, 'periodes', 'user_id', 'cabinet_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
+    /**
+     * Get the user's role.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function departments()
     {
         return $this->belongsToMany(Department::class, 'periodes', 'user_id', 'department_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
     }
 
+    /**
+     * Get the user's role.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function periodes()
     {
         return $this->hasMany(Periode::class);
     }
 
+    /**
+     * Get the user's role.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function scopeActive($query)
     {
         return $query->whereHas('periodes', function ($query) {

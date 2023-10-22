@@ -13,36 +13,26 @@ class Role extends SpatieRole
     use HasFactory, LogsActivity;
 
     /**
-     * The attributes that are logged.
-     *
-     */
-     public function getActivitylogOptions(): LogOptions
-     {
-         return LogOptions::defaults()
-             ->logOnly(['name', 'guard_name'])
-             ->logOnlyDirty()
-             ->useLogName('Role')
-             ->setDescriptionForEvent(function (string $eventName) {
-                 return "{$this->name} has been {$eventName}";
-             });
-     }
-    
-     /**
-     * The attributes where the logo is stored.
-     * 
-    */
-    
-    /**
      * The attributes that are mass assignable.
      * 
     */
-    
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS 
-    |--------------------------------------------------------------------------
-    |
-    | Here are the relations this model has with other models
-    |
-    */
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
+   
+    /**
+     * The attributes that are logged.
+     *
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'guard_name'])
+            ->logOnlyDirty()
+            ->useLogName('Role')
+            ->setDescriptionForEvent(function (string $eventName) {
+                return "{$this->name} has been {$eventName}";
+            });
+    }
 }

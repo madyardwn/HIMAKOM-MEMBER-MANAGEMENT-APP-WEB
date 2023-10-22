@@ -10,11 +10,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DepartmentController extends Controller
 {
+    /**
+     * Path to department logos.
+     */
     protected $path_logo_departments;
 
+    /**
+     * Create a new controller instance.
+     */
     public function __construct()
     {
-        $this->path_logo_departments = config('dirpath.departments.logo'); // departments/logos
+        $this->path_logo_departments = config('dirpath.departments.logo');
     }
     
     /**

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileUpdateRequest extends FormRequest
 {
+    /**
+     * Return an array of validation rules for the request.
+     */
     public function rules()
     {
         return [
@@ -17,11 +20,17 @@ class ProfileUpdateRequest extends FormRequest
         ];
     }
 
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize()
     {
         return true;
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation()
     {
         if ($this->password == null) {
