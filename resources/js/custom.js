@@ -9,6 +9,9 @@ window.Swal = swal;
 import moment from 'moment';
 window.moment = moment;
 
+import TemplateCRUD from './templateCRUD';
+window.TemplateCRUD = TemplateCRUD;
+
 /*
     * This dark mode script is taken from
     *
