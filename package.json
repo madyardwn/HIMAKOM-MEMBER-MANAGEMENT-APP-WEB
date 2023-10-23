@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.8",
+        "@shufo/prettier-plugin-blade": "^1.13.3",
         "@tabler/core": "1.0.0-beta20",
         "@tabler/icons": "^2.32.0",
         "@tabler/icons-webfont": "^2.32.0",
@@ -23,6 +24,7 @@
         "litepicker": "^2.0.12",
         "nouislider": "^15.7.0",
         "plyr": "^3.7.8",
+        "prettier": "^3.0.3",
         "sass": "^1.64.2",
         "sass-loader": "^13.3.1",
         "tinymce": "^6.4.2",
