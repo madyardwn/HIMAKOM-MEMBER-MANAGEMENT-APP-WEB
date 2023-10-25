@@ -1,6 +1,16 @@
-<script type="module">        
-    $(document).ready(function () {        
-        const cabinet = new TemplateCRUD({
+<script type="module">
+    $(document).ready(function() {
+
+        let options = []
+
+        @foreach ($events as $key => $value)
+            options.push({
+                id: {{ $key }},
+                name: "{{ $value }}"
+            })
+        @endforeach
+
+        const events = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             editUrl: "{{ route('periodes.events.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.events.destroy', ':id') }}",
@@ -8,7 +18,7 @@
             submitEditUrl: "{{ route('periodes.events.update', ':id') }}",
             tableDataUrl: "{{ route('periodes.events.index') }}",
             subject: 'events',
-            columns: [{ 
+            columns: [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -32,12 +42,43 @@
                         return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
                     }
                 },
-                { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '10%' },
-                { data: 'description', name: 'description', title: 'Description', width: '10%' },
-                { data: 'date', name: 'date', title: 'Date', width: '10%' },
-                { data: 'time', name: 'time', title: 'Time', width: '10%' },
-                { data: 'location', name: 'location', title: 'Location', width: '10%' },
-                { data: 'type', name: 'type', title: 'Type', width: '10%' },                
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 1,
+                    width: '10%'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description',
+                    width: '10%'
+                },
+                {
+                    data: 'date',
+                    name: 'date',
+                    title: 'Date',
+                    width: '10%'
+                },
+                {
+                    data: 'time',
+                    name: 'time',
+                    title: 'Time',
+                    width: '10%'
+                },
+                {
+                    data: 'location',
+                    name: 'location',
+                    title: 'Location',
+                    width: '10%'
+                },
+                {
+                    data: 'type',
+                    name: 'type',
+                    title: 'Type',
+                    width: '10%'
+                },
                 {
                     data: 'is_active',
                     name: 'is_active',
@@ -71,9 +112,35 @@
                         return html;
                     }
                 },
-            ]
+            ],
+            tomSelects: [{
+                name: 'type',
+                settings: {
+                    valueField: "id",
+                    labelField: "name",
+                    searchField: "name",
+                    placeholder: `Select Type`,
+                    options: options,
+                    plugins: {
+                        remove_button: {
+                            title: "Remove this item",
+                        },
+                    },
+                    render: {
+                        option: function(item, escape) {
+                            return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                        },
+                        item: function(item, escape) {
+                            return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                        },
+                    },
+                },
+            }]
         });
-
-        cabinet.init();
+        events.init();
     });
 </script>

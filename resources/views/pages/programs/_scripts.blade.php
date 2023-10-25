@@ -1,5 +1,5 @@
-<script type="module">        
-    $(document).ready(function () {        
+<script type="module">
+    $(document).ready(function() {
         const program = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             editUrl: "{{ route('periodes.programs.edit', ':id') }}",
@@ -8,7 +8,7 @@
             submitEditUrl: "{{ route('periodes.programs.update', ':id') }}",
             tableDataUrl: "{{ route('periodes.programs.index') }}",
             subject: 'programs',
-            columns: [{ 
+            columns: [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -20,10 +20,30 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-                { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '10%' },
-                { data: 'description', name: 'description', title: 'Description' },
-                { data: 'user.name', name: 'user.name', title: 'Lead By', width: '10%' },
-                { data: 'department.name', name: 'department.name', title: 'Department', width: '10%' },                
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 1,
+                    width: '10%'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description'
+                },
+                {
+                    data: 'user.name',
+                    name: 'user.name',
+                    title: 'Lead By',
+                    width: '10%'
+                },
+                {
+                    data: 'department.name',
+                    name: 'department.name',
+                    title: 'Department',
+                    width: '10%'
+                },
                 {
                     data: null,
                     title: 'Action',
@@ -47,7 +67,7 @@
                         return html;
                     }
                 },
-            ]
+            ],
         });
 
         program.init();

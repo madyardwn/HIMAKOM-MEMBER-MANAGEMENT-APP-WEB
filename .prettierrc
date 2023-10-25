@@ -8,6 +8,14 @@
                 "tabWidth": 4,
                 "printWidth": 1000
             }
+        },
+        {
+            "files": ["*.js"],
+            "options": {
+                "parser": "babel",
+                "tabWidth": 4,
+                "printWidth": 1000
+            }
         }
     ]
 }

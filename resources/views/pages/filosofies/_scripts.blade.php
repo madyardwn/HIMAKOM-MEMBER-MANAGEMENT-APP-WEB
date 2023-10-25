@@ -32,8 +32,19 @@
                         return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
                     }
                 },
-                { data: 'cabinet.name', name: 'cabinet.name', title: 'Cabinet', responsivePriority: 1, width: '10%' },
-                { data: 'label', name: 'label', title: 'Label', responsivePriority: 2 },
+                {
+                    data: 'cabinet.name',
+                    name: 'cabinet.name',
+                    title: 'Cabinet',
+                    responsivePriority: 1,
+                    width: '10%'
+                },
+                {
+                    data: 'label',
+                    name: 'label',
+                    title: 'Label',
+                    responsivePriority: 2
+                },
                 {
                     data: null,
                     title: 'Action',
@@ -57,7 +68,50 @@
                         return html;
                     }
                 },
-            ]
+            ],
+            tomSelects: [{
+                name: 'cabinet',
+                settings: {
+                    valueField: "id",
+                    labelField: "name",
+                    searchField: "name",
+                    placeholder: `Select cabinet`,
+                    plugins: {
+                        remove_button: {
+                            title: "Remove this item",
+                        },
+                    },
+                    load: (query, callback) => {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: "{{ route('tom-select.cabinets') }}",
+                            type: "GET",
+                            dataType: "json",
+                            data: {
+                                q: query,
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                callback(res);
+                            },
+                        });
+                    },
+                    render: {
+                        option: function(item, escape) {
+                            return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                        },
+                        item: function(item, escape) {
+                            return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                        },
+                    },
+                },
+            }]
         });
 
         filosofie.init();
