@@ -2,6 +2,8 @@
     $(document).ready(function() {
         const program = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
+            modalAdd: new bootstrap.Modal($(`#modal-add-programs`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-programs`)),
             editUrl: "{{ route('periodes.programs.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.programs.destroy', ':id') }}",
             submitAddUrl: "{{ route('periodes.programs.store') }}",
@@ -59,7 +61,7 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-programs"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                                     <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>
@@ -68,6 +70,93 @@
                     }
                 },
             ],
+            tomSelects: [{
+                    name: 'department',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select department`,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        load: (query, callback) => {
+                            if (!query.length) return callback();
+                            $.ajax({
+                                url: "{{ route('tom-select.departments') }}",
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    q: query,
+                                },
+                                error: function() {
+                                    callback();
+                                },
+                                success: function(res) {
+                                    callback(res);
+                                },
+                            });
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                            },
+                        },
+                    },
+                },
+                {
+                    name: 'user',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select user`,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        load: (query, callback) => {
+                            if (!query.length) return callback();
+                            $.ajax({
+                                url: "{{ route('tom-select.users') }}",
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    q: query,
+                                },
+                                error: function() {
+                                    callback();
+                                },
+                                success: function(res) {
+                                    callback(res);
+                                },
+                            });
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                            },
+                        },
+                    },
+                },
+            ]
         });
 
         program.init();

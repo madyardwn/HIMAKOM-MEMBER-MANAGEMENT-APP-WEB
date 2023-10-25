@@ -1,7 +1,6 @@
 @extends('tablar::page')
 
 @section('css')
-
 @endsection
 
 @section('content')
@@ -24,9 +23,9 @@
     <!-- Page body -->
     <div class="page-body">
         <div class="container">
-            <div class="card">   
+            <div class="card">
                 <div class="card-body">
-                    <table id="auth-web-permissions-table" class="table table-bordered responsive w-100">
+                    <table id="table-auth-web-permissions" class="table table-bordered responsive w-100">
                     </table>
                 </div>
             </div>

@@ -1,41 +1,27 @@
 <script type="module">
-    let table, formAdd, formEdit;
-
-    function initDtTable() {
-        table = new DataTable('#auth-web-permissions-table', {
-            processing: true,
-            responsive: true,
-            serverSide: true,
-            ajax: "{{ route('auth-web.permissions.index') }}",            
-            columns: [
-                {data: 'id', name: 'id', title: 'No', width: '1%'},
-                {data: 'name', name: 'name', title: 'Name'},
+    $(document).ready(function() {
+        const authWebRoles = new TemplateCRUD({
+            emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
+            subject: 'auth-web-permissions',
+            editUrl: "{{ route('auth-web.roles.edit', ':id') }}",
+            deleteUrl: "{{ route('auth-web.roles.destroy', ':id') }}",
+            submitAddUrl: "{{ route('auth-web.roles.store') }}",
+            submitEditUrl: "{{ route('auth-web.roles.update', ':id') }}",
+            tableDataUrl: "{{ route('auth-web.roles.index') }}",
+            columns: [{
+                    data: 'id',
+                    name: 'id',
+                    title: 'No',
+                    width: '1%'
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name'
+                },
             ],
-        });         
-    }
-
-    // docuemnt on ready
-    $(document).ready(function () {
-        initDtTable();
-        // initDtEvents();
-
-        const addCabinet = new TomSelect("#add-cabinet", {
-            persist: false,
-            createOnBlur: true,
-            create: true
         });
 
-        const addDepartment = new TomSelect("#add-department", {
-            persist: false,
-            createOnBlur: true,
-            create: true
-        });
-
-        const addRole = new TomSelect("#add-role", {
-            persist: false,
-            createOnBlur: true,
-            create: true
-        });
-
+        authWebRoles.init();
     });
 </script>

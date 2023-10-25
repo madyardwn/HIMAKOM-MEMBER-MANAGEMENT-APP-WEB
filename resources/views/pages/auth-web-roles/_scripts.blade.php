@@ -3,6 +3,8 @@
         const authWebRoles = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             subject: 'auth-web-roles',
+            modalAdd: new bootstrap.Modal($(`#modal-add-auth-web-roles`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-auth-web-roles`)),
             editUrl: "{{ route('auth-web.roles.edit', ':id') }}",
             deleteUrl: "{{ route('auth-web.roles.destroy', ':id') }}",
             submitAddUrl: "{{ route('auth-web.roles.store') }}",

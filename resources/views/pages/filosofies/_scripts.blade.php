@@ -3,6 +3,8 @@
         const filosofie = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             subject: 'filosofies',
+            modalAdd: new bootstrap.Modal($(`#modal-add-filosofies`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-filosofies`)),
             editUrl: "{{ route('periodes.filosofies.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.filosofies.destroy', ':id') }}",
             submitAddUrl: "{{ route('periodes.filosofies.store') }}",
@@ -60,7 +62,7 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-filosofies"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                                     <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>

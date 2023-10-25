@@ -1,14 +1,16 @@
-<script type="module">        
-    $(document).ready(function () {        
+<script type="module">
+    $(document).ready(function() {
         const cabinet = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
+            modalAdd: new bootstrap.Modal($(`#modal-add-cabinets`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-cabinets`)),
             editUrl: "{{ route('periodes.cabinets.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.cabinets.destroy', ':id') }}",
             submitAddUrl: "{{ route('periodes.cabinets.store') }}",
             submitEditUrl: "{{ route('periodes.cabinets.update', ':id') }}",
             tableDataUrl: "{{ route('periodes.cabinets.index') }}",
             subject: 'cabinets',
-            columns: [{ 
+            columns: [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -32,11 +34,37 @@
                         return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
                     }
                 },
-                { data: 'name', name: 'name', title: 'Name', responsivePriority: 1, width: '20%' },
-                { data: 'description', name: 'description', title: 'Description', width: '20%' },
-                { data: 'visi', name: 'visi', title: 'Visi', width: '20%' },
-                { data: 'misi', name: 'misi', title: 'Misi', width: '20%' },
-                { data: 'year', name: 'year', title: 'Year', width: '20%' },
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 1,
+                    width: '20%'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description',
+                    width: '20%'
+                },
+                {
+                    data: 'visi',
+                    name: 'visi',
+                    title: 'Visi',
+                    width: '20%'
+                },
+                {
+                    data: 'misi',
+                    name: 'misi',
+                    title: 'Misi',
+                    width: '20%'
+                },
+                {
+                    data: 'year',
+                    name: 'year',
+                    title: 'Year',
+                    width: '20%'
+                },
                 {
                     data: 'is_active',
                     name: 'is_active',
@@ -61,7 +89,7 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-cabinets"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                                     <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>

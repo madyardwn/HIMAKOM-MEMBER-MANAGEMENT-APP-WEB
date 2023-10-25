@@ -1,13 +1,15 @@
 <script type="module">
-    $(document).ready(function() {        
+    $(document).ready(function() {
         const department = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             subject: 'departments',
+            modalAdd: new bootstrap.Modal($(`#modal-add-departments`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-departments`)),
             editUrl: "{{ route('periodes.departments.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.departments.destroy', ':id') }}",
             submitAddUrl: "{{ route('periodes.departments.store') }}",
-            submitEditUrl: "{{ route('periodes.departments.update', ':id') }}", 
-            tableDataUrl: "{{ route('periodes.departments.index') }}", 
+            submitEditUrl: "{{ route('periodes.departments.update', ':id') }}",
+            tableDataUrl: "{{ route('periodes.departments.index') }}",
             columns: [{
                     title: 'No',
                     data: null,
@@ -32,9 +34,25 @@
                         return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
                     }
                 },
-                { data: 'name', name: 'name', title: 'Name', responsivePriority: 3, width: '10%' },
-                { data: 'short_name', name: 'short_name', title: 'Short Name', responsivePriority: 1, width: '10%' },
-                { data: 'description', name: 'description', title: 'Description' },
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 3,
+                    width: '10%'
+                },
+                {
+                    data: 'short_name',
+                    name: 'short_name',
+                    title: 'Short Name',
+                    responsivePriority: 1,
+                    width: '10%'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description'
+                },
                 {
                     data: 'is_active',
                     name: 'is_active',
@@ -59,7 +77,7 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-departments"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                                     <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>
@@ -70,6 +88,6 @@
             ]
         });
 
-        department.init();        
+        department.init();
     });
 </script>

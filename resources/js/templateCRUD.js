@@ -1,10 +1,10 @@
 class TemplateCRUD {
-    constructor({ subject, columns, editUrl, deleteUrl, submitAddUrl, submitEditUrl, tableDataUrl, emptyImage, tomSelects }) {
+    constructor({ subject, columns, editUrl, deleteUrl, submitAddUrl, submitEditUrl, tableDataUrl, emptyImage, tomSelects, modalAdd, modalEdit }) {
         this.table = null;
         this.inputs = { add: [], edit: [] };
         this.tomSelectsInputs = { add: [], edit: [] };
-        this.modalAdd = new bootstrap.Modal(document.getElementById(`modal-add-${subject}`));
-        this.modalEdit = new bootstrap.Modal(document.getElementById(`modal-edit-${subject}`));
+        this.modalAdd = modalAdd;
+        this.modalEdit = modalEdit;
         this.subject = subject;
         this.columns = columns;
         this.editUrl = editUrl;
@@ -89,7 +89,7 @@ class TemplateCRUD {
 
     // button events
     initEvents() {
-        this.modalAdd.on("hidden.bs.modal", (e) => {
+        $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
             $(".is-invalid").removeClass("is-invalid");
             $(".invalid-feedback").remove();
 
@@ -103,7 +103,7 @@ class TemplateCRUD {
             });
         });
 
-        this.modalEdit.on("hidden.bs.modal", (e) => {
+        $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
             $(".is-invalid").removeClass("is-invalid");
             $(".invalid-feedback").remove();
 
@@ -145,10 +145,10 @@ class TemplateCRUD {
             });
         });
 
-        this.table.on("click", ".btn-delete", (e, item) => {
+        this.table.on("click", ".btn-delete", (e) => {
             e.preventDefault();
 
-            const id = $(this).data("id");
+            const id = $(e.currentTarget).data("id");
 
             Swal.fire({
                 title: "Are you sure?",
