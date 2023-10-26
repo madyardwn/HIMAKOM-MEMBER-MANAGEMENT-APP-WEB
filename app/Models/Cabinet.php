@@ -15,7 +15,7 @@ class Cabinet extends Model
      * The attributes that are mass assignable.
      * 
      * @var array
-    */
+     */
     protected $fillable = [
         'name',
         'description',
@@ -23,15 +23,15 @@ class Cabinet extends Model
         'year',
         'is_active',
         'visi',
-        'misi',        
-    ];    
-    
+        'misi',
+    ];
+
     /**
      * The attributes where the logo is stored.
      * 
      * @param string $value
      * @return string
-    */
+     */
     public function getLogoAttribute($value)
     {
         if ($value) {
@@ -43,7 +43,7 @@ class Cabinet extends Model
      * The attributes that are logged.
      *
      * @return LogOptions
-    */
+     */
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -68,7 +68,7 @@ class Cabinet extends Model
      * Get the filosofies for the cabinet.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function filosofies()
     {
         return $this->hasMany(Filosofie::class);
@@ -78,40 +78,19 @@ class Cabinet extends Model
      * Get the users for the cabinet.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    */
+     */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'periodes', 'cabinet_id', 'user_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
+        return $this->belongsToMany(User::class, 'users_cabinets', 'cabinet_id', 'user_id')->withPivot('id')->withTimestamps();
     }
 
     /**
      * Get the departments for the cabinet.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    */
+     */
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'periodes', 'cabinet_id', 'department_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
-    }
-
-    /**
-     * Get the periodes for the cabinet.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function periodes()
-    {
-        return $this->hasMany(Periode::class);
-    }
-
-    /**
-     * Get the projects for the cabinet (only active projects).
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
+        return $this->belongsToMany(Department::class, 'cabinets_departments', 'cabinet_id', 'department_id')->withPivot('id')->withTimestamps();
     }
 }

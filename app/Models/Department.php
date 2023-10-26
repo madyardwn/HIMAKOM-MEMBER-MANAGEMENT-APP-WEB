@@ -15,13 +15,12 @@ class Department extends Model
      * The attributes that are mass assignable.
      * 
      * @var array
-    */
+     */
     protected $fillable = [
         'name',
         'short_name',
         'description',
         'logo',
-        'is_active',
     ];
 
     /**
@@ -29,14 +28,14 @@ class Department extends Model
      * 
      * @param string $value
      * @return string
-    */
+     */
     public function getLogoAttribute($value)
     {
         if ($value) {
             return asset('storage/' . config('dirpath.departments.logo') . '/' . $value);
         }
     }
-    
+
     /**
      * The attributes that are logged.
      *
@@ -51,7 +50,7 @@ class Department extends Model
             ->setDescriptionForEvent(function (string $eventName) {
                 return "{$this->name} has been {$eventName}";
             });
-    }    
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -61,45 +60,24 @@ class Department extends Model
     | Here are the relations this model has with other models
     |
     */
-    
+
     /**
      * Get the cabinet that owns the department.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
+     */
     public function cabinets()
     {
-        return $this->belongsToMany(Cabinet::class, 'periodes', 'department_id', 'cabinet_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
+        return $this->belongsToMany(Cabinet::class, 'cabinets_departments', 'department_id', 'cabinet_id')->withPivot('id')->withTimestamps();
     }
 
     /**
      * Get the users that owns the department.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
+     */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'periodes', 'department_id', 'user_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
-    }
-
-    /**
-     * Get the periodes that owns the department.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
-    public function periodes()
-    {
-        return $this->hasMany(Periode::class);
-    }
-
-    /**
-     * Get the active departments.
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-    */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
+        return $this->belongsToMany(User::class, 'users_departments', 'department_id', 'user_id')->withPivot('id')->withTimestamps();
     }
 }

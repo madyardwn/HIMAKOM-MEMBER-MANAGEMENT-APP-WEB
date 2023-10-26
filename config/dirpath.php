@@ -16,4 +16,7 @@ return [
     'events' => [
         'posters' => 'events/posters',
     ],
+    'users' => [
+        'pictures' => 'users/pictures',
+    ],
 ];

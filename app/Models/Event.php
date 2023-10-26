@@ -14,22 +14,20 @@ class Event extends Model
     /**
      * The attributes that are mass assignable.
      * 
-    */
+     */
     protected $fillable = [
         'name',
         'description',
         'location',
         'poster',
         'date',
-        'time',
         'type',
-        'is_active',
     ];
 
     /**
      * Type of event.
      * 
-    */
+     */
     const EVENT_TYPE = [
         '1' => 'kegiatan',
         '2' => 'proker',
@@ -42,7 +40,7 @@ class Event extends Model
      * 
      * @param string $value
      * @return string
-    */
+     */
     public function getPosterAttribute($value)
     {
         if ($value) {
@@ -54,11 +52,11 @@ class Event extends Model
      * The attributes that are logged.
      *
      * @return LogOptions
-    */
+     */
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'description', 'location', 'poster', 'date', 'time', 'type', 'is_active'])            
+            ->logOnly(['name', 'description', 'location', 'poster', 'date', 'time', 'type', 'is_active'])
             ->logOnlyDirty()
             ->useLogName('Events')
             ->setDescriptionForEvent(function (string $eventName) {

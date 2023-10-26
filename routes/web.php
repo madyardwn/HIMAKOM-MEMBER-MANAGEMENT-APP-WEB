@@ -20,12 +20,12 @@ Route::get('/', function () {
 
 Auth::routes([
     'register' => false,
-    'verify' => false,    
+    'verify' => false,
 ]);
 
 Route::group(['middleware' => ['auth']], function () {
     // dashboard
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');    
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
@@ -33,14 +33,18 @@ Route::group(['middleware' => ['auth']], function () {
     // route users-management group
     Route::group(['prefix' => 'users-management', 'as' => 'users-management.'], function () {
         // Users
-        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index')->middleware('permission:read-users');
+        Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::post('/users/store', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}/update', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}/destroy', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     });
 
     // route auth-web group
     Route::group(['prefix' => 'auth-web', 'as' => 'auth-web.'], function () {
         // Permissions
         Route::get('/permissions', [\App\Http\Controllers\AuthWebPermissionController::class, 'index'])->name('permissions.index');
-        
+
         // Roles
         Route::get('/roles', [\App\Http\Controllers\AuthWebRoleController::class, 'index'])->name('roles.index');
         Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store');
@@ -63,14 +67,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/filosofies/store', [\App\Http\Controllers\FilosofieController::class, 'store'])->name('filosofies.store');
         Route::get('/filosofies/{filosofie}/edit', [\App\Http\Controllers\FilosofieController::class, 'edit'])->name('filosofies.edit');
         Route::put('/filosofies/{filosofie}/update', [\App\Http\Controllers\FilosofieController::class, 'update'])->name('filosofies.update');
-        Route::delete('/filosofies/{filosofie}/destroy', [\App\Http\Controllers\FilosofieController::class, 'destroy'])->name('filosofies.destroy');        
+        Route::delete('/filosofies/{filosofie}/destroy', [\App\Http\Controllers\FilosofieController::class, 'destroy'])->name('filosofies.destroy');
 
         // Departments
         Route::get('/departments', [\App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index');
         Route::post('/departments/store', [\App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store');
         Route::get('/departments/{department}/edit', [\App\Http\Controllers\DepartmentController::class, 'edit'])->name('departments.edit');
         Route::put('/departments/{department}/update', [\App\Http\Controllers\DepartmentController::class, 'update'])->name('departments.update');
-        Route::delete('/departments/{department}/destroy', [\App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');        
+        Route::delete('/departments/{department}/destroy', [\App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');
 
         // Programs
         Route::get('/programs', [\App\Http\Controllers\ProgramController::class, 'index'])->name('programs.index');
@@ -94,10 +98,11 @@ Route::group(['middleware' => ['auth']], function () {
         // Telescope
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index');
     });
-    
+
     // tom-select
     Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions');
     Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets');
     Route::get('/tom-select/departments', [\App\Http\Controllers\TomSelectController::class, 'departments'])->name('tom-select.departments');
-    Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');    
+    Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users');
+    Route::get('/tom-select/roles', [\App\Http\Controllers\TomSelectController::class, 'roles'])->name('tom-select.roles');
 });

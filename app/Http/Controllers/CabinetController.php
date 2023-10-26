@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cabinet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -28,25 +27,27 @@ class CabinetController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-     {
-         if ($request->ajax()) {
-            $data = Cabinet::select([
-                'id',
-                'name', 
-                'description', 
-                'year', 
-                'is_active', 
-                'visi', 
-                'misi',
-                'logo'
-            ]);
-             
-             return DataTables::of($data)
+    {
+        if ($request->ajax()) {
+            $data = Cabinet::with('departments:id,name')
+                ->when($request->search['value'], function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhere('description', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhere('year', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhere('visi', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhere('misi', 'like', '%' . $request->search['value'] . '%');
+                    $query->orWhereHas('departments', function ($query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
+                    });
+                })
+                ->orderBy('id', 'asc');
+
+            return DataTables::of($data)
                 ->make(true);
-         }
-  
-         return view('pages.cabinets.index');
-     }
+        }
+
+        return view('pages.cabinets.index');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -60,7 +61,7 @@ class CabinetController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {        
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:cabinets,name|max:50',
             'description' => 'required|max:255',
@@ -69,6 +70,7 @@ class CabinetController extends Controller
             'is_active' => 'required|numeric',
             'visi' => 'required|max:255',
             'misi' => 'required|max:255',
+            'departments' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -92,8 +94,10 @@ class CabinetController extends Controller
                 'year' => $request->year,
                 'is_active' => $request->is_active,
                 'visi' => $request->visi,
-                'misi' => $request->misi,                
+                'misi' => $request->misi,
             ]);
+
+            $cabinet->departments()->attach($request->departments);
 
             return response()->json([
                 'status' => 'success',
@@ -104,7 +108,7 @@ class CabinetController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -123,6 +127,8 @@ class CabinetController extends Controller
     public function edit(Cabinet $cabinet)
     {
         try {
+            $cabinet->load('departments:id,name');
+
             return response()->json([
                 'status' => 'success',
                 'data' => $cabinet,
@@ -131,7 +137,7 @@ class CabinetController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -147,7 +153,8 @@ class CabinetController extends Controller
             'year' => 'required|numeric',
             'is_active' => 'required|numeric',
             'visi' => 'required|max:255',
-            'misi' => 'required|max:255',            
+            'misi' => 'required|max:255',
+            'departments' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -161,7 +168,7 @@ class CabinetController extends Controller
         try {
             if ($request->hasFile('logo')) {
 
-                if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {                          
+                if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {
                     logFile($this->path_logo_cabinets, $cabinet->logo, 'UPDATED');
                 }
 
@@ -177,8 +184,10 @@ class CabinetController extends Controller
                 'year' => $request->year,
                 'is_active' => $request->is_active,
                 'visi' => $request->visi,
-                'misi' => $request->misi,                    
+                'misi' => $request->misi,
             ]);
+
+            $cabinet->departments()->sync($request->departments);
 
             return response()->json([
                 'status' => 'success',
@@ -189,7 +198,7 @@ class CabinetController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',           
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -200,9 +209,13 @@ class CabinetController extends Controller
     public function destroy(Cabinet $cabinet)
     {
         try {
-            if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {                          
+            if ($cabinet->logo && file_exists(storage_path('app/public/' . $this->path_logo_cabinets . '/' . $cabinet->logo))) {
                 logFile($this->path_logo_cabinets, $cabinet->logo, 'DELETED');
             }
+
+            $cabinet->departments()->detach();
+            $cabinet->users()->detach();
+
             $cabinet->delete();
 
             return response()->json([

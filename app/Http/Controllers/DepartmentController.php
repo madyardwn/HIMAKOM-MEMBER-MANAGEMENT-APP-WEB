@@ -22,21 +22,14 @@ class DepartmentController extends Controller
     {
         $this->path_logo_departments = config('dirpath.departments.logo');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Department::select([
-                'id',
-                'name', 
-                'short_name', 
-                'description', 
-                'is_active', 
-                'logo',
-            ]);
+            $data = Department::select('*');
 
             return DataTables::of($data)->make(true);
         }
@@ -62,7 +55,6 @@ class DepartmentController extends Controller
             'short_name' => 'required|unique:departments,short_name|max:10',
             'description' => 'required|max:255',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -84,7 +76,6 @@ class DepartmentController extends Controller
                 'short_name' => $request->short_name,
                 'description' => $request->description,
                 'logo' => $logo_name,
-                'is_active' => $request->is_active,            
             ]);
 
             return response()->json([
@@ -96,7 +87,7 @@ class DepartmentController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -123,7 +114,7 @@ class DepartmentController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -137,7 +128,6 @@ class DepartmentController extends Controller
             'name' => 'required|unique:departments,name,' . $department->id . '|max:50',
             'short_name' => 'required|unique:departments,short_name,' . $department->id . '|max:10',
             'description' => 'required|max:255',
-            'is_active' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -151,7 +141,7 @@ class DepartmentController extends Controller
         try {
             if ($request->hasFile('logo')) {
 
-                if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {                          
+                if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {
                     logFile($this->path_logo_departments, $department->logo, 'UPDATED');
                 }
 
@@ -165,7 +155,6 @@ class DepartmentController extends Controller
                 'name' => $request->name,
                 'short_name' => $request->short_name,
                 'description' => $request->description,
-                'is_active' => $request->is_active,                    
             ]);
 
             return response()->json([
@@ -177,7 +166,7 @@ class DepartmentController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',           
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -188,9 +177,12 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         try {
-            if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {                          
+            if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {
                 logFile($this->path_logo_departments, $department->logo, 'DELETED');
             }
+
+            $department->cabinets()->detach();
+            $department->users()->detach();
 
             $department->delete();
 
@@ -202,7 +194,7 @@ class DepartmentController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }

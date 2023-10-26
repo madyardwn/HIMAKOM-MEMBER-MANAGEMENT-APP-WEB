@@ -11,7 +11,7 @@
                         <div class="col-md-5">
                             <label class="form-label" for="add-logo">Logo</label>
                             <div class="mb-3">
-                                <img src="{{ asset(config('tablar.default.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.default.preview.name') }}">                                
+                                <img src="{{ asset(config('tablar.default.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.default.preview.name') }}">
                             </div>
                             <input type="file" name="logo" id="add-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
                         </div>
@@ -24,7 +24,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="add-cabinet">Cabinet</label>
-                                        <select name="cabinet" id="add-cabinet" data-url="{{ route('tom-select.cabinets') }}">
+                                        <select name="cabinet" id="add-cabinet">
                                         </select>
                                     </div>
                                 </div>
@@ -36,9 +36,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ms-auto" id="submit-add-filosofies">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />

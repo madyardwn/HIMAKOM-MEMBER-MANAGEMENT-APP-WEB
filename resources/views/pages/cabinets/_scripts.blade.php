@@ -75,6 +75,19 @@
                     }
                 },
                 {
+                    data: 'departments',
+                    name: 'departments.name',
+                    title: 'Departments',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
+                },
+                {
                     data: null,
                     title: 'Action',
                     orderable: false,
@@ -97,7 +110,50 @@
                         return html;
                     }
                 },
-            ]
+            ],
+            tomSelects: [{
+                name: 'departments',
+                settings: {
+                    valueField: "id",
+                    labelField: "name",
+                    searchField: "name",
+                    placeholder: `Select Departments`,
+                    plugins: {
+                        remove_button: {
+                            title: "Remove this item",
+                        },
+                    },
+                    load: (query, callback) => {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: "{{ route('tom-select.departments') }}",
+                            type: "GET",
+                            dataType: "json",
+                            data: {
+                                q: query,
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                callback(res);
+                            },
+                        });
+                    },
+                    render: {
+                        option: function(item, escape) {
+                            return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                        },
+                        item: function(item, escape) {
+                            return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                        },
+                    },
+                },
+            }]
         });
 
         cabinet.init();

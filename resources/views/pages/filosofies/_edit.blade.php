@@ -25,7 +25,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="edit-cabinet">Cabinet</label>
-                                        <select name="cabinet" id="edit-cabinet" data-url="{{ route('tom-select.cabinets') }}">
+                                        <select name="cabinet" id="edit-cabinet">
                                         </select>
                                     </div>
                                 </div>
@@ -37,9 +37,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ms-auto" id="submit-edit-filosofies">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
                         <path d="M13.5 6.5l4 4"></path>

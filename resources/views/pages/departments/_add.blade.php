@@ -11,7 +11,7 @@
                         <div class="col-md-5">
                             <label class="form-label" for="add-logo">Logo</label>
                             <div class="mb-3">
-                                <img src="{{ asset(config('tablar.default.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.default.preview.name') }}">                                
+                                <img src="{{ asset(config('tablar.default.preview.path')) }}" id="preview-add-logo" class="img-thumbnail" width="265" height="300" alt="{{ config('tablar.default.preview.name') }}">
                             </div>
                             <input type="file" name="logo" id="add-logo" class="form-control" placeholder="Enter logo" autocomplete="off" required>
                         </div>
@@ -28,13 +28,6 @@
                                 <label class="form-label" for="add-description">Description</label>
                                 <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-label" for="add-is_active">Status</div>
-                                <label class="form-check form-switch">
-                                <input type="checkbox" name="is_active" id="add-is_active" class="form-check-input">
-                                <span class="form-check-label">Active</span>
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -42,9 +35,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ms-auto" id="submit-add-departments">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />

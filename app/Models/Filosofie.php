@@ -15,25 +15,25 @@ class Filosofie extends Model
      * The attributes that are mass assignable.
      *
      * @var array 
-    */
+     */
     protected $fillable = [
         'cabinet_id',
         'logo',
         'label',
     ];
-    
+
     /**
      * The attributes where the logo is stored.
      * 
      * @param string $value
      * @return string
-     */    
+     */
     public function getLogoAttribute($value)
     {
         if ($value) {
             return asset('storage/' . config('dirpath.cabinets.filosofies') . '/' . $value);
         }
-    }    
+    }
 
     /**
      * The attributes that are logged.
@@ -68,5 +68,5 @@ class Filosofie extends Model
     public function cabinet()
     {
         return $this->belongsTo(Cabinet::class);
-    }    
+    }
 }

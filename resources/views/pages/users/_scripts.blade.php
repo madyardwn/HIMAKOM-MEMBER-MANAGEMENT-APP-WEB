@@ -1,63 +1,314 @@
 <script type="module">
-    let table, formAdd, formEdit;
+    $(document).ready(function() {
 
-    function initDtTable() {
-        table = new DataTable('#users-table', {
-            processing: true,
-            responsive: true,
-            serverSide: true,
-            ajax: "{{ route('users-management.users.index') }}",            
-            columns: [
-                {data: 'id', name: 'id', title: 'No'},
-                {data: 'name', name: 'name', title: 'Name'},
-                {data: 'email', name: 'email', title: 'Email'},
-                {
-                    data: null, 
-                    title: 'Action',
-                    orderable: false, 
-                    searchable: false, 
+        const genderOption = [];
+
+        @foreach ($gender as $key => $value)
+            genderOption.push({
+                id: {{ $key }},
+                name: "{{ $value }}"
+            })
+        @endforeach
+
+        const user = new TemplateCRUD({
+            emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
+            subject: 'users',
+            modalAdd: new bootstrap.Modal($(`#modal-add-users`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-users`)),
+            editUrl: "{{ route('users-management.users.edit', ':id') }}",
+            deleteUrl: "{{ route('users-management.users.destroy', ':id') }}",
+            submitAddUrl: "{{ route('users-management.users.store') }}",
+            submitEditUrl: "{{ route('users-management.users.update', ':id') }}",
+            tableDataUrl: "{{ route('users-management.users.index') }}",
+            columns: [{
+                    title: 'No',
+                    data: null,
+                    orderable: false,
+                    searchable: false,
                     responsivePriority: 1,
                     width: '1%',
-                    render: function (data, type, row) {
-                        return `
+                    className: 'dt-center',
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: 'picture',
+                    name: 'picture',
+                    title: 'Picture',
+                    orderable: false,
+                    searchable: false,
+                    responsivePriority: 1,
+                    width: '10%',
+                    render: function(data, type, row) {
+                        return `<img src="${data}" alt="picture" class="img-fluid" width="100">`;
+                    }
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Name',
+                    responsivePriority: 2,
+                    width: '10%'
+                },
+                {
+                    data: 'email',
+                    name: 'email',
+                    title: 'Email',
+                    responsivePriority: 3,
+                    width: '10%'
+                },
+                {
+                    data: 'nim',
+                    name: 'nim',
+                    title: 'NIM',
+                    responsivePriority: 4,
+                    width: '10%'
+                },
+                {
+                    data: 'npa',
+                    name: 'npa',
+                    title: 'NPA',
+                    responsivePriority: 5,
+                    width: '10%'
+                },
+                {
+                    data: 'name_bagus',
+                    name: 'name_bagus',
+                    title: 'Name Bagus',
+                    responsivePriority: 5,
+                    width: '10%'
+                },
+                {
+                    data: 'gender',
+                    name: 'gender',
+                    title: 'Gender',
+                    responsivePriority: 5,
+                    width: '10%',
+                    render: (data) => data == '1' ? 'Male' : 'Female'
+                },
+                {
+                    data: 'cabinets',
+                    name: 'cabinets.name',
+                    title: 'Cabinets',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
+                },
+                {
+                    data: 'departments',
+                    name: 'departments.name',
+                    title: 'Department',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
+                },
+                {
+                    data: 'roles',
+                    name: 'roles.name',
+                    title: 'Roles',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
+                },
+                {
+                    data: null,
+                    title: 'Action',
+                    orderable: false,
+                    searchable: false,
+                    responsivePriority: 1,
+                    width: '1%',
+                    render: function(data, type, row) {
+                        let html = '';
+                        html = `
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Action
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item btn-edit" href="#" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                    <li><a class="dropdown-item btn-delete" href="{{ route('users-management.users.index') }}/${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                                <ul class="dropdown-menu">                                    
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>
                         `;
+                        return html;
                     }
                 },
             ],
-        });         
-    }
-
-    // docuemnt on ready
-    $(document).ready(function () {
-        initDtTable();
-        // initDtEvents();
-
-        const addCabinet = new TomSelect("#add-cabinet", {
-            persist: false,
-            createOnBlur: true,
-            create: true
+            tomSelects: [{
+                    name: 'cabinets',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select cabinet`,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        load: (query, callback) => {
+                            if (!query.length) return callback();
+                            $.ajax({
+                                url: "{{ route('tom-select.cabinets') }}",
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    q: query,
+                                },
+                                error: function() {
+                                    callback();
+                                },
+                                success: function(res) {
+                                    callback(res);
+                                },
+                            });
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                            },
+                        },
+                    },
+                },
+                {
+                    name: 'roles',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select roles`,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        load: (query, callback) => {
+                            if (!query.length) return callback();
+                            $.ajax({
+                                url: "{{ route('tom-select.roles') }}",
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    q: query,
+                                },
+                                error: function() {
+                                    callback();
+                                },
+                                success: function(res) {
+                                    callback(res);
+                                },
+                            });
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                            },
+                        },
+                    },
+                },
+                {
+                    name: 'departments',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select departments`,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        load: (query, callback) => {
+                            if (!query.length) return callback();
+                            $.ajax({
+                                url: "{{ route('tom-select.departments') }}",
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    q: query,
+                                },
+                                error: function() {
+                                    callback();
+                                },
+                                success: function(res) {
+                                    callback(res);
+                                },
+                            });
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                            },
+                        },
+                    },
+                },
+                {
+                    name: 'gender',
+                    settings: {
+                        valueField: "id",
+                        labelField: "name",
+                        searchField: "name",
+                        placeholder: `Select Gender`,
+                        options: genderOption,
+                        plugins: {
+                            remove_button: {
+                                title: "Remove this item",
+                            },
+                        },
+                        render: {
+                            option: function(item, escape) {
+                                return `<div>
+                                        <span class="title">${escape(item.name)}</span>
+                                    </div>`;
+                            },
+                            item: function(item, escape) {
+                                return `<div>
+                                        ${escape(item.name)}
+                                    </div>`;
+                            },
+                        },
+                    },
+                }
+            ]
         });
 
-        const addDepartment = new TomSelect("#add-department", {
-            persist: false,
-            createOnBlur: true,
-            create: true
-        });
-
-        const addRole = new TomSelect("#add-role", {
-            persist: false,
-            createOnBlur: true,
-            create: true
-        });
-
+        user.init();
     });
 </script>

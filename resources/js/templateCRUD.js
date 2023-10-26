@@ -163,7 +163,7 @@ class TemplateCRUD {
                     $.ajax({
                         url: this.deleteUrl.replace(":id", id),
                         method: "DELETE",
-                        success: function (response) {
+                        success: (response) => {
                             if (response.status === "success") {
                                 Swal.fire({
                                     icon: "success",
@@ -185,7 +185,7 @@ class TemplateCRUD {
                                 });
                             }
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
+                        error: (xhr, ajaxOptions, thrownError) => {
                             Swal.fire("Error!", thrownError, "error");
 
                             $(`#card-${this.subject}`).before(`

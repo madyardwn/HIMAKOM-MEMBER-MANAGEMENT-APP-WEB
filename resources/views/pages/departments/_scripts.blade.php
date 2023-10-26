@@ -54,15 +54,6 @@
                     title: 'Description'
                 },
                 {
-                    data: 'is_active',
-                    name: 'is_active',
-                    title: 'Status',
-                    width: '5%',
-                    render: function(data, type, row) {
-                        return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
-                    }
-                },
-                {
                     data: null,
                     title: 'Action',
                     orderable: false,

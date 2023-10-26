@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('short_name');
             $table->string('description')->nullable();
-            $table->string('location')->nullable();
-            $table->string('poster')->nullable();
-            $table->date('date');
-            $table->time('time');
-            $table->integer('type')->comment('1:kegiatan, 2:proker, 3:lomba, 4:project')->default(1);
-            $table->boolean('is_active')->default(true);
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('departments');
     }
 };

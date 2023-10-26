@@ -26,10 +26,16 @@ class User extends Authenticatable
         'password',
         'nim',
         'npa',
-        'nama_bagus',
+        'name_bagus',
         'picture',
         'year',
         'device_token',
+        'gender',
+    ];
+
+    const GENDER_TYPE = [
+        0 => 'Female',
+        1 => 'Male'
     ];
 
     /**
@@ -66,7 +72,20 @@ class User extends Authenticatable
             ->setDescriptionForEvent(function (string $eventName) {
                 return "{$this->name} has been {$eventName}";
             });
-    }    
+    }
+
+    /**
+     * The attributes where the logo is stored.
+     * 
+     * @param string $value
+     * @return string
+     */
+    public function getPictureAttribute($value)
+    {
+        if ($value && file_exists(storage_path('app/public/' . config('dirpath.users.pictures') . '/' . $value))) {
+            return asset('storage/' . config('dirpath.users.pictures') . '/' . $value);
+        }
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -81,41 +100,19 @@ class User extends Authenticatable
      * Get the user's role.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
+     */
     public function cabinets()
     {
-        return $this->belongsToMany(Cabinet::class, 'periodes', 'user_id', 'cabinet_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
+        return $this->belongsToMany(Cabinet::class, 'users_cabinets', 'user_id', 'cabinet_id')->withPivot('id')->withTimestamps();
     }
 
     /**
      * Get the user's role.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
+     */
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'periodes', 'user_id', 'department_id')->withPivot('id', 'is_active', 'position')->withTimestamps();
-    }
-
-    /**
-     * Get the user's role.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
-    public function periodes()
-    {
-        return $this->hasMany(Periode::class);
-    }
-
-    /**
-     * Get the user's role.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
-    public function scopeActive($query)
-    {
-        return $query->whereHas('periodes', function ($query) {
-            $query->where('is_active', true);
-        });
+        return $this->belongsToMany(Department::class, 'users_departments', 'user_id', 'department_id')->withPivot('id')->withTimestamps();
     }
 }
