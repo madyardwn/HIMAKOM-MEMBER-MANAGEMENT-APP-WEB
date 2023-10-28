@@ -30,11 +30,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-date">Date</label>
-                                <input type="date" name="date" id="add-date" class="form-control" placeholder="Enter date" autocomplete="off" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-time">Time</label>
-                                <input type="time" name="time" id="add-time" class="form-control" placeholder="Enter time" autocomplete="off" required>
+                                <input type="datetime-local" name="date" id="add-date" class="form-control" placeholder="Enter date" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">

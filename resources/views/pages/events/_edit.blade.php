@@ -31,11 +31,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-date">Date</label>
-                                <input type="date" name="date" id="edit-date" class="form-control" placeholder="Enter date" autocomplete="off" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="edit-time">Time</label>
-                                <input type="time" name="time" id="edit-time" class="form-control" placeholder="Enter time" autocomplete="off" required>
+                                <input type="datetime-local" name="date" id="edit-date" class="form-control" placeholder="Enter date" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">

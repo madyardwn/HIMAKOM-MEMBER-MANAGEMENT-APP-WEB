@@ -157,7 +157,7 @@ return [
                     'icon' => 'ti ti-users-group',
                     'route' => 'users-management.users.index',
                     'hasAnyPermission' => ['access-users'],
-                ],                                
+                ],
             ],
         ],
         [
@@ -235,43 +235,43 @@ return [
                 ],
             ],
         ],
-        [
-            'text' => 'Content (Soon)',
-            'icon' => 'ti ti-aspect-ratio',
-            'hasAnyPermission' => ['access-news', 'access-articles', 'access-galleries', 'access-videos', 'access-documents'],
-            'submenu' => [
-                [
-                    'text' => 'News',
-                    'icon' => 'ti ti-article',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-news'],
-                ],
-                [
-                    'text' => 'Article',
-                    'icon' => 'ti ti-file-text',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-articles'],
-                ],
-                [
-                    'text' => 'Gallery',
-                    'icon' => 'ti ti-photo',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-galleries'],
-                ],
-                [
-                    'text' => 'Video',
-                    'icon' => 'ti ti-player-play',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-videos'],
-                ],
-                [
-                    'text' => 'Document',
-                    'icon' => 'ti ti-file',
-                    'url' => '#',
-                    'hasAnyPermission' => ['access-documents'],
-                ],
-            ],
-        ],
+        // [
+        //     'text' => 'Content (Soon)',
+        //     'icon' => 'ti ti-aspect-ratio',
+        //     'hasAnyPermission' => ['access-news', 'access-articles', 'access-galleries', 'access-videos', 'access-documents'],
+        //     'submenu' => [
+        //         [
+        //             'text' => 'News',
+        //             'icon' => 'ti ti-article',
+        //             'url' => '#',
+        //             'hasAnyPermission' => ['access-news'],
+        //         ],
+        //         [
+        //             'text' => 'Article',
+        //             'icon' => 'ti ti-file-text',
+        //             'url' => '#',
+        //             'hasAnyPermission' => ['access-articles'],
+        //         ],
+        //         [
+        //             'text' => 'Gallery',
+        //             'icon' => 'ti ti-photo',
+        //             'url' => '#',
+        //             'hasAnyPermission' => ['access-galleries'],
+        //         ],
+        //         [
+        //             'text' => 'Video',
+        //             'icon' => 'ti ti-player-play',
+        //             'url' => '#',
+        //             'hasAnyPermission' => ['access-videos'],
+        //         ],
+        //         [
+        //             'text' => 'Document',
+        //             'icon' => 'ti ti-file',
+        //             'url' => '#',
+        //             'hasAnyPermission' => ['access-documents'],
+        //         ],
+        //     ],
+        // ],
         [
             'text' => 'Auth API\'s (Soon)',
             'icon' => 'ti ti-lock',
@@ -294,7 +294,7 @@ return [
         [
             'text' => 'CV Himakom (Soon)',
             'icon' => 'ti ti-id-badge',
-            'url' => '#',            
+            'url' => '#',
             'hasAnyPermission' => ['access-cv-himakom'],
         ],
     ],
@@ -369,5 +369,5 @@ return [
             'name' => 'Error Image',
             'alt' => 'Error Image',
         ],
-    ],    
+    ],
 ];

@@ -1,17 +1,19 @@
 <script type="module">
+    let options = []
+
+    @foreach ($events as $key => $value)
+        options.push({
+            id: {{ $key }},
+            name: "{{ $value }}"
+        })
+    @endforeach
+
     $(document).ready(function() {
-
-        let options = []
-
-        @foreach ($events as $key => $value)
-            options.push({
-                id: {{ $key }},
-                name: "{{ $value }}"
-            })
-        @endforeach
 
         const events = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
+            modalAdd: new bootstrap.Modal($(`#modal-add-events`)),
+            modalEdit: new bootstrap.Modal($(`#modal-edit-events`)),
             editUrl: "{{ route('periodes.events.edit', ':id') }}",
             deleteUrl: "{{ route('periodes.events.destroy', ':id') }}",
             submitAddUrl: "{{ route('periodes.events.store') }}",
@@ -59,13 +61,8 @@
                     data: 'date',
                     name: 'date',
                     title: 'Date',
-                    width: '10%'
-                },
-                {
-                    data: 'time',
-                    name: 'time',
-                    title: 'Time',
-                    width: '10%'
+                    width: '10%',
+                    render: (data, type, row) => moment(data).format('DD MMMM YYYY HH:mm')
                 },
                 {
                     data: 'location',
@@ -78,16 +75,6 @@
                     name: 'type',
                     title: 'Type',
                     width: '10%'
-                },
-                {
-                    data: 'is_active',
-                    name: 'is_active',
-                    title: 'Status',
-                    width: '20%',
-                    responsivePriority: 1,
-                    render: function(data, type, row) {
-                        return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
-                    }
                 },
                 {
                     data: null,
@@ -104,7 +91,8 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#modal-edit-events"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                    <li><a class="dropdown-item btn-notification" href="" data-id="${data.id}"><i class="ti ti-bell"></i>&nbsp; Notification</a></li>
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                                     <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                                 </ul>
                             </div>

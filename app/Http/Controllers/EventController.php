@@ -16,7 +16,7 @@ class EventController extends Controller
      * Path to store posters.
      */
     private $path_poster_events;
-    
+
     /**
      * Create a new controller instance.
      */
@@ -31,7 +31,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            
+
             $typeExpression = 'CASE type ';
             foreach (Event::EVENT_TYPE as $key => $value) {
                 $typeExpression .= 'WHEN ' . $key . ' THEN "' . $value . '" ';
@@ -45,9 +45,7 @@ class EventController extends Controller
                 'location',
                 'poster',
                 'date',
-                'time',
                 DB::raw($typeExpression),
-                'is_active',
             ]);
 
             return DataTables::of($data)->make();
@@ -77,7 +75,6 @@ class EventController extends Controller
             'location' => 'required|max:255',
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date',
-            'time' => 'required',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
         ]);
 
@@ -100,9 +97,7 @@ class EventController extends Controller
                 'description' => $request->description,
                 'location' => $request->location,
                 'date' => $request->date,
-                'time' => $request->time,
                 'type' => $request->type,
-                'active' => Carbon::parse($request->date . ' ' . $request->time)->greaterThan(Carbon::now()),
             ]);
 
             return response()->json([
@@ -114,7 +109,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -148,7 +143,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -163,7 +158,6 @@ class EventController extends Controller
             'description' => 'required|max:255',
             'location' => 'required|max:255',
             'date' => 'required|date',
-            'time' => 'required',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
         ]);
 
@@ -178,7 +172,7 @@ class EventController extends Controller
         try {
             if ($request->hasFile('poster')) {
 
-                if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {                          
+                if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {
                     logFile($this->path_poster_events, $event->poster, 'UPDATED');
                 }
 
@@ -193,9 +187,7 @@ class EventController extends Controller
                 'description' => $request->description,
                 'location' => $request->location,
                 'date' => $request->date,
-                'time' => $request->time,
                 'type' => $request->type,
-                'is_active' => Carbon::parse($request->date . ' ' . $request->time)->greaterThan(Carbon::now()),
             ]);
 
             return response()->json([
@@ -207,7 +199,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',           
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -218,7 +210,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         try {
-            if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {                          
+            if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {
                 logFile($this->path_poster_events, $event->poster, 'DELETED');
             }
 
@@ -232,7 +224,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }

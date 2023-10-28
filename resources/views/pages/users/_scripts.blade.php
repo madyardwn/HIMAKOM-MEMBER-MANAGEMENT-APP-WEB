@@ -1,4 +1,76 @@
 <script type="module">
+    let user;
+
+    function initImportSubmit() {
+        $(`#submit-import-users`).on("click", (e, item) => {
+            e.preventDefault();
+
+            $(".is-invalid").removeClass("is-invalid");
+            $(".invalid-feedback").remove();
+            $(`#submit-import-users`).attr("disabled", true);
+            $(`#submit-import-users`).addClass("btn-loading");
+
+            const form = $(`#form-import-users`); // Ambil form
+            const formData = new FormData(form[0]); // Buat form data
+            const url = "{{ route('users-management.users.import') }}"; // Set url
+
+            $.ajax({
+                url: url, // Set url
+                method: "POST",
+                data: formData, // Menggunakan objek FormData sebagai data
+                contentType: false, // Mengatur contentType ke false
+                processData: false, // Mengatur processData ke false
+                success: (response) => {
+                    $(`#submit-import-users`).attr("disabled", false);
+                    $(`#submit-import-users`).removeClass("btn-loading");
+                    if (response.status === "success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            user.table.ajax.reload();
+                            $(`#card-users`).before(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> ${response.message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+                            $(".alert").delay(3000).slideUp(300);
+                        });
+                    } else {
+                        Swal.fire("Error!", response.message, "error");
+                    }
+                },
+                error: (response) => {
+                    $(`#submit-import-users`).attr("disabled", false);
+                    $(`#submit-import-users`).removeClass("btn-loading");
+                    if (response.status === 422) {
+                        const errors = response.responseJSON.errors;
+                        for (const key in errors) {
+                            if (Object.hasOwnProperty.call(errors, key)) {
+                                const element = errors[key];
+                            }
+                        }
+                    } else {
+                        Swal.fire("Error!", "Something went wrong!", "error");
+                    }
+                },
+            });
+        });
+    }
+
+    function initImportEvents() {
+        $(`#modal-import-users`).on("hidden.bs.modal", (e) => {
+            $(".is-invalid").removeClass("is-invalid");
+            $(".invalid-feedback").remove();
+
+            $(`#form-import-users`)[0].reset(); // reset form            
+        });
+    }
+
     $(document).ready(function() {
 
         const genderOption = [];
@@ -10,7 +82,7 @@
             })
         @endforeach
 
-        const user = new TemplateCRUD({
+        user = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             subject: 'users',
             modalAdd: new bootstrap.Modal($(`#modal-add-users`)),
@@ -86,6 +158,13 @@
                     responsivePriority: 5,
                     width: '10%',
                     render: (data) => data == '1' ? 'Male' : 'Female'
+                },
+                {
+                    data: 'year',
+                    name: 'year',
+                    title: 'Year',
+                    responsivePriority: 5,
+                    width: '10%'
                 },
                 {
                     data: 'cabinets',
@@ -310,5 +389,8 @@
         });
 
         user.init();
+
+        initImportSubmit();
+        initImportEvents();
     });
 </script>
