@@ -1,13 +1,13 @@
 <script type="module">
     $(document).ready(function() {
-        const authWebRoles = new TemplateCRUD({
+        const authWebPermissions = new TemplateCRUD({
             emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
             subject: 'auth-web-permissions',
-            editUrl: "{{ route('auth-web.roles.edit', ':id') }}",
-            deleteUrl: "{{ route('auth-web.roles.destroy', ':id') }}",
-            submitAddUrl: "{{ route('auth-web.roles.store') }}",
-            submitEditUrl: "{{ route('auth-web.roles.update', ':id') }}",
-            tableDataUrl: "{{ route('auth-web.roles.index') }}",
+            editUrl: "",
+            deleteUrl: "",
+            submitAddUrl: "",
+            submitEditUrl: "",
+            tableDataUrl: "{{ route('auth-web.permissions.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id',
@@ -22,6 +22,6 @@
             ],
         });
 
-        authWebRoles.init();
+        authWebPermissions.init();
     });
 </script>

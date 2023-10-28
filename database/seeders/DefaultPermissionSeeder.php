@@ -6,7 +6,7 @@ use App\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DefaultPermissionsSeeder extends Seeder
+class DefaultPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -33,11 +33,11 @@ class DefaultPermissionsSeeder extends Seeder
             'departments',
             'programs',
             'events',
-            'news',
-            'articles',
-            'galleries',
-            'videos',
-            'documents',
+            // 'news',
+            // 'articles',
+            // 'galleries',
+            // 'videos',
+            // 'documents',
             'activity-logs',
             'telescope',
             'cv-himakom'
@@ -47,6 +47,6 @@ class DefaultPermissionsSeeder extends Seeder
             foreach ($permission as $perm) {
                 Permission::create(['name' => "{$perm}-{$model}"]);
             }
-        }        
+        }
     }
 }

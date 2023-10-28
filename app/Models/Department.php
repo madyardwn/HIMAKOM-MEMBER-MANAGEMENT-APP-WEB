@@ -31,8 +31,10 @@ class Department extends Model
      */
     public function getLogoAttribute($value)
     {
-        if ($value) {
+        if ($value && file_exists(storage_path('app/public/' . config('dirpath.departments.logo') . '/' . $value))) {
             return asset('storage/' . config('dirpath.departments.logo') . '/' . $value);
+        } else {
+            return asset(config('tablar.default.logo.path'));
         }
     }
 

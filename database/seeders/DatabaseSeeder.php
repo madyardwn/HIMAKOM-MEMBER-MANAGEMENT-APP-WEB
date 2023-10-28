@@ -16,11 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(DefaultPermissionsSeeder::class);
-
-        // Create Super Admin Role
-        $role = Role::create(['name' => 'super-admin']);
-
         // Create Super Admin User
         $user = User::create([
             'name' => 'Super Admin',
@@ -28,11 +23,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('unittekno36'),
         ]);
 
-        // Assign Super Admin Role to Super Admin User
-        $user->assignRole($role->name);
+        $this->call(DefaultPermissionSeeder::class); // Create Permissions
+        $this->call(DefaultRoleSeeder::class); // Create Roles
+        $this->call(DefaultDepartmentSeeder::class); // Create Departments
 
-        // Assign All Permissions to Super Admin Role
-        $permissions = Permission::pluck('id', 'id')->all();
-        $role->syncPermissions($permissions);
+        $user->assignRole('super-admin'); // Assign Super Admin Role to Super Admin User
     }
 }

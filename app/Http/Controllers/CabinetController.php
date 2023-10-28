@@ -68,8 +68,8 @@ class CabinetController extends Controller
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'year' => 'required|numeric',
             'is_active' => 'required|numeric',
-            'visi' => 'required|max:255',
-            'misi' => 'required|max:255',
+            'visi' => 'required',
+            'misi' => 'required',
             'departments' => 'required|array',
         ]);
 
@@ -152,8 +152,8 @@ class CabinetController extends Controller
             'description' => 'required|max:255',
             'year' => 'required|numeric',
             'is_active' => 'required|numeric',
-            'visi' => 'required|max:255',
-            'misi' => 'required|max:255',
+            'visi' => 'required',
+            'misi' => 'required',
             'departments' => 'required|array',
         ]);
 

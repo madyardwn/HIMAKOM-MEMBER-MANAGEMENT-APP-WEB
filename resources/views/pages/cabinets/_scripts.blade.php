@@ -45,7 +45,8 @@
                     data: 'description',
                     name: 'description',
                     title: 'Description',
-                    width: '20%'
+                    width: '20%',
+                    responsivePriority: 2,
                 },
                 {
                     data: 'visi',
@@ -63,13 +64,15 @@
                     data: 'year',
                     name: 'year',
                     title: 'Year',
-                    width: '20%'
+                    width: '20%',
+                    responsivePriority: 2,
                 },
                 {
                     data: 'is_active',
                     name: 'is_active',
                     title: 'Status',
                     width: '20%',
+                    responsivePriority: 1,
                     render: function(data, type, row) {
                         return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
                     }
@@ -79,6 +82,8 @@
                     name: 'departments.name',
                     title: 'Departments',
                     orderable: false,
+                    width: '30%',
+                    responsivePriority: 4,
                     render: function(data, type, row) {
                         let html = '';
                         data.forEach(function(item, index) {
