@@ -32,7 +32,8 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Notification::select('*')
+            $data = Notification::with('users:id,name')
+                ->select('*')
                 ->orderBy('created_at', 'desc');
 
             return DataTables::of($data)

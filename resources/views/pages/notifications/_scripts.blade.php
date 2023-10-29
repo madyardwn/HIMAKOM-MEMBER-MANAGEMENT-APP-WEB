@@ -49,17 +49,31 @@
                     responsivePriority: 1,
                 },
                 {
+                    data: 'link',
+                    name: 'link',
+                    title: 'Link',
+                    width: '10%',
+                    responsivePriority: 2,
+                },
+                {
                     data: 'created_at',
                     name: 'created_at',
                     title: 'Created At',
                     width: '10%',
+                    responsivePriority: 3,
                     render: (data) => moment(data).format('DD MMMM YYYY HH:mm')
                 },
                 {
-                    data: 'link',
-                    name: 'link',
-                    title: 'Link',
-                    width: '10%'
+                    data: 'users',
+                    name: 'users.name',
+                    title: 'Sent To',
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-grey">${item.name}</span>`;
+                        });
+                        return html;
+                    }
                 },
                 {
                     data: null,

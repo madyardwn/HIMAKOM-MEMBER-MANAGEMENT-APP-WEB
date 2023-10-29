@@ -13,28 +13,22 @@ class AuthWebRoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-     public function index(Request $request)
-     {
-         if ($request->ajax()) {
-             $data = Role::with('permissions:id,name')
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Role::with('permissions:id,name')
                 ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
                     return $query->where('id', '!=', 1);
                 })
-                ->when($request->search['value'], function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhereHas('permissions', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    });
-                })
                 ->orderBy('id', 'asc');
-             
-             return DataTables::of($data)
+
+            return DataTables::of($data)
                 ->make(true);
-         }
-  
-         return view('pages.auth-web-roles.index');
-     }
-     
+        }
+
+        return view('pages.auth-web-roles.index');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -42,7 +36,7 @@ class AuthWebRoleController extends Controller
     {
         try {
             $role->load('permissions:id,name');
-            
+
             return response()->json([
                 'status' => 'success',
                 'data' => $role,

@@ -14,25 +14,16 @@ class ActivityLogController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-     {
-         if ($request->ajax()) {
+    {
+        if ($request->ajax()) {
             $data = Activity::with('causer:id,name')
-                ->select([
-                    'id',
-                    'log_name',
-                    'description',
-                    'causer_id',
-                    'causer_type',
-                    'properties',
-                    'created_at',
-                ])
+                ->select('*')
                 ->orderBy('created_at', 'desc');
-             
-             return DataTables::of($data)
-                ->make(true);
-         }
-  
-         return view('pages.activity-logs.index');
-     }
-}
 
+            return DataTables::of($data)
+                ->make(true);
+        }
+
+        return view('pages.activity-logs.index');
+    }
+}

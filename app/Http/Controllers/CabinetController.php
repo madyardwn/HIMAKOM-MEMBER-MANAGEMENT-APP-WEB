@@ -30,16 +30,6 @@ class CabinetController extends Controller
     {
         if ($request->ajax()) {
             $data = Cabinet::with('departments:id,name')
-                ->when($request->search['value'], function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('description', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('year', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('visi', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('misi', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhereHas('departments', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    });
-                })
                 ->orderBy('id', 'asc');
 
             return DataTables::of($data)
