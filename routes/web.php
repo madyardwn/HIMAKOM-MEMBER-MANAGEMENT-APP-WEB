@@ -39,6 +39,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/users/{user}/update', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}/destroy', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
         Route::post('/users/import', [\App\Http\Controllers\UserController::class, 'import'])->name('users.import');
+
+        // Notifications
+        Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/notifications/store', [\App\Http\Controllers\NotificationController::class, 'store'])->name('notifications.store');
+        Route::get('/notifications/{notification}/edit', [\App\Http\Controllers\NotificationController::class, 'edit'])->name('notifications.edit');
+        Route::put('/notifications/{notification}/update', [\App\Http\Controllers\NotificationController::class, 'update'])->name('notifications.update');
+        Route::delete('/notifications/{notification}/destroy', [\App\Http\Controllers\NotificationController::class, 'destroy'])->name('notifications.destroy');
     });
 
     // route auth-web group
@@ -90,6 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/events/{event}/edit', [\App\Http\Controllers\EventController::class, 'edit'])->name('events.edit');
         Route::put('/events/{event}/update', [\App\Http\Controllers\EventController::class, 'update'])->name('events.update');
         Route::delete('/events/{event}/destroy', [\App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy');
+        Route::post('events/notification/{event}', [\App\Http\Controllers\EventController::class, 'notification'])->name('events.notification');
     });
 
     // route logs

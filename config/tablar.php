@@ -158,6 +158,12 @@ return [
                     'route' => 'users-management.users.index',
                     'hasAnyPermission' => ['access-users'],
                 ],
+                [
+                    'text' => 'Notification',
+                    'icon' => 'ti ti-bell',
+                    'route' => 'users-management.notifications.index',
+                    'hasAnyPermission' => ['access-users'],
+                ],
             ],
         ],
         [

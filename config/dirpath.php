@@ -19,4 +19,7 @@ return [
     'users' => [
         'pictures' => 'users/pictures',
     ],
+    'notifications' => [
+        'posters' => 'notifications/posters',
+    ],
 ];

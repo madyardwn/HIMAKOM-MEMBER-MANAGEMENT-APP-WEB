@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cabinet;
 use App\Models\Event;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -100,6 +103,10 @@ class EventController extends Controller
                 'type' => $request->type,
             ]);
 
+            if (!Carbon::parse($event->date)->isPast()) {
+                $this->sendNotification($event);
+            }
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Event created successfully!',
@@ -111,6 +118,73 @@ class EventController extends Controller
                 'status' => 'error',
                 'message' => 'Something went wrong!',
             ], 500);
+        }
+    }
+
+    public function sendNotification($event)
+    {
+        $notification = Notification::create([
+            'poster' => $event->poster,
+            'title' => $event->name,
+            'body' => $event->description,
+        ]);
+
+        $url = env('FCM_URL');
+
+        $serverKey = env('FCM_SERVER_KEY');
+
+        $headers = [
+            'Authorization: key=' . $serverKey,
+            'Content-Type: application/json',
+        ];
+
+        $data = [
+            'event_id' => $notification->id,
+        ];
+
+        $cabinet = Cabinet::where('is_active', 1)->first();
+        $fcmTokens = $cabinet->users()->whereNotNull('device_token')->pluck('device_token')->all();
+
+        $chunks = array_chunk($fcmTokens, 50);
+
+        foreach ($chunks as $chunk) {
+            $fields = [
+                'registration_ids' => $chunk,
+                'notification' => $notification,
+                'data' => $data,
+            ];
+
+            $payload = json_encode($fields);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => $headers,
+            ]);
+
+            $response = curl_exec($curl);
+
+            if ($response === false) {
+                // Handle the cURL error here
+                throw new \Exception('cURL error: ' . curl_error($curl));
+            }
+
+            curl_close($curl);
+
+            foreach ($chunk as $token) {
+                $user = User::where('device_token', $token)->first();
+
+                if ($user) {
+                    $user->notifications()->attach(Notification::latest()->first()->id, [
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
         }
     }
 
@@ -219,6 +293,94 @@ class EventController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Event deleted successfully!',
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong!',
+            ], 500);
+        }
+    }
+
+    public function notification(Event $event, Request $request)
+    {
+        try {
+            if (Carbon::parse($event->date)->isPast()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Event ' . $event->name . ' has passed!',
+                ], 403);
+            }
+
+            $notification = Notification::create([
+                'title' => $request->title ?? 'Event ' . $event->name,
+                'body' => $request->body ?? 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
+                'link' => $request->link ?? '',
+                'poster' => $event->poster,
+            ]);
+
+            $url = env('FCM_URL');
+
+            $serverKey = env('FCM_SERVER_KEY');
+
+            $headers = [
+                'Authorization: key=' . $serverKey,
+                'Content-Type: application/json',
+            ];
+
+            $data = [
+                'event_id' => $notification->id,
+            ];
+
+            $cabinet = Cabinet::where('is_active', 1)->first();
+            $fcmTokens = $cabinet->users()->whereNotNull('device_token')->pluck('device_token')->all();
+
+            $chunks = array_chunk($fcmTokens, 50);
+
+            foreach ($chunks as $chunk) {
+                $fields = [
+                    'registration_ids' => $chunk,
+                    'notification' => $notification,
+                    'data' => $data,
+                ];
+
+                $payload = json_encode($fields);
+
+                $curl = curl_init();
+
+                curl_setopt_array($curl, [
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => $payload,
+                    CURLOPT_HTTPHEADER => $headers,
+                ]);
+
+                $response = curl_exec($curl);
+
+                if ($response === false) {
+                    // Handle the cURL error here
+                    throw new \Exception('cURL error: ' . curl_error($curl));
+                }
+
+                curl_close($curl);
+
+                foreach ($chunk as $token) {
+                    $user = User::where('device_token', $token)->first();
+
+                    if ($user) {
+                        $user->notifications()->attach(Notification::latest()->first()->id, [
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    }
+                }
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Notification sent successfully!',
             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

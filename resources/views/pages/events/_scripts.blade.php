@@ -130,5 +130,97 @@
             }]
         });
         events.init();
+
+        events.table.on("click", ".btn-notification", function(e) {
+            e.preventDefault();
+
+            const id = $(this).attr('data-id');
+            console.log(id);
+            Swal.fire({
+                title: 'Kirim Notifikasi',
+                html: `
+                        <div class="form-group mt-3">
+                            <input type="text" class="form-control" id="swal-title" placeholder="Title">
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" id="swal-body" placeholder="Content" rows="4"></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="text" class="form-control" id="swal-link" placeholder="Link">
+                        </div>
+                    `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Kirim!',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    const title = document.getElementById('swal-title').value;
+                    const body = document.getElementById('swal-body').value;
+                    const link = document.getElementById('swal-link').value;
+
+                    return {
+                        title,
+                        body,
+                        link
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('title', result.value.title);
+                    formData.append('body', result.value.body);
+                    formData.append('link', result.value.link);
+
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('periodes.events.notification', ':id') }}".replace(':id', id),
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(res) {
+                            if (res) {
+                                Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        html: res.message,
+                                        showConfirmButton: true
+                                    })
+                                    .then((result) => {
+                                        if (result.isConfirmed) {
+                                            events.table.ajax.reload();
+                                            $('#card').before(
+                                                '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                                                res.message +
+                                                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                                '</div>'
+                                            );
+
+                                            $('.alert').delay(3000).slideUp(300,
+                                                function() {
+                                                    $(this).alert('close');
+                                                });
+                                        }
+                                    });
+                            }
+                        },
+                        error: (xhr, ajaxOptions, thrownError) => {
+                            Swal.fire("Error!", thrownError, "error");
+
+                            $(`#card-${this.subject}`).before(`
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> ${thrownError}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+
+                            $(".alert").delay(3000).slideUp(300);
+                        },
+                    });
+                }
+            });
+        });
+
     });
 </script>

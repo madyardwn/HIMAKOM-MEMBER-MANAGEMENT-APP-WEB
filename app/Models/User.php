@@ -119,4 +119,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Department::class, 'users_departments', 'user_id', 'department_id')->withPivot('id')->withTimestamps();
     }
+
+    /**
+     * Get the user's notifications.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'users_notifications', 'user_id', 'notification_id')->withPivot('id')->withTimestamps();
+    }
 }
