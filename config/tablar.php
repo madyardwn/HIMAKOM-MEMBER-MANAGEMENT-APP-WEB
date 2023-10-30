@@ -150,10 +150,10 @@ return [
         [
             'text' => 'User Management',
             'icon' => 'ti ti-user',
-            'hasAnyPermission' => ['access-users'],
+            'hasAnyPermission' => ['access-users', 'access-notifications'],
             'submenu' => [
                 [
-                    'text' => 'Users',
+                    'text' => 'User',
                     'icon' => 'ti ti-users-group',
                     'route' => 'users-management.users.index',
                     'hasAnyPermission' => ['access-users'],
@@ -162,7 +162,7 @@ return [
                     'text' => 'Notification',
                     'icon' => 'ti ti-bell',
                     'route' => 'users-management.notifications.index',
-                    'hasAnyPermission' => ['access-users'],
+                    'hasAnyPermission' => ['access-notifications'],
                 ],
             ],
         ],
