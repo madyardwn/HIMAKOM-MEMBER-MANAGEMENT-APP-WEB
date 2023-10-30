@@ -28,8 +28,9 @@
                     title: 'Poster',
                     orderable: false,
                     searchable: false,
+                    className: 'dt-center',
                     responsivePriority: 1,
-                    width: '10%',
+                    width: '30%',
                     render: function(data, type, row) {
                         return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
                     }
@@ -45,21 +46,20 @@
                     data: 'body',
                     name: 'body',
                     title: 'Body',
-                    width: '10%',
+                    width: '40%',
                     responsivePriority: 1,
                 },
                 {
                     data: 'link',
                     name: 'link',
                     title: 'Link',
-                    width: '10%',
+                    width: '20%',
                     responsivePriority: 2,
                 },
                 {
                     data: 'created_at',
                     name: 'created_at',
                     title: 'Created At',
-                    width: '10%',
                     responsivePriority: 3,
                     render: (data) => moment(data).format('DD MMMM YYYY HH:mm')
                 },

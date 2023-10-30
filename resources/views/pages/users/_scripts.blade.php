@@ -110,6 +110,7 @@
                     title: 'Picture',
                     orderable: false,
                     searchable: false,
+                    className: 'dt-center',
                     responsivePriority: 1,
                     width: '10%',
                     render: function(data, type, row) {

@@ -38,10 +38,11 @@
                     title: 'Poster',
                     orderable: false,
                     searchable: false,
+                    className: 'dt-center',
                     responsivePriority: 1,
                     width: '10%',
                     render: function(data, type, row) {
-                        return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
+                        return `<img src="${data}" alt="Poster" class="img-fluid" width="100">`;
                     }
                 },
                 {
@@ -137,7 +138,7 @@
             const id = $(this).attr('data-id');
             console.log(id);
             Swal.fire({
-                title: 'Kirim Notifikasi',
+                title: 'Send Notification',
                 html: `
                         <div class="form-group mt-3">
                             <input type="text" class="form-control" id="swal-title" placeholder="Title">
@@ -153,17 +154,13 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, Kirim!',
-                cancelButtonText: 'Batal',
+                confirmButtonText: 'Yes, send it!',
+                cancelButtonText: 'Cancel',
                 preConfirm: () => {
-                    const title = document.getElementById('swal-title').value;
-                    const body = document.getElementById('swal-body').value;
-                    const link = document.getElementById('swal-link').value;
-
                     return {
-                        title,
-                        body,
-                        link
+                        title: $('#swal-title').val(),
+                        body: $('#swal-body').val(),
+                        link: $('#swal-link').val(),
                     };
                 }
             }).then((result) => {
@@ -221,6 +218,5 @@
                 }
             });
         });
-
     });
 </script>

@@ -28,6 +28,7 @@
                     title: 'Logo',
                     orderable: false,
                     searchable: false,
+                    className: 'dt-center',
                     responsivePriority: 1,
                     width: '20%',
                     render: function(data, type, row) {
