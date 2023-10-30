@@ -29,7 +29,7 @@ class FilosofieController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()){
+        if ($request->ajax()) {
 
             $data = Filosofie::select("*")
                 ->with('cabinet:id,name');
@@ -86,7 +86,7 @@ class FilosofieController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -106,7 +106,7 @@ class FilosofieController extends Controller
     {
         try {
             $filosofie->load('cabinet:id,name');
-            
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Filosofie fetched successfully!',
@@ -116,7 +116,7 @@ class FilosofieController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -142,7 +142,7 @@ class FilosofieController extends Controller
         try {
 
             if ($request->hasFile('logo')) {
-                if ($filosofie->logo && file_exists(storage_path('app/public/' . $this->path_logo_filosofies . '/' . $filosofie->logo))) {                          
+                if ($filosofie->logo && file_exists(storage_path('app/public/' . $this->path_logo_filosofies . '/' . $filosofie->logo))) {
                     logFile($this->path_logo_filosofies, $filosofie->logo, 'DELETED');
                 }
 
@@ -167,7 +167,7 @@ class FilosofieController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',                
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -178,7 +178,7 @@ class FilosofieController extends Controller
     public function destroy(Filosofie $filosofie)
     {
         try {
-            if ($filosofie->logo && file_exists(storage_path('app/public/' . $this->path_logo_filosofies . '/' . $filosofie->logo))) {                          
+            if ($filosofie->logo && file_exists(storage_path('app/public/' . $this->path_logo_filosofies . '/' . $filosofie->logo))) {
                 logFile($this->path_logo_filosofies, $filosofie->logo, 'DELETED');
             }
             $filosofie->delete();
