@@ -38,6 +38,9 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="edit-type">type</label>
                                         <select name="type" id="edit-type" required>
+                                            @foreach ($types as $key => $type)
+                                                <option value="{{ $key }}">{{ $type }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

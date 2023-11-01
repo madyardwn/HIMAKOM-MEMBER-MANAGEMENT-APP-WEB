@@ -55,7 +55,7 @@ class EventController extends Controller
         }
 
         return view('pages.events.index', [
-            'events' => Event::EVENT_TYPE,
+            'types' => Event::EVENT_TYPE,
         ]);
     }
 
