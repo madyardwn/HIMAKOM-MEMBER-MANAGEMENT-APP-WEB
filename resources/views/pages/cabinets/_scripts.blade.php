@@ -1,5 +1,5 @@
 <script type="module">
-    class Cabinets {
+    class Cabinet {
         constructor() {
             this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}" // empty image
             this.subject = 'cabinets'; // subject of modal event
@@ -150,6 +150,7 @@
                 $(".invalid-feedback").remove();
 
                 $(`#form-add-${this.subject}`)[0].reset(); // reset form
+                $(`#preview-add-logo`).attr("src", this.emptyImage); // reset preview image
                 this.tomSelectAddDepartments.clear(); // clear tom select
             });
 
@@ -158,6 +159,7 @@
                 $(".invalid-feedback").remove();
 
                 $(`#form-edit-${this.subject}`)[0].reset(); // reset form
+                $(`#preview-edit-logo`).attr("src", this.emptyImage); // reset preview image
                 this.tomSelectEditDepartments.clear(); // clear tom select
             });
 
@@ -210,7 +212,7 @@
                                 $('#edit-misi').val(response.data.misi);
                                 $('#edit-year').val(response.data.year);
                                 $('#edit-is_active').prop("checked", response.data.is_active);
-                                $(`#preview-edit-logo`).attr("src", response.data.logo ? response.data.logo : this.emptyImage);
+                                $(`#preview-edit-logo`).attr("src", response.data.logo);
                                 this.tomSelectEditDepartments.setValue(response.data.departments.map((item) => item.id));
                                 this.modalEdit.show();
                             },
@@ -429,7 +431,7 @@
     }
 
     $(document).ready(function() {
-        const cabinet = new Cabinets();
+        const cabinet = new Cabinet();
         cabinet.initDtEvents();
         cabinet.initDtTable();
         cabinet.initDtSubmit();
