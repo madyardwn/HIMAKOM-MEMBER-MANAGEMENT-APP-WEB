@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cabinet;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -30,13 +31,15 @@ class CabinetController extends Controller
     {
         if ($request->ajax()) {
             $data = Cabinet::with('departments:id,name')
-                ->orderBy('id', 'asc');
+                ->orderBy('year', 'desc');
 
             return DataTables::of($data)
                 ->make(true);
         }
 
-        return view('pages.cabinets.index');
+        return view('pages.cabinets.index', [
+            'departments' => Department::all(['id', 'name']),
+        ]);
     }
 
     /**

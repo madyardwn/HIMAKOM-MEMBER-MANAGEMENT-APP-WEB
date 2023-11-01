@@ -47,7 +47,10 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="add-departments">Departments</label>
-                                        <select name="departments" id="add-departments" multiple>
+                                        <select name="departments[]" id="add-departments" multiple>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

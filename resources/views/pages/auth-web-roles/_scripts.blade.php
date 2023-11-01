@@ -125,13 +125,9 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                if (response.status === "success") {
-                                    $('#edit-name').val(response.data.name);
-                                    this.tomSelectEditPermissions.setValue(response.data.permissions.map((item) => item.id));
-                                    this.modalEdit.show();
-                                } else {
-                                    Swal.fire("Error!", response.message, "error");
-                                }
+                                $('#edit-name').val(response.data.name);
+                                this.tomSelectEditPermissions.setValue(response.data.permissions.map((item) => item.id));
+                                this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 Swal.fire("Error!", thrownError, "error");
@@ -209,9 +205,13 @@
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
                 const formData = new FormData(); // Membuat objek FormData
+                const permissions = this.tomSelectAddPermissions.getValue();
 
                 formData.append("name", $(`#add-name`).val());
-                formData.append("permissions[]", this.tomSelectAddPermissions.getValue());
+                // formData.append("permissions[]", this.tomSelectAddPermissions.getValue());
+                permissions.forEach((permission) => {
+                    formData.append("permissions[]", permission);
+                });
 
                 $.ajax({
                     url: this.storeUrl, // Assign URL
@@ -271,11 +271,12 @@
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
                 const formData = new FormData();
+                const permissions = this.tomSelectEditPermissions.getValue();
+
                 formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
                 formData.append("id", $(`#edit-id-${this.subject}`).val());
                 formData.append("name", $(`#edit-name`).val());
                 // formData.append("permissions[]", this.tomSelectEditPermissions.getValue());
-                const permissions = this.tomSelectEditPermissions.getValue();
                 permissions.forEach((permission) => {
                     formData.append("permissions[]", permission);
                 });
@@ -298,10 +299,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalEdit.hide();
+                            this.modalEdit.hide(); // hide modal
 
-                            // Reload Datatable
-                            this.table.DataTable().ajax.reload();
+                            this.table.DataTable().ajax.reload(); // reload datatable
 
                             // Show Alert
                             $(`#card-${this.subject}`).before(`
