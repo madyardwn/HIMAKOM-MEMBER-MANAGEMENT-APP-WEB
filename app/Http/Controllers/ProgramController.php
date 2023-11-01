@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,7 +22,9 @@ class ProgramController extends Controller
             return DataTables::of($data)->make();
         }
 
-        return view('pages.programs.index');
+        return view('pages.programs.index', [
+            'departments' => Department::all(['id', 'name']),
+        ]);
     }
 
     /**
@@ -40,8 +43,8 @@ class ProgramController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name|max:50',
             'description' => 'required|max:255',
-            'user' => 'required|exists:users,id',
-            'department' => 'required|exists:departments,id',
+            'user' => 'required|string|exists:users,id',
+            'department' => 'required|string|exists:departments,id',
         ]);
 
         if ($validator->fails()) {
@@ -57,7 +60,7 @@ class ProgramController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'user_id' => $request->user,
-                'department_id' => $request->department,                
+                'department_id' => $request->department,
             ]);
 
             return response()->json([
@@ -128,7 +131,7 @@ class ProgramController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'user_id' => $request->user,
-                'department_id' => $request->department,                
+                'department_id' => $request->department,
             ]);
 
             return response()->json([

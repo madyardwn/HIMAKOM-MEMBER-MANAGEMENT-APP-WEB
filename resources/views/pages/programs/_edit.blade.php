@@ -17,12 +17,16 @@
                             <div class="mb-3">
                                 <label class="form-label" for="edit-description">Description</label>
                                 <textarea name="description" id="edit-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
-                            </div>                            
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="edit-department">Department</label>
-                                        <select name="department" id="edit-department" data-url="{{ route('tom-select.departments') }}">
+                                        <select name="department" id="edit-department">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -30,8 +34,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="edit-user">Ketua Pelaksana</label>
-                                        <select name="user" id="edit-user" data-url="{{ route('tom-select.users') }}">
+                                        <label class="form-label" for="edit-user">Lead By</label>
+                                        <select name="user" id="edit-user">
                                         </select>
                                     </div>
                                 </div>
@@ -43,9 +47,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ms-auto" id="submit-edit-programs">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
                         <path d="M13.5 6.5l4 4"></path>

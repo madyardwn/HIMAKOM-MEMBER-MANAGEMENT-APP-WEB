@@ -63,7 +63,7 @@ class CabinetController extends Controller
             'is_active' => 'required|numeric',
             'visi' => 'required',
             'misi' => 'required',
-            'departments' => 'required|array',
+            'departments' => 'required|array|exists:departments,id',
         ]);
 
         if ($validator->fails()) {
