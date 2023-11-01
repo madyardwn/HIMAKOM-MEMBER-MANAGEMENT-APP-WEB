@@ -37,7 +37,9 @@ class FilosofieController extends Controller
             return DataTables::of($data)->make();
         }
 
-        return view('pages.filosofies.index');
+        return view('pages.filosofies.index', [
+            'cabinets' => Cabinet::all(['id', 'name']),
+        ]);
     }
 
     /**

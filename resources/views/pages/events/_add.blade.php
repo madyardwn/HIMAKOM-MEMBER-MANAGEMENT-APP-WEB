@@ -37,6 +37,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="add-type">type</label>
                                         <select name="type" id="add-type" required>
+                                            <option value="" selected disabled></option>
                                             @foreach ($types as $key => $type)
                                                 <option value="{{ $key }}">{{ $type }}</option>
                                             @endforeach

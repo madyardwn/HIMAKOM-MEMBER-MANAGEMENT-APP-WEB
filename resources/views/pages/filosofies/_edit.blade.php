@@ -26,6 +26,10 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="edit-cabinet">Cabinet</label>
                                         <select name="cabinet" id="edit-cabinet">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($cabinets as $cabinet)
+                                                <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
