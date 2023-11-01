@@ -14,7 +14,7 @@ class DefaultDepartmentSeeder extends Seeder
     public function run(): void
     {
         Department::create([
-            'name' => 'Majelis Perwakilan Anggota',
+            'name' => 'MAJELIS PERWAKILAN ANGGOTA',
             'short_name' => 'MPA',
             'description' => 'Majelis Perwakilan Anggota merupakan organisasi legislatif yang bertanggung jawab terhadap pembuatan serta mengamandemen Anggaran Dasar dan Anggaran Rumah Tangga di Himpunan Mahasiswa Komputer Politeknik Negeri Bandung.',
             'logo' => 'MPA.png',

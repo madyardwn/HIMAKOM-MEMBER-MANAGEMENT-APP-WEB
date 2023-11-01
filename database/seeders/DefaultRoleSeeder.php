@@ -18,29 +18,35 @@ class DefaultRoleSeeder extends Seeder
         // Create Super Admin Role
         Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
 
-        Role::create([
-            'name' => 'ketua-himpunan',
-            'name' => 'wakil-ketua himpunan'
-        ])->givePermissionTo([
+        Role::create(['name' => 'ketua-himpunan'])->givePermissionTo([
             // Cabinets
-            'access-cabinets',
             'read-cabinets',
             'create-cabinets',
             'update-cabinets',
             'delete-cabinets',
 
             // Departments
-            'access-departments',
             'read-departments',
             'create-departments',
             'update-departments',
             'delete-departments',
         ]);
 
-        Role::create([
-            'name' => 'ketua-divisi',
-            'name' => 'wakil-ketua-divisi'
-        ])->givePermissionTo([
+        Role::create(['name' => 'wakil-ketua-himpunan'])->givePermissionTo([
+            // Cabinets
+            'read-cabinets',
+            'create-cabinets',
+            'update-cabinets',
+            'delete-cabinets',
+
+            // Departments
+            'read-departments',
+            'create-departments',
+            'update-departments',
+            'delete-departments',
+        ]);
+
+        Role::create(['name' => 'ketua-divisi'])->givePermissionTo([
             // Programs
             'read-programs',
             'create-programs',
@@ -58,10 +64,33 @@ class DefaultRoleSeeder extends Seeder
             'delete-events',
         ]);
 
-        Role::create([
-            'name' => 'ketua-majelis-perwakilan-anggota',
-            'name' => 'wakil-ketua-majelis-perwakilan-anggota'
-        ])->givePermissionTo([
+        Role::create(['name' => 'wakil-ketua-divisi'])->givePermissionTo([
+            // Programs
+            'read-programs',
+            'create-programs',
+            'update-programs',
+            'delete-programs',
+
+            // Departments
+            'read-departments',
+            'update-departments',
+
+            // Events
+            'read-events',
+            'create-events',
+            'update-events',
+            'delete-events',
+        ]);
+
+        Role::create(['name' => 'ketua-majelis-perwakilan-anggota'])->givePermissionTo([
+            'read-users',
+            'read-cabinets',
+            'read-departments',
+            'read-programs',
+            'read-events',
+        ]);
+
+        Role::create(['name' => 'wakil-ketua-majelis-perwakilan-anggota'])->givePermissionTo([
             'read-users',
             'read-cabinets',
             'read-departments',

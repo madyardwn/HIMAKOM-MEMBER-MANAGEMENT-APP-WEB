@@ -16,6 +16,16 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasRoles, LogsActivity;
 
     /**
+     * Constant Variable 
+     * 
+     * @var object
+     */
+    const GENDER_TYPE = [
+        0 => 'Female',
+        1 => 'Male'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -31,11 +41,6 @@ class User extends Authenticatable
         'year',
         'device_token',
         'gender',
-    ];
-
-    const GENDER_TYPE = [
-        0 => 'Female',
-        1 => 'Male'
     ];
 
     /**

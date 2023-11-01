@@ -14,14 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('login'));
-});
 
 Auth::routes([
     'register' => false,
     'verify' => false,
 ]);
+
+Route::get('/', fn () => redirect(route('login')));
 
 Route::group(['middleware' => ['auth']], function () {
     // dashboard
