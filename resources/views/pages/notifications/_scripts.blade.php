@@ -1,16 +1,18 @@
 <script type="module">
-    $(document).ready(function() {
-        const notification = new TemplateCRUD({
-            emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
-            modalAdd: new bootstrap.Modal($(`#modal-add-notifications`)),
-            modalEdit: "",
-            editUrl: "",
-            deleteUrl: "{{ route('users-management.notifications.destroy', ':id') }}",
-            submitAddUrl: "{{ route('users-management.notifications.store') }}",
-            submitEditUrl: "",
-            tableDataUrl: "{{ route('users-management.notifications.index') }}",
-            subject: 'notifications',
-            columns: [{
+    class Notification {
+        constructor() {
+            this.subject = 'notifications'; // subject of modal event
+
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-notifications`)); // modal add
+
+            // Url
+            this.storeUrl = "{{ route('users-management.notifications.store') }}"; // url store
+            this.deleteUrl = "{{ route('users-management.notifications.destroy', ':id') }}"; // url delete
+
+            // Datatable
+            this.table = $('#table-notifications'); // datatable selector
+            this.tableDataUrl = "{{ route('users-management.notifications.index') }}"; // url datatable
+            this.tableColumns = [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -32,7 +34,7 @@
                     responsivePriority: 1,
                     width: '30%',
                     render: function(data, type, row) {
-                        return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
+                        return `<img src="${data}" alt="poster" class="img-fluid" width="100">`;
                     }
                 },
                 {
@@ -97,10 +99,172 @@
                         return html;
                     }
                 },
-            ],
-            tomSelects: []
-        });
+            ];
+        }
 
-        notification.init();
+        initDtEvents() {
+            // Modal Events
+            $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
+                $(".is-invalid").removeClass("is-invalid");
+                $(".invalid-feedback").remove();
+
+                $(`#form-add-${this.subject}`)[0].reset(); // reset form
+                $(`#preview-add-poster`).attr("src", this.emptyImage); // reset preview image
+            });
+
+            // Image Preview Events
+            $(`#add-poster`).on("change", () => {
+                const file = $(`#add-poster`)[0].files[0]; // get file
+                const name = $(`#add-poster`)[0].name; // name of input file
+                const reader = new FileReader(); // create reader
+
+                reader.onload = function(e) {
+                    // set image source to preview image name
+                    $(`#preview-add-${name}`).attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        initDtTable() {
+            this.table.DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: this.tableDataUrl,
+                columns: this.tableColumns,
+                drawCallback: () => {
+                    $('.btn-delete').on('click', (e) => {
+                        e.preventDefault();
+
+                        const id = $(e.currentTarget).data("id");
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: this.deleteUrl.replace(":id", id),
+                                    method: "DELETE",
+                                    success: (response) => {
+                                        if (response.status === "success") {
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "Berhasil",
+                                                text: response.message,
+                                                showConfirmButton: false,
+                                                timer: 1500,
+                                            }).then(() => {
+                                                this.table.DataTable().ajax.reload();
+
+                                                $(`#card-${this.subject}`).before(`
+                                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                        <strong>Success!</strong> ${response.message}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                `);
+
+                                                $(".alert").delay(3000).slideUp(300);
+                                            });
+                                        }
+                                    },
+                                    error: (xhr, ajaxOptions, thrownError) => {
+                                        Swal.fire("Error!", thrownError, "error");
+
+                                        $(`#card-${this.subject}`).before(`
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <strong>Error!</strong> ${thrownError}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        `);
+
+                                        $(".alert").delay(3000).slideUp(300);
+                                    },
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        initDtSubmit() {
+            $(`#submit-add-${this.subject}`).on("click", (e, item) => {
+                e.preventDefault();
+
+                $(".is-invalid").removeClass("is-invalid");
+                $(".invalid-feedback").remove();
+                $(`#submit-add-${this.subject}`).attr("disabled", true);
+                $(`#submit-add-${this.subject}`).addClass("btn-loading");
+
+                const formData = new FormData(); // Membuat objek FormData
+
+                formData.append("title", $(`#add-title`).val());
+                formData.append("body", $(`#add-body`).val());
+                formData.append("poster", $(`#add-poster`)[0].files[0]);
+                formData.append("link", $(`#add-link`).val());
+
+                $.ajax({
+                    url: this.storeUrl, // Assign URL
+                    method: "POST",
+                    data: formData, // Menggunakan objek FormData sebagai data
+                    contentType: false, // Mengatur contentType ke false
+                    processData: false, // Mengatur processData ke false
+                    complete: () => {
+                        $(`#submit-add-${this.subject}`).attr("disabled", false);
+                        $(`#submit-add-${this.subject}`).removeClass("btn-loading");
+                    },
+                    success: (response) => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            this.modalAdd.hide(); // hide modal
+
+                            this.table.DataTable().ajax.reload(); // reload datatable
+
+                            $(`#card-${this.subject}`).before(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> ${response.message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+
+                            $(".alert").delay(3000).slideUp(300);
+                        });
+                    },
+                    error: (response) => {
+                        if (response.status === 422) {
+                            const errors = response.responseJSON.errors;
+                            for (const key in errors) {
+                                if (Object.hasOwnProperty.call(errors, key)) {
+                                    const element = errors[key];
+                                    $(`#add-${key}`).addClass("is-invalid");
+                                    $(`#add-${key}`).after(`<div class="invalid-feedback">${element[0]}</div>`);
+                                }
+                            }
+                        } else {
+                            Swal.fire("Error!", "Something went wrong!", "error");
+                        }
+                    },
+                });
+            });
+        }
+    }
+
+    $(document).ready(function() {
+        const notification = new Notification();
+        notification.initDtEvents();
+        notification.initDtTable();
+        notification.initDtSubmit();
     });
 </script>
