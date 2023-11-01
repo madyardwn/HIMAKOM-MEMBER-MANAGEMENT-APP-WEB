@@ -1,14 +1,9 @@
 <script type="module">
-    $(document).ready(function() {
-        const authWebPermissions = new TemplateCRUD({
-            emptyImage: "{{ asset(config('tablar.default.preview.path')) }}",
-            subject: 'auth-web-permissions',
-            editUrl: "",
-            deleteUrl: "",
-            submitAddUrl: "",
-            submitEditUrl: "",
-            tableDataUrl: "{{ route('auth-web.permissions.index') }}",
-            columns: [{
+    class AuthWebPermissions {
+        constructor() {
+            this.table = $('#table-auth-web-permissions');
+            this.tableDataUrl = "{{ route('auth-web.permissions.index') }}";
+            this.tableColumns = [{
                     data: 'id',
                     name: 'id',
                     title: 'No',
@@ -19,9 +14,22 @@
                     name: 'name',
                     title: 'Name'
                 },
-            ],
-        });
+            ];
+        }
 
-        authWebPermissions.init();
+        initDtTable() {
+            this.table.DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: this.tableDataUrl,
+                columns: this.tableColumns,
+            });
+        }
+    }
+
+    $(document).ready(function() {
+        const authWebPermissions = new AuthWebPermissions();
+        authWebPermissions.initDtTable();
     });
 </script>

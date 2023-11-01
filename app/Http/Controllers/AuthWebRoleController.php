@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +27,9 @@ class AuthWebRoleController extends Controller
                 ->make(true);
         }
 
-        return view('pages.auth-web-roles.index');
+        return view('pages.auth-web-roles.index', [
+            'permissions' => Permission::all(['id', 'name']),
+        ]);
     }
 
     /**
