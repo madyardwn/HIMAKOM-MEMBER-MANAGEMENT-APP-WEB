@@ -39,7 +39,7 @@
                     data: 'name',
                     name: 'name',
                     title: 'Name',
-                    responsivePriority: 1,
+                    responsivePriority: 2,
                     width: '20%'
                 },
                 {
@@ -47,26 +47,27 @@
                     name: 'description',
                     title: 'Description',
                     width: '20%',
-                    responsivePriority: 2,
                 },
                 {
                     data: 'visi',
                     name: 'visi',
                     title: 'Visi',
-                    width: '20%'
+                    width: '20%',
+                    'responsivePriority': 4,
                 },
                 {
                     data: 'misi',
                     name: 'misi',
                     title: 'Misi',
-                    width: '20%'
+                    width: '20%',
+                    'responsivePriority': 4,
                 },
                 {
                     data: 'year',
                     name: 'year',
                     title: 'Year',
                     width: '20%',
-                    responsivePriority: 2,
+                    responsivePriority: 4,
                 },
                 {
                     data: 'is_active',
@@ -84,7 +85,6 @@
                     title: 'Departments',
                     orderable: false,
                     width: '30%',
-                    responsivePriority: 4,
                     render: function(data, type, row) {
                         let html = '';
                         data.forEach(function(item, index) {

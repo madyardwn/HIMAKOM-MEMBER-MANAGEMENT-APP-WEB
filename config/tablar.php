@@ -167,25 +167,6 @@ return [
             ],
         ],
         [
-            'text' => 'Auth Web',
-            'icon' => 'ti ti-lock',
-            'hasAnyPermission' => ['read-auth-web-permissions', 'read-auth-web-roles'],
-            'submenu' => [
-                [
-                    'text' => 'Permission',
-                    'icon' => 'ti ti-square-key',
-                    'route' => 'auth-web.permissions.index',
-                    'hasAnyPermission' => ['read-auth-web-permissions'],
-                ],
-                [
-                    'text' => 'Role',
-                    'icon' => 'ti ti-key',
-                    'route' => 'auth-web.roles.index',
-                    'hasAnyPermission' => ['read-auth-web-roles'],
-                ],
-            ],
-        ],
-        [
             'text' => 'Periodes',
             'icon' => 'ti ti-category-filled',
             'hasAnyPermission' => ['read-cabinets', 'read-filosofies', 'read-departments', 'read-programs', 'read-events'],
@@ -220,6 +201,25 @@ return [
                     'route' => 'periodes.events.index',
                     'hasAnyPermission' => ['read-events'],
                 ]
+            ],
+        ],
+        [
+            'text' => 'Auth Web',
+            'icon' => 'ti ti-lock',
+            'hasAnyPermission' => ['read-auth-web-permissions', 'read-auth-web-roles'],
+            'submenu' => [
+                [
+                    'text' => 'Permission',
+                    'icon' => 'ti ti-square-key',
+                    'route' => 'auth-web.permissions.index',
+                    'hasAnyPermission' => ['read-auth-web-permissions'],
+                ],
+                [
+                    'text' => 'Role',
+                    'icon' => 'ti ti-key',
+                    'route' => 'auth-web.roles.index',
+                    'hasAnyPermission' => ['read-auth-web-roles'],
+                ],
             ],
         ],
         [
