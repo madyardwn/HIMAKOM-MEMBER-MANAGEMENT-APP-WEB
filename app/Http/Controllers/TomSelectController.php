@@ -18,7 +18,9 @@ class TomSelectController extends Controller
     public function users(Request $request)
     {
         $users = User::select('id', 'name')
-            ->where('name', 'LIKE', "%{$request->q}%")->get();
+            ->whereNotIn('id', [1])
+            ->where('name', 'like', '%' . $request->q . '%')
+            ->get();
 
         return response()->json($users);
     }

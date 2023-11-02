@@ -33,6 +33,7 @@
                         title: "Remove this item",
                     },
                 },
+                maxItems: 2,
             })
             this.tomSelectEditRoles = new TomSelect($('#edit-roles'), { // tom select edit roles
                 placeholder: `Select role`,
@@ -41,6 +42,7 @@
                         title: "Remove this item",
                     },
                 },
+                maxItems: 2,
             })
 
             this.tomSelectAddCabinets = new TomSelect($('#add-cabinets'), { // tom select add cabinets
@@ -50,6 +52,7 @@
                         title: "Remove this item",
                     },
                 },
+                maxItems: 2,
             })
             this.tomSelectEditCabinets = new TomSelect($('#edit-cabinets'), { // tom select edit cabinets
                 placeholder: `Select cabinet`,
@@ -58,6 +61,7 @@
                         title: "Remove this item",
                     },
                 },
+                maxItems: 2,
             })
 
             this.tomSelectAddGender = new TomSelect($('#edit-gender'), {

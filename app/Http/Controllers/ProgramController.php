@@ -43,8 +43,8 @@ class ProgramController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name|max:50',
             'description' => 'required|max:255',
-            'user' => 'required|string|exists:users,id',
-            'department' => 'required|string|exists:departments,id',
+            'user' => 'required|numeric|exists:users,id|not_in:1',
+            'department' => 'required|numeric|exists:departments,id',
         ]);
 
         if ($validator->fails()) {
@@ -114,8 +114,8 @@ class ProgramController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name,' . $program->id . '|max:50',
             'description' => 'required|max:255',
-            'user' => 'required|exists:users,id',
-            'department' => 'required|exists:departments,id',
+            'user' => 'required|numeric|exists:users,id|not_in:1',
+            'department' => 'required|numeric|exists:departments,id',
         ]);
 
         if ($validator->fails()) {

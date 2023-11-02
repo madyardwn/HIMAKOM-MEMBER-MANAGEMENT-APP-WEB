@@ -46,7 +46,8 @@ class UserController extends Controller
         return view('pages.users.index', [
             'gender' => User::GENDER_TYPE,
             'departments' => Department::all(['id', 'name']),
-            'roles' => Role::all(['id', 'name']),
+            'roles' => Role::all(['id', 'name'])
+                ->whereNotIn('name', ['super-admin']),
             'cabinets' => Cabinet::all(['id', 'name']),
         ]);
     }
@@ -74,9 +75,9 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
-            'cabinets' => 'required|array',
-            'department' => 'required|numeric',
-            'roles' => 'required|array',
+            'cabinets' => 'required|array|exists:cabinets,id|not_in:1',
+            'department' => 'required|numeric|exists:departments,id',
+            'roles' => 'required|array|exists:roles,id|not_in:1',
         ]);
 
         if ($validator->fails()) {
@@ -165,9 +166,9 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
-            'cabinets' => 'required|array',
-            'department' => 'required|numeric',
-            'roles' => 'required|array',
+            'cabinets' => 'required|array|exists:cabinets,id|not_in:1',
+            'department' => 'required|numeric|exists:departments,id',
+            'roles' => 'required|array|exists:roles,id|not_in:1',
         ]);
 
         if ($validator->fails()) {

@@ -50,7 +50,7 @@ class UserImport implements ToModel
             throw new \Exception('Role with name ' . $row[11] . ' not found!');
         }
 
-        if ($user) { // Import at second time
+        if ($user) { // Import at second time, for add missing data or regeneration
 
             // Update user
             $user->name_bagus = $row[5] ?? null;
