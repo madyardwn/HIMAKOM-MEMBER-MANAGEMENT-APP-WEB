@@ -599,7 +599,7 @@
                                 }
                             }
                         } else {
-                            Swal.fire("Error!", "Something went wrong!", "error");
+                            Swal.fire("Error!", response.responseJSON.message, "error");
                         }
                     },
                 });

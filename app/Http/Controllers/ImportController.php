@@ -31,7 +31,7 @@ class ImportController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
