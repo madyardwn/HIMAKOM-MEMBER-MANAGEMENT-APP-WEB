@@ -36,6 +36,9 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $data = User::with('cabinets:id,name', 'roles:id,name', 'department:id,name')
+                ->withWhereHas('cabinets', function ($query) {
+                    $query->where('is_active', '=', '1');
+                })
                 ->where('id', '!=', 1);
 
             return DataTables::of($data)
@@ -74,7 +77,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
-            'cabinets' => 'required|array|exists:cabinets,id|not_in:1',
+            'cabinets' => 'required|array|exists:cabinets,id',
             'department' => 'required|numeric|exists:departments,id',
             'roles' => 'required|array|exists:roles,id|not_in:1',
         ]);
@@ -165,7 +168,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
-            'cabinets' => 'required|array|exists:cabinets,id|not_in:1',
+            'cabinets' => 'required|array|exists:cabinets,id',
             'department' => 'required|numeric|exists:departments,id',
             'roles' => 'required|array|exists:roles,id|not_in:1',
         ]);
