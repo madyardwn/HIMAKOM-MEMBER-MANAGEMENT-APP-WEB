@@ -39,7 +39,7 @@
                                         <select name="type" id="add-type" required>
                                             <option value="" selected disabled></option>
                                             @foreach ($types as $key => $type)
-                                                <option value="{{ $key }}">{{ $type }}</option>
+                                                <option value="{{ $key }}">{{ ucwords($type) }}</option>
                                             @endforeach
                                         </select>
                                     </div>

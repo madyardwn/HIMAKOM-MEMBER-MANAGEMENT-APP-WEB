@@ -13,11 +13,6 @@
                 labelField: "name",
                 searchField: "name",
                 placeholder: `Select user`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -54,11 +49,6 @@
                 labelField: "name",
                 searchField: "name",
                 placeholder: `Select user`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -92,20 +82,10 @@
 
             this.tomSelectAddDepartment = new TomSelect($('#add-department'), {
                 placeholder: `Select department`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             });
 
             this.tomSelectEditDepartment = new TomSelect($('#edit-department'), {
                 placeholder: `Select department`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             });
 
             // Url

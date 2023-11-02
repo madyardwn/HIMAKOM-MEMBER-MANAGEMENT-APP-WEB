@@ -46,8 +46,7 @@ class UserController extends Controller
         return view('pages.users.index', [
             'gender' => User::GENDER_TYPE,
             'departments' => Department::all(['id', 'name']),
-            'roles' => Role::all(['id', 'name'])
-                ->whereNotIn('name', ['super-admin']),
+            'roles' => Role::all(['id', 'name'])->whereNotIn('name', ['super-admin']),
             'cabinets' => Cabinet::all(['id', 'name']),
         ]);
     }

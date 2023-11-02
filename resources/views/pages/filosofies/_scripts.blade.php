@@ -10,19 +10,9 @@
             // Special Select
             this.tomSelectAddCabinet = new TomSelect($('#add-cabinet'), { // tom select add cabinet
                 placeholder: `Select cabinet`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
             this.tomSelectEditCabinet = new TomSelect($('#edit-cabinet'), { // tom select edit cabinet
                 placeholder: `Select cabinet`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
 
             // Url

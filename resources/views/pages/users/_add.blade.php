@@ -26,7 +26,7 @@
                                     <select name="gender" id="add-gender">
                                         <option value="" selected disabled></option>
                                         @foreach ($gender as $key => $value)
-                                            <option value="{{ $key }}">{{ $value }}</option>
+                                            <option value="{{ $key }}">{{ ucwords($value) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -89,6 +89,17 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
+                                    <label class="form-label" for="add-roles">Role</label>
+                                    <select name="roles[]" id="add-roles" multiple>
+                                        <option value="" selected disabled></option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
                                     <label class="form-label" for="add-cabinets">Cabinet</label>
                                     <select name="cabinets[]" id="add-cabinets" multiple>
                                         <option value="" selected disabled></option>
@@ -105,17 +116,6 @@
                                         <option value="" selected disabled></option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label class="form-label" for="add-roles">Role</label>
-                                    <select name="roles[]" id="add-roles" multiple>
-                                        <option value="" selected disabled></option>
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

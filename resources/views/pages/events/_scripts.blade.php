@@ -10,19 +10,9 @@
             // Special Select
             this.tomSelectAddType = new TomSelect($('#add-type'), {
                 placeholder: `Select type`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
             this.tomSelectEditType = new TomSelect($('#edit-type'), {
                 placeholder: `Select type`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
 
             // Url

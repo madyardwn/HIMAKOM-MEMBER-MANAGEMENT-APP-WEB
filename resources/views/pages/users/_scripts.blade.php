@@ -10,20 +10,10 @@
 
             // Special Select
             this.tomSelectAddDepartment = new TomSelect($('#add-department'), { // tom select add departments
-                placeholder: `Select department`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
+                placeholder: `Select department`
             })
             this.tomSelectEditDepartment = new TomSelect($('#edit-department'), { // tom select edit departments
                 placeholder: `Select department`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
 
             this.tomSelectAddRoles = new TomSelect($('#add-roles'), { // tom select add roles
@@ -66,20 +56,10 @@
 
             this.tomSelectAddGender = new TomSelect($('#edit-gender'), {
                 placeholder: `Select gender`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
 
             this.tomSelectEditGender = new TomSelect($('#add-gender'), {
                 placeholder: `Select gender`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
             })
 
             // Url
