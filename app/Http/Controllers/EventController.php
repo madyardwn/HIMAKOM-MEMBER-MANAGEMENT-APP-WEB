@@ -134,12 +134,6 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $type_name = Event::EVENT_TYPE[$event->type];
-        $event->type = [
-            'id' => $event->type,
-            'name' => $type_name,
-        ];
-
         try {
             return response()->json([
                 'status' => 'success',

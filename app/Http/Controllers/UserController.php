@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Imports\UserImport;
+use App\Models\Cabinet;
 use App\Models\Department;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -33,26 +35,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with('cabinets:id,name', 'roles:id,name', 'departments:id,name')
-                ->when($request->search['value'], function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('nim', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('npa', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('name_bagus', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('year', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('email', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhere('gender', 'like', '%' . $request->search['value'] . '%');
-                    $query->orWhereHas('cabinets', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    });
-                    $query->orWhereHas('departments', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    });
-                    $query->orWhereHas('roles', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->search['value'] . '%');
-                    });
-                })
-                ->select('users.*')
+            $data = User::with('cabinets:id,name', 'roles:id,name', 'department:id,name')
                 ->where('id', '!=', 1);
 
             return DataTables::of($data)
@@ -62,6 +45,9 @@ class UserController extends Controller
 
         return view('pages.users.index', [
             'gender' => User::GENDER_TYPE,
+            'departments' => Department::all(['id', 'name']),
+            'roles' => Role::all(['id', 'name']),
+            'cabinets' => Cabinet::all(['id', 'name']),
         ]);
     }
 
@@ -89,7 +75,7 @@ class UserController extends Controller
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
             'cabinets' => 'required|array',
-            'departments' => 'required|array',
+            'department' => 'required|numeric',
             'roles' => 'required|array',
         ]);
 
@@ -117,11 +103,11 @@ class UserController extends Controller
                 'email' => $request->email,
                 'picture' => $picture_name,
                 'password' => bcrypt($request->password),
+                'department_id' => $request->department,
             ]);
 
             $user->assignRole($request->roles);
             $user->cabinets()->attach($request->cabinets);
-            $user->departments()->attach($request->departments);
 
             return response()->json([
                 'status' => 'success',
@@ -151,13 +137,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         try {
-            $user->load('cabinets:id,name', 'departments:id,name', 'roles:id,name');
-
-            $user->gender = [
-                'id' => $user->gender,
-                'name' => User::GENDER_TYPE[$user->gender]
-            ];
-
+            $user->load('cabinets:id,name', 'department:id,name', 'roles:id,name');
             return response()->json([
                 'status' => 'success',
                 'data' => $user,
@@ -186,7 +166,7 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
             'cabinets' => 'required|array',
-            'departments' => 'required|array',
+            'department' => 'required|numeric',
             'roles' => 'required|array',
         ]);
 
@@ -220,10 +200,10 @@ class UserController extends Controller
                 'year' => $request->year,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'department_id' => $request->department,
             ]);
 
             $user->cabinets()->sync($request->cabinets);
-            $user->departments()->sync($request->departments);
             $user->roles()->sync($request->roles);
 
             return response()->json([
@@ -251,7 +231,6 @@ class UserController extends Controller
             }
 
             $user->cabinets()->detach();
-            $user->departments()->detach();
             $user->roles()->detach();
 
             $user->delete();

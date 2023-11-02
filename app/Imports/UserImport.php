@@ -36,6 +36,9 @@ class UserImport implements ToModel
         }
 
         $user = User::where('nim', $row[0])->first();
+        $cabinet = Cabinet::where('name', $row[9])->first();
+        $department = Department::where('short_name', $row[10])->first();
+
         if ($user) {
             $user->update([
                 'name' => $row[1],
@@ -46,12 +49,10 @@ class UserImport implements ToModel
                 'npa' => $row[6],
                 'picture' => $row[7],
                 'gender' => $row[8],
+                'department_id' => $department->id,
             ]);
 
-            $cabinet = Cabinet::where('name', $row[9])->first();
-            $department = Department::where('short_name', $row[10])->first();
-            $user->cabinets()->sync($cabinet->id ?? 1);
-            $user->departments()->sync($department->id ?? 1);
+            $user->cabinets()->sync($cabinet->id);
             $user->assignRole($row[11]);
 
             return null;
@@ -65,15 +66,12 @@ class UserImport implements ToModel
             'year' => $row[4],
             'name_bagus' => $row[5],
             'npa' => $row[6],
-            'picture' => $row[7], // 'default.png',
+            'picture' => $row[7],
             'gender' => $row[8],
+            'department_id' => $department->id,
         ]);
 
-        $cabinet = Cabinet::where('name', $row[9])->first();
-        $department = Department::where('short_name', $row[10])->first();
-
-        $user->cabinets()->sync($cabinet->id ?? 1);
-        $user->departments()->sync($department->id ?? 1);
+        $user->cabinets()->sync($cabinet->id);
         $user->assignRole($row[11]);
 
         return $user;

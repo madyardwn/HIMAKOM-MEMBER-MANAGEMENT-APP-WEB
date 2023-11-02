@@ -41,6 +41,7 @@ class User extends Authenticatable
         'year',
         'device_token',
         'gender',
+        'department_id',
     ];
 
     /**
@@ -120,9 +121,9 @@ class User extends Authenticatable
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function departments()
+    public function department()
     {
-        return $this->belongsToMany(Department::class, 'users_departments', 'user_id', 'department_id')->withPivot('id')->withTimestamps();
+        return $this->belongsTo(Department::class);
     }
 
     /**

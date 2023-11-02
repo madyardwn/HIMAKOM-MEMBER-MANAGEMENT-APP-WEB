@@ -25,6 +25,9 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="edit-gender">Gender</label>
                                     <select name="gender" id="edit-gender">
+                                        @foreach ($gender as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -41,7 +44,7 @@
                                 <input type="text" name="npa" id="edit-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="edit-name_bagus">Nama Bagus</label>
+                                <label class="form-label" for="edit-name_bagus">Name Bagus</label>
                                 <input type="text" name="name_bagus" id="edit-name_bagus" class="form-control" placeholder="Enter Nama Bagus" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
@@ -53,7 +56,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Password</label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password" id="add-password" class="type-password form-control" placeholder="Password" autocomplete="off">
+                                            <input type="password" name="password" id="edit-password" class="type-password form-control" placeholder="Password" autocomplete="off">
                                             <span class="input-group-text">
                                                 <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -70,7 +73,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Confirm Password</label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password_confirmation" id="add-password_confirmation" class="type-password form-control" placeholder="Password" autocomplete="off">
+                                            <input type="password" name="password_confirmation" id="edit-password_confirmation" class="type-password form-control" placeholder="Password" autocomplete="off">
                                             <span class="input-group-text">
                                                 <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -86,22 +89,31 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="edit-cabinets">Cabinets</label>
-                                    <select name="cabinets" id="edit-cabinets" multiple>
+                                    <label class="form-label" for="edit-cabinets">Cabinet</label>
+                                    <select name="cabinets[]" id="edit-cabinets" multiple>
+                                        @foreach ($cabinets as $cabinet)
+                                            <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="edit-departments">Departments</label>
-                                    <select name="departments" id="edit-departments" multiple>
+                                    <label class="form-label" for="edit-department">Department</label>
+                                    <select name="department" id="edit-department">
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="edit-roles">Roles</label>
-                                    <select name="roles" id="edit-roles" multiple>
+                                    <label class="form-label" for="edit-roles">Role</label>
+                                    <select name="roles[]" id="edit-roles" multiple>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

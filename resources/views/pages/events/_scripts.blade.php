@@ -277,7 +277,7 @@
                                 $('#edit-date').val(moment(response.data.date).format('YYYY-MM-DDTHH:mm'));
                                 $('#edit-location').val(response.data.location);
                                 $(`#preview-edit-poster`).attr("src", response.data.poster);
-                                this.tomSelectEditType.setValue(response.data.type.id);
+                                this.tomSelectEditType.setValue(response.data.type);
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

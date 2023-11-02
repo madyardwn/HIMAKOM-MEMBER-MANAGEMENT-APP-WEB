@@ -82,5 +82,12 @@ class DefaultDepartmentSeeder extends Seeder
             'description' => 'Unit Teknologi adalah unit kegiatan yang berfokus pada teknologi, khususnya dalam pengembangan sumber daya anggota dalam rangka meningkatkan kualitas keilmuan di bidang informatika.',
             'logo' => 'TEKNO.png',
         ]);
+
+        Department::create([
+            'name' => 'DEPARTEMEN LUAR HIMPUNAN',
+            'short_name' => 'LUHIM',
+            'description' => 'Departemen Luar Himpunan merupakan departemen yang berfokus dalam menjalin hubungan dan kerjasama antara HIMAKOM POLBAN dengan pihak eksternal dan alumni HIMAKOM POLBAN sehingga terbentuk forum bilateral maupun multilateral.',
+            'logo' => 'LUHIM.png',
+        ]);
     }
 }
