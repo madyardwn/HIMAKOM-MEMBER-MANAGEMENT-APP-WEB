@@ -6,6 +6,7 @@
 
             this.modalAdd = new bootstrap.Modal($(`#modal-add-users`)); // modal add
             this.modalEdit = new bootstrap.Modal($(`#modal-edit-users`)); // modal edit
+            this.modalImport = new bootstrap.Modal($(`#modal-import-users`)); // modal import
 
             // Special Select
             this.tomSelectAddDepartment = new TomSelect($('#add-department'), { // tom select add departments
@@ -82,7 +83,7 @@
             this.editUrl = "{{ route('users-management.users.edit', ':id') }}"; // url edit
             this.deleteUrl = "{{ route('users-management.users.destroy', ':id') }}"; // url delete
             this.updateUrl = "{{ route('users-management.users.update', ':id') }}"; // url update
-            this.importUrl = "{{ route('users-management.users.import') }}"; // Set url
+            this.importUrl = "{{ route('import.users') }}"; // Set url
 
             // Datatable
             this.table = $('#table-users'); // datatable selector
@@ -562,6 +563,10 @@
                     complete: () => {
                         $(`#submit-import-${this.subject}`).attr("disabled", false);
                         $(`#submit-import-${this.subject}`).removeClass("btn-loading");
+
+                        this.modalImport.hide();
+
+                        this.table.DataTable().ajax.reload();
                     },
                     success: (response) => {
                         if (response.status === "success") {

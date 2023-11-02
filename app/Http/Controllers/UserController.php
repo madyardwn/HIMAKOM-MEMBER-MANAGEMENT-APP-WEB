@@ -247,29 +247,4 @@ class UserController extends Controller
             ], 500);
         }
     }
-
-    public function import(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'users' => 'required|file|mimes:xlsx,xls,csv',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
-        try {
-            Excel::import(new UserImport, $request->file('users'));
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Users imported successfully!',
-            ], 201);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Something went wrong!',
-            ], 500);
-        }
-    }
 }

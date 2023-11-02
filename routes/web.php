@@ -37,7 +37,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/users/{user}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit')->middleware('permission:update-users');
         Route::put('/users/{user}/update', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update')->middleware('permission:update-users');
         Route::delete('/users/{user}/destroy', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy')->middleware('permission:delete-users');
-        Route::post('/users/import', [\App\Http\Controllers\UserController::class, 'import'])->name('users.import')->middleware('permission:create-users');
 
         // Notifications
         Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index')->middleware('permission:read-notifications');
@@ -106,9 +105,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // tom-select
-    Route::get('/tom-select/permissions', [\App\Http\Controllers\TomSelectController::class, 'permissions'])->name('tom-select.permissions')->middleware('permission:read-permissions');
-    Route::get('/tom-select/cabinets', [\App\Http\Controllers\TomSelectController::class, 'cabinets'])->name('tom-select.cabinets')->middleware('permission:read-cabinets');
-    Route::get('/tom-select/departments', [\App\Http\Controllers\TomSelectController::class, 'departments'])->name('tom-select.departments')->middleware('permission:read-departments');
     Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users')->middleware('permission:read-users');
-    Route::get('/tom-select/roles', [\App\Http\Controllers\TomSelectController::class, 'roles'])->name('tom-select.roles')->middleware('permission:read-roles');
+
+    // Excel Import
+    Route::post('/import/users', [\App\Http\Controllers\ImportController::class, 'users'])->name('import.users')->middleware('permission:create-users');
 });
