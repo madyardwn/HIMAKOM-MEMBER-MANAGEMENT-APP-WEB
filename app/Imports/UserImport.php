@@ -52,6 +52,13 @@ class UserImport implements ToModel
 
         if ($user) { // Import at second time
 
+            // Update user
+            $user->name_bagus = $row[5] ?? null;
+            $user->npa = $row[6] ?? null;
+            $user->picture = $row[7] ?? null;
+            $user->department_id = $department->id ?? null;
+            $user->save();
+
             // Add new Cabinet
             if (strcmp($row[9], $user->cabinets()->first()->name) != 0) {
                 $user->cabinets()->attach($cabinet->id);
@@ -71,9 +78,9 @@ class UserImport implements ToModel
             'email' => $row[2],
             'password' => bcrypt($row[3]),
             'year' => $row[4],
-            'name_bagus' => $row[5],
-            'npa' => $row[6],
-            'picture' => $row[7],
+            'name_bagus' => $row[5] ?? null,
+            'npa' => $row[6] ?? null,
+            'picture' => $row[7] ?? null,
             'gender' => $row[8],
             'department_id' => $department->id ?? null,
         ]);
