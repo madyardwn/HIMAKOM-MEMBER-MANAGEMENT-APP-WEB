@@ -42,10 +42,6 @@ class UserImport implements ToModel
         $department = Department::where('short_name', $row[10])->first();
         $roles = Role::where('name', $row[11])->first();
 
-        if (!$department) {
-            throw new \Exception('Department with short name ' . $row[10] . ' not found!');
-        }
-
         if (!$cabinet) {
             throw new \Exception('Cabinet with name ' . $row[9] . ' not found!');
         }
@@ -79,7 +75,7 @@ class UserImport implements ToModel
             'npa' => $row[6],
             'picture' => $row[7],
             'gender' => $row[8],
-            'department_id' => $department->id,
+            'department_id' => $department->id ?? null,
         ]);
 
         $user->cabinets()->sync($cabinet->id);
