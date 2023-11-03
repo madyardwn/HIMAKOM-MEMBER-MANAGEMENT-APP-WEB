@@ -36,9 +36,6 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $data = User::with('cabinets:id,name', 'roles:id,name', 'department:id,name')
-                ->withWhereHas('cabinets', function ($query) {
-                    $query->where('is_active', '=', '1');
-                })
                 ->where('id', '!=', 1);
 
             return DataTables::of($data)
