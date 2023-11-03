@@ -23,7 +23,7 @@
                         title: "Remove this item",
                     },
                 },
-                maxItems: 2,
+                maxItems: 3,
             })
             this.tomSelectEditRoles = new TomSelect($('#edit-roles'), { // tom select edit roles
                 placeholder: `Select role`,
@@ -32,7 +32,7 @@
                         title: "Remove this item",
                     },
                 },
-                maxItems: 2,
+                maxItems: 3,
             })
 
             this.tomSelectAddCabinets = new TomSelect($('#add-cabinets'), { // tom select add cabinets

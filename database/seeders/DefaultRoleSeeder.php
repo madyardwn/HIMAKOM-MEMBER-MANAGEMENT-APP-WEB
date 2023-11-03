@@ -18,6 +18,9 @@ class DefaultRoleSeeder extends Seeder
         // Create Super Admin Role
         Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
 
+        // Create Default Roles Non Active Users
+        Role::create(['name' => 'non-active-users']);
+
         Role::create(['name' => 'ketua-himpunan'])->givePermissionTo([
             // Cabinets
             'read-cabinets',

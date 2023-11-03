@@ -77,9 +77,9 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
-            'cabinets' => 'required|array|exists:cabinets,id',
+            'cabinets' => 'required|array|exists:cabinets,id|max:2',
             'department' => 'required|numeric|exists:departments,id',
-            'roles' => 'required|array|exists:roles,id|not_in:1',
+            'roles' => 'required|array|exists:roles,id|not_in:1|max:3',
         ]);
 
         if ($validator->fails()) {
@@ -168,9 +168,9 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
-            'cabinets' => 'required|array|exists:cabinets,id',
+            'cabinets' => 'required|array|exists:cabinets,id|max:2',
             'department' => 'required|numeric|exists:departments,id',
-            'roles' => 'required|array|exists:roles,id|not_in:1',
+            'roles' => 'required|array|exists:roles,id|not_in:1|max:3',
         ]);
 
         if ($validator->fails()) {
