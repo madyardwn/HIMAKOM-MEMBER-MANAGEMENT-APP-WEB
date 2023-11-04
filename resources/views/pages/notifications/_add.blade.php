@@ -26,7 +26,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-link">Link</label>
-                                <input type="text" name="link" id="add-link" class="form-control" placeholder="Enter link" autocomplete="off" required>
+                                <input type="url" name="link" id="add-link" class="form-control" placeholder="Enter link" autocomplete="off" required>
                             </div>
                         </div>
                     </div>

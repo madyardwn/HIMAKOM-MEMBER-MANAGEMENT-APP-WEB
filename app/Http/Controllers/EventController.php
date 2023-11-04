@@ -110,7 +110,6 @@ class EventController extends Controller
             ]);
 
             if (!Carbon::parse($event->date)->isPast()) {
-                $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
                 sendNotificationEvent($event);
             }
 
@@ -180,6 +179,7 @@ class EventController extends Controller
 
         try {
             if ($request->hasFile('poster')) {
+                deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
                 $poster = $request->file('poster');
                 $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
                 $poster->storeAs($this->path_poster_events, $poster_name, 'public');
@@ -215,6 +215,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         try {
+            deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
             $event->delete();
 
             return response()->json([
@@ -236,74 +237,11 @@ class EventController extends Controller
             if (Carbon::parse($event->date)->isPast()) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Event ' . $event->name . ' has passed!',
-                ], 403);
+                    'message' => 'Event has passed!',
+                ], 422);
             }
 
-            $notification = Notification::create([
-                'title' => $request->title ?? 'Event ' . $event->name,
-                'body' => $request->body ?? 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
-                'link' => $request->link ?? '',
-                'poster' => $event->poster,
-            ]);
-
-            $url = env('FCM_URL');
-
-            $serverKey = env('FCM_SERVER_KEY');
-
-            $headers = [
-                'Authorization: key=' . $serverKey,
-                'Content-Type: application/json',
-            ];
-
-            $data = [
-                'event_id' => $notification->id,
-            ];
-
-            $cabinet = Cabinet::where('is_active', 1)->first();
-            $fcmTokens = $cabinet->users()->whereNotNull('device_token')->pluck('device_token')->all();
-
-            $chunks = array_chunk($fcmTokens, 50);
-
-            foreach ($chunks as $chunk) {
-                $fields = [
-                    'registration_ids' => $chunk,
-                    'notification' => $notification,
-                    'data' => $data,
-                ];
-
-                $payload = json_encode($fields);
-
-                $curl = curl_init();
-
-                curl_setopt_array($curl, [
-                    CURLOPT_URL => $url,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => $payload,
-                    CURLOPT_HTTPHEADER => $headers,
-                ]);
-
-                $response = curl_exec($curl);
-
-                if ($response === false) {
-                    // Handle the cURL error here
-                    throw new \Exception('cURL error: ' . curl_error($curl));
-                }
-
-                curl_close($curl);
-
-                foreach ($chunk as $token) {
-                    $user = User::where('device_token', $token)->first();
-
-                    if ($user) {
-                        $user->notifications()->attach(Notification::latest()->first()->id, [
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                        ]);
-                    }
-                }
-            }
+            sendNotificationEvent($event, $request->message ?? '');
 
             return response()->json([
                 'status' => 'success',

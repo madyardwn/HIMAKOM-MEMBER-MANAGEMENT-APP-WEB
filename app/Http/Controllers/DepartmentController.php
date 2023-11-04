@@ -140,6 +140,7 @@ class DepartmentController extends Controller
 
         try {
             if ($request->hasFile('logo')) {
+                deleteFile($this->path_logo_departments . '/' . $department->getAttributes()['logo']);
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
                 $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
@@ -174,6 +175,7 @@ class DepartmentController extends Controller
         try {
             $department->cabinets()->detach();
 
+            deleteFile($this->path_logo_departments . '/' . $department->getAttributes()['logo']);
             $department->delete();
 
             return response()->json([

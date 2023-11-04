@@ -154,10 +154,7 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         try {
-            if ($notification->poster && file_exists($notification->poster)) {
-                unlink($notification->poster);
-            }
-
+            deleteFile($this->path_poster_notifications . '/' . $notification->getAttributes()['poster']);
             $notification->delete();
 
             return response()->json([

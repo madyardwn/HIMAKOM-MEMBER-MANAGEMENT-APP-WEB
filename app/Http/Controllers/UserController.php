@@ -180,6 +180,7 @@ class UserController extends Controller
 
         try {
             if ($request->hasFile('picture')) {
+                deleteFile($this->path_picture_users . '/' . $user->getAttributes()['picture']);
                 $picture = $request->file('picture');
                 $picture_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $picture->extension();
                 $picture->storeAs($this->path_picture_users, $picture_name, 'public');
@@ -223,6 +224,7 @@ class UserController extends Controller
         try {
             $user->roles()->detach();
 
+            deleteFile($this->path_picture_users . '/' . $user->getAttributes()['picture']);
             $user->delete();
 
             return response()->json([

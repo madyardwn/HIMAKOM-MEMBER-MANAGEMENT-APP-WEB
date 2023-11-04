@@ -254,7 +254,7 @@
                                         }
                                     },
                                     error: (xhr, ajaxOptions, thrownError) => {
-                                        Swal.fire("Error!", thrownError, "error");
+                                        Swal.fire("Error!", xhr.responseJSON.message, "error");
 
                                         $(`#card-${this.subject}`).before(`
                                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">

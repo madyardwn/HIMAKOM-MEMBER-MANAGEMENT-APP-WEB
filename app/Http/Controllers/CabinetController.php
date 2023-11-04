@@ -160,6 +160,7 @@ class CabinetController extends Controller
 
         try {
             if ($request->hasFile('logo')) {
+                deleteFile($this->path_logo_cabinets . '/' .  $cabinet->getAttributes()['logo']);
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
                 $logo->storeAs($this->path_logo_cabinets, $logo_name, 'public');
@@ -198,8 +199,8 @@ class CabinetController extends Controller
     {
         try {
             $cabinet->departments()->detach();
-            $cabinet->users()->detach();
 
+            deleteFile($this->path_logo_cabinets . '/' .  $cabinet->getAttributes()['logo']);
             $cabinet->delete();
 
             return response()->json([

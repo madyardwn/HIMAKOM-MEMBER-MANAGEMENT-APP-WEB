@@ -8,15 +8,14 @@ if (!function_exists('logFile')) {
         }
         $filename = $type . '_AT_' .  date('Y-m-d-H-i-s') . '_FROM_' . $file;
         rename(storage_path('app/public/' . $path . '/' . $file), storage_path('app/logfile/' . $path . '/' . $filename));
-    }    
+    }
 }
 
 if (!function_exists('deleteFile')) {
-    function deleteFile($path, $file)
+    function deleteFile($path)
     {
-        if (file_exists(storage_path('app/public/' . $path . '/' . $file))) {
-            unlink(storage_path('app/public/' . $path . '/' . $file));
+        if (file_exists(storage_path('app/public/' . $path))) {
+            unlink(storage_path('app/public/' . $path));
         }
-    }    
+    }
 }
-

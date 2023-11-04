@@ -144,14 +144,15 @@ class FilosofieController extends Controller
         try {
 
             if ($request->hasFile('logo')) {
+                deleteFile($this->path_logo_filosofies . '/' .  $filosofie->getAttributes()['logo']);
                 $cabinet = Cabinet::find($request->cabinet);
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $cabinet->name . '.' . $logo->extension();
                 $logo->storeAs($this->path_logo_filosofies, $logo_name, 'public');
-                $filosofie->logo = $logo_name;
             }
 
             $filosofie->update([
+                'logo' => $logo_name,
                 'cabinet_id' => $request->cabinet,
                 'label' => $request->label,
             ]);
@@ -176,6 +177,7 @@ class FilosofieController extends Controller
     public function destroy(Filosofie $filosofie)
     {
         try {
+            deleteFile($this->path_logo_filosofies . '/' .  $filosofie->getAttributes()['logo']);
             $filosofie->delete();
 
             return response()->json([

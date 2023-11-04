@@ -2,6 +2,7 @@
     class Notification {
         constructor() {
             // Subject
+            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
             this.subject = 'notifications';
 
             // Modal

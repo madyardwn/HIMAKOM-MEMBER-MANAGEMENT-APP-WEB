@@ -5,16 +5,29 @@ use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('sendNotificationEvent')) {
-    function sendNotificationEvent($event)
+    function sendNotificationEvent($event, $message = null)
     {
+        $cabinet = Cabinet::where('is_active', 1)->first();
+        if (!$cabinet) {
+            return;
+        }
+
         try {
+            $poster_name = $event->getAttributes()['poster']; // x.png
+            $path_events_posters = config('dirpath.events.posters'); // events/posters
+            $path_poster_notifications = config('dirpath.notifications.posters'); // notifications/posters
+
+            $new_poster_name = date('Y-m-d-H-i-s') . '_FROM_EVENT_' . $event->getAttributes()['poster']; // 20200101_x.png
+            Storage::disk('public')->copy($path_events_posters . '/' . $poster_name, $path_poster_notifications . '/' . $new_poster_name);
+
             $notification = Notification::create([
-                'poster' => $event->getAttributes()['poster'],
-                'title' => 'Event ' . $event->name,
-                'body' => 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
-                'link' => $event->link ?? '',
+                'poster' => $new_poster_name,
+                'title' => $message->title ??  'Event ' . $event->name,
+                'body' => $message->body ?? 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
+                'link' => $message->link ?? $event->link ?? '',
             ]);
 
             $url = env('FCM_URL');
@@ -30,9 +43,7 @@ if (!function_exists('sendNotificationEvent')) {
                 'event_id' => $notification->id,
             ];
 
-            $cabinet = Cabinet::where('is_active', 1)->first();
             $fcmTokens = $cabinet->users()->whereNotNull('device_token')->pluck('device_token')->all();
-
             $chunks = array_chunk($fcmTokens, 50);
 
             foreach ($chunks as $chunk) {
