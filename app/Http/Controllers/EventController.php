@@ -177,10 +177,6 @@ class EventController extends Controller
 
         try {
             if ($request->hasFile('poster')) {
-                if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {
-                    logFile($this->path_poster_events, $event->poster, 'UPDATED');
-                }
-
                 $poster = $request->file('poster');
                 $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
                 $poster->storeAs($this->path_poster_events, $poster_name, 'public');
@@ -216,10 +212,6 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         try {
-            if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {
-                logFile($this->path_poster_events, $event->poster, 'DELETED');
-            }
-
             $event->delete();
 
             return response()->json([

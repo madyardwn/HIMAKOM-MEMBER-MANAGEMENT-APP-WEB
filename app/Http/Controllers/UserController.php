@@ -180,11 +180,6 @@ class UserController extends Controller
 
         try {
             if ($request->hasFile('picture')) {
-
-                if ($user->picture && file_exists(storage_path('app/public/' . $this->path_picture_users . '/' . $user->picture))) {
-                    logFile($this->path_picture_users, $user->picture, 'UPDATED');
-                }
-
                 $picture = $request->file('picture');
                 $picture_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $picture->extension();
                 $picture->storeAs($this->path_picture_users, $picture_name, 'public');
@@ -226,10 +221,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
-            if ($user->picture && file_exists(storage_path('app/public/' . $this->path_picture_users . '/' . $user->picture))) {
-                logFile($this->path_picture_users, $user->picture, 'DELETED');
-            }
-
             $user->roles()->detach();
 
             $user->delete();

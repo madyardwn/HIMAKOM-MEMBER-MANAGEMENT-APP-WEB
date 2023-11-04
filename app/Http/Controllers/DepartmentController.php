@@ -140,11 +140,6 @@ class DepartmentController extends Controller
 
         try {
             if ($request->hasFile('logo')) {
-
-                if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {
-                    logFile($this->path_logo_departments, $department->logo, 'UPDATED');
-                }
-
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
                 $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
@@ -177,10 +172,6 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         try {
-            if ($department->logo && file_exists(storage_path('app/public/' . $this->path_logo_departments . '/' . $department->logo))) {
-                logFile($this->path_logo_departments, $department->logo, 'DELETED');
-            }
-
             $department->cabinets()->detach();
 
             $department->delete();
