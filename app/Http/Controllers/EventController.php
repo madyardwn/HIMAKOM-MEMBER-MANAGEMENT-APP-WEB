@@ -48,6 +48,8 @@ class EventController extends Controller
                 'location',
                 'poster',
                 'date',
+                'link',
+                'type',
                 DB::raw($typeExpression),
             ]);
 
@@ -79,6 +81,7 @@ class EventController extends Controller
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
+            'link' => 'nullable|url',
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +104,7 @@ class EventController extends Controller
                 'location' => $request->location,
                 'date' => $request->date,
                 'type' => $request->type,
+                'link' => $request->link ?? '',
             ]);
 
             if (!Carbon::parse($event->date)->isPast()) {
@@ -160,6 +164,7 @@ class EventController extends Controller
             'location' => 'required|max:255',
             'date' => 'required|date',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
+            'link' => 'nullable|url',
         ]);
 
         if ($validator->fails()) {
@@ -172,7 +177,6 @@ class EventController extends Controller
 
         try {
             if ($request->hasFile('poster')) {
-
                 if ($event->poster && file_exists(storage_path('app/public/' . $this->path_poster_events . '/' . $event->poster))) {
                     logFile($this->path_poster_events, $event->poster, 'UPDATED');
                 }
@@ -189,6 +193,7 @@ class EventController extends Controller
                 'location' => $request->location,
                 'date' => $request->date,
                 'type' => $request->type,
+                'link' => $request->link ?? '',
             ]);
 
             return response()->json([

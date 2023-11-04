@@ -64,6 +64,12 @@
                     width: '10%'
                 },
                 {
+                    data: 'type',
+                    name: 'type',
+                    title: 'Type',
+                    responsivePriority: 2,
+                },
+                {
                     data: 'description',
                     name: 'description',
                     title: 'Description',
@@ -89,6 +95,12 @@
                     title: 'Date',
                     responsivePriority: 2,
                     render: (data, type, row) => moment(data).format('DD MMMM YYYY HH:mm')
+                },
+                {
+                    data: 'link',
+                    name: 'link',
+                    title: 'Link',
+                    responsivePriority: 4,
                 },
                 {
                     data: null,
@@ -271,6 +283,7 @@
                                 $('#edit-description').val(response.data.description);
                                 $('#edit-date').val(moment(response.data.date).format('YYYY-MM-DDTHH:mm'));
                                 $('#edit-location').val(response.data.location);
+                                $('#edit-link').val(response.data.link);
                                 $(`#preview-edit-poster`).attr("src", response.data.poster);
                                 this.tomSelectEditType.setValue(response.data.type);
                                 this.modalEdit.show();

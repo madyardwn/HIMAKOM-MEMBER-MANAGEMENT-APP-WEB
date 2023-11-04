@@ -32,6 +32,10 @@
                                 <label class="form-label" for="add-date">Date</label>
                                 <input type="datetime-local" name="date" id="add-date" class="form-control" placeholder="Enter date" autocomplete="off" required>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-link">Link</label>
+                                <input type="url" name="link" id="add-link" class="form-control" placeholder="Enter link" autocomplete="off" required>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
