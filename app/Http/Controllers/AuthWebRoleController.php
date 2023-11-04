@@ -18,7 +18,7 @@ class AuthWebRoleController extends Controller
     {
         if ($request->ajax()) {
             $data = Role::with('permissions:id,name')
-                ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
+                ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
                     return $query->where('id', '!=', 1);
                 })
                 ->orderBy('id', 'asc');

@@ -8,11 +8,11 @@
             this.modalEdit = new bootstrap.Modal($(`#modal-edit-programs`)); // modal edit
 
             // Special Select
-            this.tomSelectAddUser = new TomSelect($('#add-user'), {
+            this.tomSelectAddLead = new TomSelect($('#add-lead'), {
                 valueField: "id",
                 labelField: "name",
                 searchField: "name",
-                placeholder: `Select user`,
+                placeholder: 'Select Lead',
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -44,11 +44,83 @@
                 },
             });
 
-            this.tomSelectEditUser = new TomSelect($('#edit-user'), {
+            this.tomSelectEditLead = new TomSelect($('#edit-lead'), {
                 valueField: "id",
                 labelField: "name",
                 searchField: "name",
-                placeholder: `Select user`,
+                placeholder: 'Select Lead',
+                load: (query, callback) => {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: "{{ route('tom-select.users') }}",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            q: query,
+                        },
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        },
+                    });
+                },
+                render: {
+                    option: function(item, escape) {
+                        return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                    },
+                    item: function(item, escape) {
+                        return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                    },
+                },
+            });
+
+            this.tomSelectAddParticipants = new TomSelect($('#add-participants'), {
+                valueField: "id",
+                labelField: "name",
+                searchField: "name",
+                placeholder: 'Select Participants',
+                load: (query, callback) => {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: "{{ route('tom-select.users') }}",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            q: query,
+                        },
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        },
+                    });
+                },
+                render: {
+                    option: function(item, escape) {
+                        return `<div>
+                                <span class="title">${escape(item.name)}</span>
+                            </div>`;
+                    },
+                    item: function(item, escape) {
+                        return `<div>
+                                ${escape(item.name)}
+                            </div>`;
+                    },
+                },
+            });
+
+            this.tomSelectEditParticipants = new TomSelect($('#edit-participants'), {
+                valueField: "id",
+                labelField: "name",
+                searchField: "name",
+                placeholder: 'Select Participants',
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -81,11 +153,11 @@
             });
 
             this.tomSelectAddDepartment = new TomSelect($('#add-department'), {
-                placeholder: `Select department`,
+                placeholder: 'Select department',
             });
 
             this.tomSelectEditDepartment = new TomSelect($('#edit-department'), {
-                placeholder: `Select department`,
+                placeholder: 'Select department',
             });
 
             // Url
@@ -122,9 +194,15 @@
                     title: 'Description'
                 },
                 {
-                    data: 'user.name',
-                    name: 'user.name',
+                    data: 'lead.name',
+                    name: 'lead.name',
                     title: 'Lead By',
+                    width: '10%'
+                },
+                {
+                    data: 'participants.name',
+                    name: 'participants.name',
+                    title: 'Participants',
                     width: '10%'
                 },
                 {
@@ -166,8 +244,9 @@
                 $(".invalid-feedback").remove();
 
                 $(`#form-add-${this.subject}`)[0].reset(); // reset form
-                this.tomSelectAddDepartment.clear(); // clear tom select
-                this.tomSelectAddUser.clear(); // clear tom select
+                this.tomSelectAddDepartment.clear();
+                this.tomSelectAddLead.clear();
+                this.tomSelectAddParticipants.clear();
             });
 
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
@@ -175,8 +254,9 @@
                 $(".invalid-feedback").remove();
 
                 $(`#form-edit-${this.subject}`)[0].reset(); // reset form
-                this.tomSelectEditDepartment.clear(); // clear tom select
-                this.tomSelectEditUser.clear(); // clear tom select
+                this.tomSelectEditDepartment.clear();
+                this.tomSelectEditLead.clear();
+                this.tomSelectEditParticipants.clear();
             });
         }
 
@@ -200,11 +280,10 @@
                                 $('#edit-name').val(response.data.name);
                                 $('#edit-description').val(response.data.description);
                                 this.tomSelectEditDepartment.setValue(response.data.department.id);
-                                this.tomSelectEditUser.addOption({
-                                    id: response.data.user.id,
-                                    name: response.data.user.name
-                                });
-                                this.tomSelectEditUser.setValue(response.data.user.id);
+                                this.tomSelectEditLead.addOption(response.data.user);
+                                this.tomSelectEditLead.setValue(response.data.user.id);
+                                this.tomSelectEditParticipants.addOption(response.data.participants);
+                                this.tomSelectEditParticipants.setValue(response.data.participants.map((item) => item.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
@@ -283,11 +362,15 @@
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
                 const formData = new FormData(); // Membuat objek FormData
+                const participants = this.tomSelectAddParticipants.getValue();
 
                 formData.append("name", $(`#add-name`).val());
                 formData.append("description", $(`#add-description`).val());
-                formData.append("user", $(`#add-user`).val());
+                formData.append("lead", $(`#add-lead`).val());
                 formData.append("department", $(`#add-department`).val());
+                participants.forEach((item) => {
+                    formData.append("participants[]", item);
+                });
 
                 $.ajax({
                     url: this.storeUrl, // Assign URL
@@ -347,13 +430,17 @@
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
                 const formData = new FormData();
+                const participants = this.tomSelectEditParticipants.getValue();
 
                 formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
                 formData.append("id", $(`#edit-id-${this.subject}`).val());
                 formData.append("name", $(`#edit-name`).val());
                 formData.append("description", $(`#edit-description`).val());
-                formData.append("user", $(`#edit-user`).val());
+                formData.append("lead", $(`#edit-lead`).val());
                 formData.append("department", $(`#edit-department`).val());
+                participants.forEach((item) => {
+                    formData.append("participants[]", item);
+                });
 
                 $.ajax({
                     url: this.updateUrl.replace(":id", formData.get("id")), // Assign URL

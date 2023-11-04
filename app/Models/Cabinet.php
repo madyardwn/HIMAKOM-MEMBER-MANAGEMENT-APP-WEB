@@ -34,8 +34,10 @@ class Cabinet extends Model
      */
     public function getLogoAttribute($value)
     {
-        if ($value) {
+        if ($value && file_exists(storage_path('app/public/' . config('dirpath.cabinets.logo') . '/' . $value))) {
             return asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value);
+        } else {
+            return asset(config('tablar.default.logo.path'));
         }
     }
 
@@ -77,11 +79,11 @@ class Cabinet extends Model
     /**
      * Get the users for the cabinet.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'users_cabinets', 'cabinet_id', 'user_id')->withPivot('id')->withTimestamps();
+        return $this->hasMany(User::class, 'cabinet_id');
     }
 
     /**

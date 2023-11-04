@@ -1,77 +1,56 @@
 <script type="module">
     class User {
         constructor() {
-            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}" // empty image
-            this.subject = 'users'; // subject of modal event
+            // Empty & Subject
+            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
+            this.subject = 'users';
 
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-users`)); // modal add
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-users`)); // modal edit
-            this.modalImport = new bootstrap.Modal($(`#modal-import-users`)); // modal import
+            // Modal
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-users`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-users`));
+            this.modalImport = new bootstrap.Modal($(`#modal-import-users`));
 
-            // Special Select
-            this.tomSelectAddDepartment = new TomSelect($('#add-department'), { // tom select add departments
-                placeholder: `Select department`
-            })
-            this.tomSelectEditDepartment = new TomSelect($('#edit-department'), { // tom select edit departments
-                placeholder: `Select department`,
-            })
+            // Form
+            this.formAdd = $(`#form-add-users`);
+            this.formEdit = $(`#form-edit-users`);
+            this.formImport = $(`#form-import-users`);
 
-            this.tomSelectAddRoles = new TomSelect($('#add-roles'), { // tom select add roles
-                placeholder: `Select role`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
-                maxItems: 3,
+            // Tom Select
+            this.tomSelectAddDepartment = new TomSelect($('#add-department'), {
+                placeholder: 'Select Department',
             })
-            this.tomSelectEditRoles = new TomSelect($('#edit-roles'), { // tom select edit roles
-                placeholder: `Select role`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
-                maxItems: 3,
+            this.tomSelectEditDepartment = new TomSelect($('#edit-department'), {
+                placeholder: 'Select Department',
             })
-
-            this.tomSelectAddCabinets = new TomSelect($('#add-cabinets'), { // tom select add cabinets
-                placeholder: `Select cabinet`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
-                maxItems: 2,
+            this.tomSelectAddRole = new TomSelect($('#add-role'), {
+                placeholder: 'Select Role',
             })
-            this.tomSelectEditCabinets = new TomSelect($('#edit-cabinets'), { // tom select edit cabinets
-                placeholder: `Select cabinet`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
-                maxItems: 2,
+            this.tomSelectEditRole = new TomSelect($('#edit-role'), {
+                placeholder: 'Select Role',
+            })
+            this.tomSelectAddCabinet = new TomSelect($('#add-cabinet'), {
+                placeholder: 'Select Cabinet',
+            })
+            this.tomSelectEditCabinet = new TomSelect($('#edit-cabinet'), {
+                placeholder: 'Select Cabinet',
+            })
+            this.tomSelectAddGender = new TomSelect($('#add-gender'), {
+                placeholder: 'Select Gender',
+            })
+            this.tomSelectEditGender = new TomSelect($('#edit-gender'), {
+                placeholder: 'Select Gender',
             })
 
-            this.tomSelectAddGender = new TomSelect($('#edit-gender'), {
-                placeholder: `Select gender`,
-            })
+            // URL
+            this.storeUrl = "{{ route('users-management.users.store') }}";
+            this.editUrl = "{{ route('users-management.users.edit', ':id') }}";
+            this.deleteUrl = "{{ route('users-management.users.destroy', ':id') }}";
+            this.updateUrl = "{{ route('users-management.users.update', ':id') }}";
+            this.importUrl = "{{ route('import.users') }}";
 
-            this.tomSelectEditGender = new TomSelect($('#add-gender'), {
-                placeholder: `Select gender`,
-            })
-
-            // Url
-            this.storeUrl = "{{ route('users-management.users.store') }}"; // url store
-            this.editUrl = "{{ route('users-management.users.edit', ':id') }}"; // url edit
-            this.deleteUrl = "{{ route('users-management.users.destroy', ':id') }}"; // url delete
-            this.updateUrl = "{{ route('users-management.users.update', ':id') }}"; // url update
-            this.importUrl = "{{ route('import.users') }}"; // Set url
-
-            // Datatable
-            this.table = $('#table-users'); // datatable selector
-            this.tableDataUrl = "{{ route('users-management.users.index') }}"; // url datatable
+            // DataTable
+            this.table = $('#table-users');
+            this.tableDataUrl = "{{ route('users-management.users.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -148,17 +127,11 @@
                     width: '10%'
                 },
                 {
-                    data: 'cabinets',
-                    name: 'cabinets.name',
+                    data: 'cabinet',
+                    name: 'cabinet.name',
                     title: 'Cabinet',
                     orderable: false,
-                    render: function(data, type, row) {
-                        let html = '';
-                        data.forEach(function(item, index) {
-                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
-                        });
-                        return html;
-                    }
+                    render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
                 },
                 {
                     data: 'department',
@@ -207,56 +180,57 @@
         }
 
         initDtEvents() {
-            // Modal Events
             $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
+                $(`#preview-add-picture`).attr("src", this.emptyImage);
 
-                $(`#form-add-${this.subject}`)[0].reset(); // reset form
-                $(`#preview-add-picture`).attr("src", this.emptyImage); // reset preview image
-                this.tomSelectAddDepartment.clear(); // clear tom select
-                this.tomSelectAddCabinets.clear(); // clear tom select
-                this.tomSelectAddRoles.clear(); // clear tom select
+                this.formAdd[0].reset();
+                this.tomSelectAddGender.clear();
+                this.tomSelectAddDepartment.clear();
+                this.tomSelectAddCabinet.clear();
+                this.tomSelectAddRole.clear();
             });
 
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
+                $(`#preview-edit-picture`).attr("src", this.emptyImage);
 
-                $(`#form-edit-${this.subject}`)[0].reset(); // reset form
-                $(`#preview-edit-picture`).attr("src", this.emptyImage); // reset preview image
-                this.tomSelectEditDepartment.clear(); // clear tom select
-                this.tomSelectEditCabinets.clear(); // clear tom select
-                this.tomSelectEditRoles.clear(); // clear tom select
+                this.formEdit[0].reset();
+                this.tomSelectEditGender.clear();
+                this.tomSelectEditDepartment.clear();
+                this.tomSelectEditCabinet.clear();
+                this.tomSelectEditRole.clear();
             });
 
             $(`#modal-import-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
 
-                $(`#form-import-${this.subject}`)[0].reset(); // reset form
+                this.formImport[0].reset();
             });
 
-            // Image Preview Events
+
             $(`#add-picture`).on("change", () => {
-                const file = $(`#add-picture`)[0].files[0]; // get file
-                const name = $(`#add-picture`)[0].name; // name of input file
-                const reader = new FileReader(); // create reader
+                const file = $(`#add-picture`)[0].files[0];
+                const name = $(`#add-picture`)[0].name;
+                const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // set image source to preview image name
+
                     $(`#preview-add-${name}`).attr("src", e.target.result);
                 };
                 reader.readAsDataURL(file);
             });
 
             $(`#edit-picture`).on("change", () => {
-                const file = $(`#edit-picture`)[0].files[0]; // get file
-                const name = $(`#edit-picture`)[0].name; // name of input file
-                const reader = new FileReader(); // create reader
+                const file = $(`#edit-picture`)[0].files[0];
+                const name = $(`#edit-picture`)[0].name;
+                const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // set image source to preview image name
+
                     $(`#preview-edit-${name}`).attr("src", e.target.result);
                 };
                 reader.readAsDataURL(file);
@@ -274,6 +248,7 @@
                     $('.btn-edit').on('click', (e) => {
                         e.preventDefault();
 
+                        // Set ID, We'll use it later
                         $(`#edit-id-${this.subject}`).val($(e.currentTarget).data("id"));
 
                         $.ajax({
@@ -286,11 +261,11 @@
                                 $('#edit-npa').val(response.data.npa);
                                 $('#edit-name_bagus').val(response.data.name_bagus);
                                 $('#edit-year').val(response.data.year);
-                                $('#edit-gender').val(response.data.gender);
                                 $(`#preview-edit-picture`).attr("src", response.data.picture);
+                                this.tomSelectEditGender.setValue(response.data.gender);
                                 this.tomSelectEditDepartment.setValue(response.data.department.id);
-                                this.tomSelectEditCabinets.setValue(response.data.cabinets.map((item) => item.id));
-                                this.tomSelectEditRoles.setValue(response.data.roles.map((item) => item.id));
+                                this.tomSelectEditCabinet.setValue(response.data.cabinet.id);
+                                this.tomSelectEditRole.setValue(response.data.roles.map((item) => item.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
@@ -368,37 +343,14 @@
                 $(`#submit-add-${this.subject}`).attr("disabled", true);
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData(); // Membuat objek FormData
-                const cabinets = this.tomSelectAddCabinets.getValue();
-                const roles = this.tomSelectAddRoles.getValue();
-
-                formData.append("name", $(`#add-name`).val());
-                formData.append("email", $(`#add-email`).val());
-                formData.append("nim", $(`#add-nim`).val());
-                formData.append("npa", $(`#add-npa`).val());
-                formData.append("name_bagus", $(`#add-name_bagus`).val());
-                formData.append("year", $(`#add-year`).val());
-                formData.append("is_active", $(`#add-is_active`).prop("checked") ? 1 : 0);
-                formData.append("password", $(`#add-password`).val());
-                formData.append("password_confirmation", $(`#add-password_confirmation`).val());
-                formData.append("gender", $(`#add-gender`).val());
-                formData.append("picture", $(`#add-picture`)[0].files[0]);
-                formData.append("department", $(`#add-department`).val());
-                // formData.append("cabinets", $(`#add-cabinets`).val());
-                // formData.append("roles", $(`#add-roles`).val());
-                cabinets.forEach((item) => {
-                    formData.append("cabinets[]", item);
-                });
-                roles.forEach((item) => {
-                    formData.append("roles[]", item);
-                });
+                const formData = new FormData(this.formAdd[0]);
 
                 $.ajax({
-                    url: this.storeUrl, // Assign URL
+                    url: this.storeUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-add-${this.subject}`).attr("disabled", false);
                         $(`#submit-add-${this.subject}`).removeClass("btn-loading");
@@ -411,9 +363,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalAdd.hide(); // hide modal
+                            this.modalAdd.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -450,38 +402,14 @@
                 $(`#submit-edit-${this.subject}`).attr("disabled", true);
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData();
-                const cabinets = this.tomSelectEditCabinets.getValue();
-                const roles = this.tomSelectEditRoles.getValue();
-
-                formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
-                formData.append("id", $(`#edit-id-${this.subject}`).val());
-                formData.append("name", $(`#edit-name`).val());
-                formData.append("email", $(`#edit-email`).val());
-                formData.append("nim", $(`#edit-nim`).val());
-                formData.append("npa", $(`#edit-npa`).val());
-                formData.append("name_bagus", $(`#edit-name_bagus`).val());
-                formData.append("year", $(`#edit-year`).val());
-                formData.append("is_active", $(`#edit-is_active`).prop("checked") ? 1 : 0);
-                formData.append("password", $(`#edit-password`).val());
-                formData.append("password_confirmation", $(`#edit-password_confirmation`).val());
-                formData.append("gender", $(`#edit-gender`).val());
-                formData.append("picture", $(`#edit-picture`)[0].files[0]);
-                formData.append("department", $(`#edit-department`).val());
-                // formData.append("cabinets", $(`#edit-cabinets`).val());
-                // formData.append("roles", $(`#edit-roles`).val());
-                cabinets.forEach((item) => {
-                    formData.append("cabinets[]", item);
-                });
-                roles.forEach((item) => {
-                    formData.append("roles[]", item);
-                });
+                const formData = new FormData(this.formEdit[0]);
+                formData.append("_method", "PUT");
 
                 $.ajax({
-                    url: this.updateUrl.replace(":id", formData.get("id")), // Assign URL
-                    method: "POST", // With FormData we can't use PUT method in here
-                    processData: false, // Prevent jQuery from processing the data
-                    contentType: false, // Prevent jQuery from setting the content type
+                    url: this.updateUrl.replace(":id", formData.get("id")),
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
                     data: formData,
                     complete: () => {
                         $(`#submit-edit-${this.subject}`).attr("disabled", false);
@@ -495,11 +423,11 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalEdit.hide(); // hide modal
+                            this.modalEdit.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
-                            // Show Alert
+
                             $(`#card-${this.subject}`).before(`
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <strong>Success!</strong> ${response.message}
@@ -535,15 +463,15 @@
                 $(`#submit-import-users`).attr("disabled", true);
                 $(`#submit-import-users`).addClass("btn-loading");
 
-                const form = $(`#form-import-${this.subject}`); // Ambil form
-                const formData = new FormData(form[0]); // Buat form data
+                const form = $(`#form-import-${this.subject}`);
+                const formData = new FormData(form[0]);
 
                 $.ajax({
-                    url: this.importUrl, // File tujuan
+                    url: this.importUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-import-${this.subject}`).attr("disabled", false);
                         $(`#submit-import-${this.subject}`).removeClass("btn-loading");

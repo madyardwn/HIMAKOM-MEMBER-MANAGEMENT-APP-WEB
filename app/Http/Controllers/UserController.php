@@ -35,7 +35,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with('cabinets:id,name', 'roles:id,name', 'department:id,name')
+            $data = User::with('cabinet:id,name', 'roles:id,name', 'department:id,name')
                 ->where('id', '!=', 1);
 
             return DataTables::of($data)
@@ -46,7 +46,7 @@ class UserController extends Controller
         return view('pages.users.index', [
             'gender' => User::GENDER_TYPE,
             'departments' => Department::all(['id', 'name']),
-            'roles' => Role::all(['id', 'name'])->whereNotIn('name', ['super-admin']),
+            'roles' => Role::all(['id', 'name'])->whereNotIn('name', ['SUPER ADMIN']),
             'cabinets' => Cabinet::all(['id', 'name']),
         ]);
     }
@@ -66,17 +66,17 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:50',
-            'nim' => 'required|string|max:10',
-            'npa' => 'required|string|max:10',
+            'nim' => 'required|numeric|digits:9|unique:users,nim',
+            'npa' => 'required|numeric|digits:7|unique:users,npa',
             'name_bagus' => 'required|string|max:50',
             'gender' => 'required|in:0,1',
-            'year' => 'required|string|max:4',
+            'year' => 'required|numeric|digits:4',
             'email' => 'required|string|email|max:255|unique:users',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
-            'cabinets' => 'required|array|exists:cabinets,id|max:2',
-            'department' => 'required|numeric|exists:departments,id',
-            'roles' => 'required|array|exists:roles,id|not_in:1|max:3',
+            'cabinet' => 'required|exists:cabinets,id',
+            'department' => 'required|exists:departments,id',
+            'role' => 'required|exists:roles,id|not_in:1',
         ]);
 
         if ($validator->fails()) {
@@ -104,10 +104,10 @@ class UserController extends Controller
                 'picture' => $picture_name,
                 'password' => bcrypt($request->password),
                 'department_id' => $request->department,
+                'cabinet_id' => $request->cabinet,
             ]);
 
-            $user->assignRole($request->roles);
-            $user->cabinets()->attach($request->cabinets);
+            $user->assignRole($request->role);
 
             return response()->json([
                 'status' => 'success',
@@ -137,7 +137,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         try {
-            $user->load('cabinets:id,name', 'department:id,name', 'roles:id,name');
+            $user->load('cabinet:id,name', 'department:id,name', 'roles:id,name');
             return response()->json([
                 'status' => 'success',
                 'data' => $user,
@@ -158,16 +158,16 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:50',
-            'nim' => 'required|string|max:10',
-            'npa' => 'required|string|max:10',
+            'nim' => 'required|numeric|digits:9|unique:users,nim,' . $user->id,
+            'npa' => 'required|numeric|digits:7|unique:users,npa,' . $user->id,
             'name_bagus' => 'required|string|max:50',
-            'year' => 'required|string|max:4',
+            'year' => 'required|numeric|digits:4',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
-            'cabinets' => 'required|array|exists:cabinets,id|max:2',
-            'department' => 'required|numeric|exists:departments,id',
-            'roles' => 'required|array|exists:roles,id|not_in:1|max:3',
+            'cabinet' => 'required|exists:cabinets,id',
+            'department' => 'required|exists:departments,id',
+            'role' => 'required|exists:roles,id|not_in:1',
         ]);
 
         if ($validator->fails()) {
@@ -201,10 +201,10 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'department_id' => $request->department,
+                'cabinet_id' => $request->cabinet,
             ]);
 
-            $user->cabinets()->sync($request->cabinets);
-            $user->roles()->sync($request->roles);
+            $user->roles()->sync($request->role);
 
             return response()->json([
                 'status' => 'success',
@@ -230,7 +230,6 @@ class UserController extends Controller
                 logFile($this->path_picture_users, $user->picture, 'DELETED');
             }
 
-            $user->cabinets()->detach();
             $user->roles()->detach();
 
             $user->delete();

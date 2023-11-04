@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-edit-users">
+                <form id="form-edit-users">
                     <input type="hidden" name="id" id="edit-id-users">
                     <div class="row">
                         <div class="col-md-5">
@@ -25,6 +25,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="edit-gender">Gender</label>
                                     <select name="gender" id="edit-gender">
+                                        <option value="" selected disabled></option>
                                         @foreach ($gender as $key => $value)
                                             <option value="{{ $key }}">{{ ucwords($value) }}</option>
                                         @endforeach
@@ -37,11 +38,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-nim">NIM</label>
-                                <input type="text" name="nim" id="edit-nim" class="form-control" placeholder="Enter NIM" autocomplete="off" required>
+                                <input type="number" name="nim" id="edit-nim" class="form-control" placeholder="Enter NIM" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-npa">NPA</label>
-                                <input type="text" name="npa" id="edit-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
+                                <input type="number" name="npa" id="edit-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-name_bagus">Name Bagus</label>
@@ -89,8 +90,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="edit-roles">Role</label>
-                                    <select name="roles[]" id="edit-roles" multiple>
+                                    <label class="form-label" for="edit-role">Role</label>
+                                    <select name="role" id="edit-role">
+                                        <option value="" selected disabled></option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
@@ -99,8 +101,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="edit-cabinets">Cabinet</label>
-                                    <select name="cabinets[]" id="edit-cabinets" multiple>
+                                    <label class="form-label" for="edit-cabinet">Cabinet</label>
+                                    <select name="cabinet" id="edit-cabinet">
+                                        <option value="" selected disabled></option>
                                         @foreach ($cabinets as $cabinet)
                                             <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
                                         @endforeach
@@ -111,6 +114,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="edit-department">Department</label>
                                     <select name="department" id="edit-department">
+                                        <option value="" selected disabled></option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                                         @endforeach

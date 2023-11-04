@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-add-users">
+                <form id="form-add-users">
                     <div class="row">
                         <div class="col-md-5">
                             <label class="form-label" for="add-picture">Picture</label>
@@ -37,11 +37,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-nim">NIM</label>
-                                <input type="text" name="nim" id="add-nim" class="form-control" placeholder="Enter NIM" autocomplete="off" required>
+                                <input type="number" name="nim" id="add-nim" class="form-control" placeholder="Enter NIM" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-npa">NPA</label>
-                                <input type="text" name="npa" id="add-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
+                                <input type="number" name="npa" id="add-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-name_bagus">Name Bagus</label>
@@ -89,8 +89,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="add-roles">Role</label>
-                                    <select name="roles[]" id="add-roles" multiple>
+                                    <label class="form-label" for="add-role">Role</label>
+                                    <select name="role" id="add-role">
                                         <option value="" selected disabled></option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -100,8 +100,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label" for="add-cabinets">Cabinet</label>
-                                    <select name="cabinets[]" id="add-cabinets" multiple>
+                                    <label class="form-label" for="add-cabinet">Cabinet</label>
+                                    <select name="cabinet" id="add-cabinet">
                                         <option value="" selected disabled></option>
                                         @foreach ($cabinets as $cabinet)
                                             <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>

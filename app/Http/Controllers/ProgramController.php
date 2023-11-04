@@ -17,7 +17,7 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Program::select('*')->with('user:id,name', 'department:id,name');
+            $data = Program::select('*')->with('lead:id,name', 'department:id,name', 'participants:id,name');
 
             return DataTables::of($data)->make();
         }
@@ -43,8 +43,9 @@ class ProgramController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name|max:50',
             'description' => 'required|max:255',
-            'user' => 'required|numeric|exists:users,id|not_in:1',
+            'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
+            'participants' => 'required|array|exists:users,id|not_in:1',
         ]);
 
         if ($validator->fails()) {
@@ -59,9 +60,11 @@ class ProgramController extends Controller
             $program = Program::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'user_id' => $request->user,
+                'user_id' => $request->lead,
                 'department_id' => $request->department,
             ]);
+
+            $program->users()->attach($request->participants);
 
             return response()->json([
                 'status' => 'success',
@@ -91,7 +94,7 @@ class ProgramController extends Controller
     public function edit(Program $program)
     {
         try {
-            $program->load('user:id,name', 'department:id,name');
+            $program->load('lead:id,name', 'department:id,name', 'participants:id,name');
 
             return response()->json([
                 'status' => 'success',
@@ -114,8 +117,9 @@ class ProgramController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name,' . $program->id . '|max:50',
             'description' => 'required|max:255',
-            'user' => 'required|numeric|exists:users,id|not_in:1',
+            'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
+            'participants' => 'required|array|exists:users,id|not_in:1',
         ]);
 
         if ($validator->fails()) {
@@ -130,9 +134,11 @@ class ProgramController extends Controller
             $program->update([
                 'name' => $request->name,
                 'description' => $request->description,
-                'user_id' => $request->user,
+                'user_id' => $request->lead,
                 'department_id' => $request->department,
             ]);
+
+            $program->users()->sync($request->participants);
 
             return response()->json([
                 'status' => 'success',
@@ -154,6 +160,9 @@ class ProgramController extends Controller
     public function destroy(Program $program)
     {
         try {
+
+            $program->participants()->detach();
+
             $program->delete();
 
             return response()->json([

@@ -33,8 +33,17 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="add-user">Lead By</label>
-                                        <select name="user" id="add-user">
+                                        <label class="form-label" for="add-lead">Lead</label>
+                                        <select name="lead" id="add-lead">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="add-participants">Participants</label>
+                                        <select name="participants[]" id="add-participants" multiple>
                                         </select>
                                     </div>
                                 </div>

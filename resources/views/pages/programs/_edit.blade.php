@@ -34,8 +34,17 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="edit-user">Lead By</label>
-                                        <select name="user" id="edit-user">
+                                        <label class="form-label" for="edit-lead">Lead</label>
+                                        <select name="lead" id="edit-lead">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="edit-participants">Participants</label>
+                                        <select name="participants[]" id="edit-participants" multiple>
                                         </select>
                                     </div>
                                 </div>

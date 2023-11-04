@@ -42,6 +42,7 @@ class User extends Authenticatable
         'device_token',
         'gender',
         'department_id',
+        'cabinet_id',
     ];
 
     /**
@@ -111,9 +112,9 @@ class User extends Authenticatable
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function cabinets()
+    public function cabinet()
     {
-        return $this->belongsToMany(Cabinet::class, 'users_cabinets', 'user_id', 'cabinet_id')->withPivot('id')->withTimestamps();
+        return $this->belongsTo(Cabinet::class, 'cabinet_id');
     }
 
     /**
@@ -123,7 +124,17 @@ class User extends Authenticatable
      */
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    /**
+     * Get the user's program.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class, 'users_programs', 'user_id', 'program_id');
     }
 
     /**

@@ -57,17 +57,11 @@ class UserImport implements ToModel
             $user->npa = $row[6] ?? null;
             $user->picture = $row[7] ?? null;
             $user->department_id = $department->id ?? null;
+            $user->cabinet_id = $cabinet->id;
             $user->save();
 
-            // Add new Cabinet
-            if (strcmp($row[9], $user->cabinets()->first()->name) != 0) {
-                $user->cabinets()->attach($cabinet->id);
-            }
-
             // Add new Role
-            if (strcmp($row[11], $user->roles()->first()->name) != 0) {
-                $user->assignRole($roles->name);
-            }
+            $user->roles()->sync($roles->id);
 
             return null;
         }
@@ -83,10 +77,10 @@ class UserImport implements ToModel
             'picture' => $row[7] ?? null,
             'gender' => $row[8],
             'department_id' => $department->id ?? null,
+            'cabinet_id' => $cabinet->id,
         ]);
 
-        $user->cabinets()->sync($cabinet->id);
-        $user->assignRole($row[11]);
+        $user->roles()->sync($roles->id);
 
         return $user;
     }

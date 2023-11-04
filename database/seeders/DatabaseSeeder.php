@@ -24,9 +24,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(DefaultPermissionSeeder::class); // Create Permissions
-        $this->call(DefaultRoleSeeder::class); // Create Roles
         $this->call(DefaultDepartmentSeeder::class); // Create Departments
-
-        $user->assignRole('super-admin'); // Assign Super Admin Role to Super Admin User
+        if (app()->environment('local')) {
+            $this->call(DefaultCabinetSeeder::class); // Create Cabinets
+        }
+        $this->call(DefaultRoleSeeder::class); // Create Roles
+        $user->assignRole('SUPER ADMIN'); // Assign Super Admin Role to Super Admin User
     }
 }

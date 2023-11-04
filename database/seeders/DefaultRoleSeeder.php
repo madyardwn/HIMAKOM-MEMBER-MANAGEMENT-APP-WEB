@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -16,12 +17,12 @@ class DefaultRoleSeeder extends Seeder
     public function run(): void
     {
         // Create Super Admin Role
-        Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'SUPER ADMIN'])->givePermissionTo(Permission::all());
 
         // Create Default Roles Non Active Users
-        Role::create(['name' => 'non-active-users']);
+        Role::create(['name' => 'NON ACTIVE']);
 
-        Role::create(['name' => 'ketua-himpunan'])->givePermissionTo([
+        Role::create(['name' => 'KETUA HIMPUNAN'])->givePermissionTo([
             // Cabinets
             'read-cabinets',
             'create-cabinets',
@@ -35,7 +36,7 @@ class DefaultRoleSeeder extends Seeder
             'delete-departments',
         ]);
 
-        Role::create(['name' => 'wakil-ketua-himpunan'])->givePermissionTo([
+        Role::create(['name' => 'WAKIL KETUA HIMPUNAN'])->givePermissionTo([
             // Cabinets
             'read-cabinets',
             'create-cabinets',
@@ -49,43 +50,7 @@ class DefaultRoleSeeder extends Seeder
             'delete-departments',
         ]);
 
-        Role::create(['name' => 'ketua-divisi'])->givePermissionTo([
-            // Programs
-            'read-programs',
-            'create-programs',
-            'update-programs',
-            'delete-programs',
-
-            // Departments
-            'read-departments',
-            'update-departments',
-
-            // Events
-            'read-events',
-            'create-events',
-            'update-events',
-            'delete-events',
-        ]);
-
-        Role::create(['name' => 'wakil-ketua-divisi'])->givePermissionTo([
-            // Programs
-            'read-programs',
-            'create-programs',
-            'update-programs',
-            'delete-programs',
-
-            // Departments
-            'read-departments',
-            'update-departments',
-
-            // Events
-            'read-events',
-            'create-events',
-            'update-events',
-            'delete-events',
-        ]);
-
-        Role::create(['name' => 'ketua-majelis-perwakilan-anggota'])->givePermissionTo([
+        Role::create(['name' => 'KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
             'read-users',
             'read-cabinets',
             'read-departments',
@@ -93,7 +58,7 @@ class DefaultRoleSeeder extends Seeder
             'read-events',
         ]);
 
-        Role::create(['name' => 'wakil-ketua-majelis-perwakilan-anggota'])->givePermissionTo([
+        Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
             'read-users',
             'read-cabinets',
             'read-departments',
@@ -101,7 +66,49 @@ class DefaultRoleSeeder extends Seeder
             'read-events',
         ]);
 
-        Role::create(['name' => 'staf-ahli'])->givePermissionTo([
+        $department = Department::select(['id', 'name'])
+            ->whereNotIn('short_name', ['MPA'])
+            ->get();
+
+        foreach ($department as $dept) {
+            Role::create(['name' => 'KETUA ' . $dept->name])->givePermissionTo([
+                // Programs
+                'read-programs',
+                'create-programs',
+                'update-programs',
+                'delete-programs',
+
+                // Departments
+                'read-departments',
+                'update-departments',
+
+                // Events
+                'read-events',
+                'create-events',
+                'update-events',
+                'delete-events',
+            ]);
+
+            Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
+                // Programs
+                'read-programs',
+                'create-programs',
+                'update-programs',
+                'delete-programs',
+
+                // Departments
+                'read-departments',
+                'update-departments',
+
+                // Events
+                'read-events',
+                'create-events',
+                'update-events',
+                'delete-events',
+            ]);
+        }
+
+        Role::create(['name' => 'STAF AHLI'])->givePermissionTo([
             // Programs
             'read-programs',
             'create-programs',
@@ -115,8 +122,7 @@ class DefaultRoleSeeder extends Seeder
             'delete-events',
         ]);
 
-
-        Role::create(['name' => 'staf-muda'])->givePermissionTo([
+        Role::create(['name' => 'STAF MUDA'])->givePermissionTo([
             // Programs
             'read-programs'
         ]);
