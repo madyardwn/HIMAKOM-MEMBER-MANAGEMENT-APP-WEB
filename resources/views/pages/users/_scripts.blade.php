@@ -255,17 +255,17 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data.name);
-                                $('#edit-email').val(response.data.email);
-                                $('#edit-nim').val(response.data.nim);
-                                $('#edit-npa').val(response.data.npa);
-                                $('#edit-name_bagus').val(response.data.name_bagus);
-                                $('#edit-year').val(response.data.year);
-                                $(`#preview-edit-picture`).attr("src", response.data.picture);
-                                this.tomSelectEditGender.setValue(response.data.gender);
-                                this.tomSelectEditDepartment.setValue(response.data.department.id);
-                                this.tomSelectEditCabinet.setValue(response.data.cabinet.id);
-                                this.tomSelectEditRole.setValue(response.data.roles.map((item) => item.id));
+                                $('#edit-name').val(response.data?.name);
+                                $('#edit-email').val(response.data?.email);
+                                $('#edit-nim').val(response.data?.nim);
+                                $('#edit-npa').val(response.data?.npa);
+                                $('#edit-name_bagus').val(response.data?.name_bagus);
+                                $('#edit-year').val(response.data?.year);
+                                $(`#preview-edit-picture`).attr("src", response.data?.picture);
+                                this.tomSelectEditGender.setValue(response.data?.gender);
+                                this.tomSelectEditDepartment.setValue(response.data?.department?.id);
+                                this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
+                                this.tomSelectEditRole.setValue(response.data?.roles.map((item) => item?.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

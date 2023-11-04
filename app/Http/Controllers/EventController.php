@@ -107,9 +107,7 @@ class EventController extends Controller
                 'link' => $request->link ?? '',
             ]);
 
-            if (!Carbon::parse($event->date)->isPast()) {
-                sendNotificationEvent($event);
-            }
+            sendNotificationEvent($event);
 
             return response()->json([
                 'status' => 'success',
@@ -120,7 +118,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => $e->getMessage(),
+                'message' => 'Something went wrong!',
             ], 500);
         }
     }
@@ -232,6 +230,12 @@ class EventController extends Controller
     public function notification(Event $event, Request $request)
     {
         try {
+            if (Carbon::parse($event->date)->isPast()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Event has passed!',
+                ], 422);
+            }
 
             sendNotificationEvent($event, $request->message ?? '');
 

@@ -156,9 +156,9 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-label').val(response.data.label);
-                                $(`#preview-edit-logo`).attr("src", response.data.logo);
-                                this.tomSelectEditCabinet.setValue(response.data.cabinet.id);
+                                $('#edit-label').val(response.data?.label);
+                                $(`#preview-edit-logo`).attr("src", response.data?.logo);
+                                this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

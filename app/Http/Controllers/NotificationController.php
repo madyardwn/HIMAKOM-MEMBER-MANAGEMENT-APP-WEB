@@ -65,6 +65,12 @@ class NotificationController extends Controller
 
         try {
 
+            $cabinet = Cabinet::where('is_active', 1)->first();
+
+            if (!$cabinet) {
+                throw new \Exception('Cabinet or users not found!');
+            }
+
             $poster = $request->file('poster');
             $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
             $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
@@ -89,7 +95,6 @@ class NotificationController extends Controller
                 'event_id' => $notification->id,
             ];
 
-            $cabinet = Cabinet::where('is_active', 1)->first();
             $fcmTokens = $cabinet->users()->whereNotNull('device_token')->pluck('device_token')->all();
 
             $chunks = array_chunk($fcmTokens, 50);

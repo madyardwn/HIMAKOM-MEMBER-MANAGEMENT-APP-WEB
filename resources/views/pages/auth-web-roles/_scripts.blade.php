@@ -123,8 +123,8 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data.name);
-                                this.tomSelectEditPermissions.setValue(response.data.permissions.map((item) => item.id));
+                                $('#edit-name').val(response.data?.name);
+                                this.tomSelectEditPermissions.setValue(response.data?.permissions.map((item) => item?.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

@@ -292,13 +292,13 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data.name);
-                                $('#edit-description').val(response.data.description);
-                                this.tomSelectEditDepartment.setValue(response.data.department.id);
-                                this.tomSelectEditLead.addOption(response.data.lead);
-                                this.tomSelectEditLead.setValue(response.data.lead.id);
-                                this.tomSelectEditParticipants.addOption(response.data.participants);
-                                this.tomSelectEditParticipants.setValue(response.data.participants.map((item) => item.id));
+                                $('#edit-name').val(response.data?.name);
+                                $('#edit-description').val(response.data?.description);
+                                this.tomSelectEditDepartment.setValue(response.data?.department?.id);
+                                this.tomSelectEditLead.addOption(response.data?.lead);
+                                this.tomSelectEditLead.setValue(response.data?.lead?.id);
+                                this.tomSelectEditParticipants.addOption(response.data?.participants);
+                                this.tomSelectEditParticipants.setValue(response.data?.participants.map((item) => item?.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

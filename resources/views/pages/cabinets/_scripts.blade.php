@@ -96,6 +96,23 @@
                     }
                 },
                 {
+                    data: 'filosofies',
+                    name: 'filosofies',
+                    title: 'Filosofies',
+                    orderable: false,
+                    width: '30%',
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `
+                                <img src="${item.logo}" alt="Filosofies" class="img-fluid" width="100">
+                                <span class="badge badge-outline text-blue m-1">${item.label}</span>
+                            `;
+                        });
+                        return html;
+                    }
+                },
+                {
                     data: 'year',
                     name: 'year',
                     title: 'Year',
@@ -198,14 +215,14 @@
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data.name);
-                                $('#edit-description').val(response.data.description);
-                                $('#edit-visi').val(response.data.visi);
-                                $('#edit-misi').val(response.data.misi);
-                                $('#edit-year').val(response.data.year);
-                                $('#edit-is_active').prop("checked", response.data.is_active);
-                                $(`#preview-edit-logo`).attr("src", response.data.logo);
-                                this.tomSelectEditDepartments.setValue(response.data.departments.map((item) => item.id));
+                                $('#edit-name').val(response.data?.name);
+                                $('#edit-description').val(response.data?.description);
+                                $('#edit-visi').val(response.data?.visi);
+                                $('#edit-misi').val(response.data?.misi);
+                                $('#edit-year').val(response.data?.year);
+                                $('#edit-is_active').prop("checked", response.data?.is_active);
+                                $(`#preview-edit-logo`).attr("src", response.data?.logo);
+                                this.tomSelectEditDepartments.setValue(response.data?.departments.map((item) => item?.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
