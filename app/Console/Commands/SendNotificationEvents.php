@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Cabinet;
 use App\Models\Event;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class SendNotificationEvents extends Command
 {
@@ -27,7 +30,11 @@ class SendNotificationEvents extends Command
         $events = Event::whereDate('date', Carbon::now()->addDay())->get();
 
         foreach ($events as $event) {
-            sendNotificationEvent($event);
+            try {
+                sendNotificationEvent($event);
+            } catch (\Throwable $th) {
+                Log::error($th->getMessage());
+            }
         }
     }
 }

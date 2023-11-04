@@ -245,10 +245,7 @@
                                                             '</div>'
                                                         );
 
-                                                        $('.alert').delay(3000).slideUp(300,
-                                                            function() {
-                                                                $(this).alert('close');
-                                                            });
+                                                        $('.alert').delay(3000).slideUp(300);
                                                     }
                                                 });
                                         }

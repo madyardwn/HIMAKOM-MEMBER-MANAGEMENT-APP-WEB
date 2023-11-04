@@ -19,7 +19,6 @@ class EventController extends Controller
      * Path to store posters.
      */
     private $path_poster_events;
-    private $path_poster_notifications;
 
     /**
      * Create a new controller instance.
@@ -27,7 +26,6 @@ class EventController extends Controller
     public function __construct()
     {
         $this->path_poster_events = config('dirpath.events.posters');
-        $this->path_poster_notifications = config('dirpath.notifications.posters');
     }
 
     /**
@@ -122,7 +120,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -234,12 +232,6 @@ class EventController extends Controller
     public function notification(Event $event, Request $request)
     {
         try {
-            if (Carbon::parse($event->date)->isPast()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Event has passed!',
-                ], 422);
-            }
 
             sendNotificationEvent($event, $request->message ?? '');
 
@@ -251,7 +243,7 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

@@ -155,6 +155,9 @@ class NotificationController extends Controller
     {
         try {
             deleteFile($this->path_poster_notifications . '/' . $notification->getAttributes()['poster']);
+
+            $notification->users()->detach();
+
             $notification->delete();
 
             return response()->json([

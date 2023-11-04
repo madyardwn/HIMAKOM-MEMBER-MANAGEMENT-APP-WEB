@@ -11,7 +11,8 @@ if (!function_exists('sendNotificationEvent')) {
     function sendNotificationEvent($event, $message = null)
     {
         $cabinet = Cabinet::where('is_active', 1)->first();
-        if (!$cabinet) {
+        $users = User::whereNotNull('device_token')->get();
+        if (!$cabinet || !$users || Carbon::parse($event->date)->isPast()) {
             return;
         }
 
