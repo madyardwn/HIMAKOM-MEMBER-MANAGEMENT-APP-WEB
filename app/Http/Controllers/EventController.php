@@ -19,6 +19,7 @@ class EventController extends Controller
      * Path to store posters.
      */
     private $path_poster_events;
+    private $path_poster_notifications;
 
     /**
      * Create a new controller instance.
@@ -26,6 +27,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->path_poster_events = config('dirpath.events.posters');
+        $this->path_poster_notifications = config('dirpath.notifications.posters');
     }
 
     /**
@@ -75,7 +77,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:events,name|max:50',
+            'name' => 'required|max:50',
             'description' => 'required|max:255',
             'location' => 'required|max:255',
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -108,6 +110,7 @@ class EventController extends Controller
             ]);
 
             if (!Carbon::parse($event->date)->isPast()) {
+                $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
                 sendNotificationEvent($event);
             }
 
@@ -159,7 +162,7 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50|unique:events,name,' . $event->id,
+            'name' => 'required|max:50',
             'description' => 'required|max:255',
             'location' => 'required|max:255',
             'date' => 'required|date',

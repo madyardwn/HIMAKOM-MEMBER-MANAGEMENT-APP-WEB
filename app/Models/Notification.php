@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -21,6 +22,20 @@ class Notification extends Model
         'link',
         'poster',
     ];
+
+    /**
+     * The attributes should be casted to native types.
+     * 
+     * @return Attribute
+     */
+    protected function poster(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.notifications.posters') . '/' . $value))
+                ? asset('storage/' . config('dirpath.notifications.posters') . '/' . $value)
+                : asset(config('tablar.default.logo.path')),
+        );
+    }
 
     /**
      * The attributes that are logged.

@@ -70,7 +70,7 @@ class NotificationController extends Controller
             $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
 
             $notification = Notification::create([
-                'poster' => asset('storage/' . $this->path_poster_notifications . '/' . $poster_name),
+                'poster' => $poster_name,
                 'title' => $request->title,
                 'body' => $request->body,
                 'link' => $request->link,

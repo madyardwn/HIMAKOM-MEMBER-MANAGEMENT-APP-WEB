@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -82,20 +84,23 @@ class User extends Authenticatable
     }
 
     /**
-     * The attributes where the logo is stored.
+     * The attributes should be casted to native types.
      * 
-     * @param string $value
-     * @return string
+     * @return Attribute
      */
-    public function getPictureAttribute($value)
+    protected function picture(): Attribute
     {
-        if ($value && file_exists(storage_path('app/public/' . config('dirpath.users.pictures') . '/' . $value))) {
-            return asset('storage/' . config('dirpath.users.pictures') . '/' . $value);
-        } else if ($this->gender == 0) {
-            return asset(config('tablar.default.female_avatar.path'));
-        } else {
-            return asset(config('tablar.default.male_avatar.path'));
-        }
+        return Attribute::make(
+            get: function ($value) {
+                if (file_exists(storage_path('app/public/' . config('dirpath.users.pictures') . '/' . $value))) {
+                    return asset('storage/' . config('dirpath.users.pictures') . '/' . $value);
+                } else if ($this->gender) {
+                    return asset(config('tablar.default.male_avatar.path'));
+                } else {
+                    return asset(config('tablar.default.female_avatar.path'));
+                }
+            },
+        );
     }
 
     /*

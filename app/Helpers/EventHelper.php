@@ -11,10 +11,10 @@ if (!function_exists('sendNotificationEvent')) {
     {
         try {
             $notification = Notification::create([
-                'poster' => $event->poster,
-                'title' => $event->name,
-                'body' => $event->description,
-                'link' => $event->link,
+                'poster' => $event->getAttributes()['poster'],
+                'title' => 'Event ' . $event->name,
+                'body' => 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
+                'link' => $event->link ?? '',
             ]);
 
             $url = env('FCM_URL');

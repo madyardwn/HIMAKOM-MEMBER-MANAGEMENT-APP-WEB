@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -27,18 +28,17 @@ class Cabinet extends Model
     ];
 
     /**
-     * The attributes where the logo is stored.
+     * The attributes should be casted to native types.
      * 
-     * @param string $value
-     * @return string
+     * @return Attribute
      */
-    public function getLogoAttribute($value)
+    protected function logo(): Attribute
     {
-        if ($value && file_exists(storage_path('app/public/' . config('dirpath.cabinets.logo') . '/' . $value))) {
-            return asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value);
-        } else {
-            return asset(config('tablar.default.logo.path'));
-        }
+        return Attribute::make(
+            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.cabinets.logo') . '/' . $value))
+                ? asset('storage/' . config('dirpath.cabinets.logo') . '/' . $value)
+                : asset(config('tablar.default.logo.path')),
+        );
     }
 
     /**

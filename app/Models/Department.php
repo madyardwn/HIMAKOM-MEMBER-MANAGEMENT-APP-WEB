@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -29,13 +30,13 @@ class Department extends Model
      * @param string $value
      * @return string
      */
-    public function getLogoAttribute($value)
+    protected function logo(): Attribute
     {
-        if ($value && file_exists(storage_path('app/public/' . config('dirpath.departments.logo') . '/' . $value))) {
-            return asset('storage/' . config('dirpath.departments.logo') . '/' . $value);
-        } else {
-            return asset(config('tablar.default.logo.path'));
-        }
+        return Attribute::make(
+            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.departments.logo') . '/' . $value))
+                ? asset('storage/' . config('dirpath.departments.logo') . '/' . $value)
+                : asset(config('tablar.default.logo.path')),
+        );
     }
 
     /**
