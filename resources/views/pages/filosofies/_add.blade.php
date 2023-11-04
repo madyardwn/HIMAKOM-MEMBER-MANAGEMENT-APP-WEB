@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-add-filosofies">
+                <form id="form-add-filosofies">
                     <div class="row">
                         <div class="col-md-5">
                             <label class="form-label" for="add-logo">Logo</label>

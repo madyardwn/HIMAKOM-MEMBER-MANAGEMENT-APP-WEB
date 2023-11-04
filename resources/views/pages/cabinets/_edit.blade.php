@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-edit-cabinets">
+                <form id="form-edit-cabinets">
                     <input type="hidden" name="id" id="edit-id-cabinets">
                     <div class="row">
                         <div class="col-md-5">
@@ -23,15 +23,15 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-description">Description</label>
-                                <textarea name="description" id="edit-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
+                                <textarea name="description" id="edit-description" class="form-control" placeholder="Enter description" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-visi">Visi</label>
-                                <textarea name="visi" id="edit-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required></textarea>
+                                <textarea name="visi" id="edit-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-misi">Misi</label>
-                                <textarea name="misi" id="edit-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required></textarea>
+                                <textarea name="misi" id="edit-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-year">Year</label>
@@ -40,7 +40,8 @@
                             <div class="mb-3">
                                 <div class="form-label" for="edit-is_active">Status</div>
                                 <label class="form-check form-switch">
-                                    <input type="checkbox" name="is_active" id="edit-is_active" class="form-check-input">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input type="checkbox" name="is_active" id="edit-is_active" class="form-check-input" value="1">
                                     <span class="form-check-label">Active</span>
                                 </label>
                             </div>
@@ -48,7 +49,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="edit-departments">Departments</label>
-                                        <select name="departments" id="edit-departments" multiple>
+                                        <select name="departments[]" id="edit-departments" multiple>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
                                             @endforeach

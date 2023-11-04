@@ -1,13 +1,19 @@
 <script type="module">
     class Program {
         constructor() {
-            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}" // empty image
-            this.subject = 'programs'; // subject of modal event
+            // Subject & Empty Image
+            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
+            this.subject = 'programs';
 
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-programs`)); // modal add
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-programs`)); // modal edit
+            // Modal
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-programs`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-programs`));
 
-            // Special Select
+            // Form
+            this.formAdd = $(`#form-add-${this.subject}`);
+            this.formEdit = $(`#form-edit-${this.subject}`);
+
+            // Tom Select
             this.tomSelectAddLead = new TomSelect($('#add-lead'), {
                 valueField: "id",
                 labelField: "name",
@@ -85,6 +91,7 @@
                 labelField: "name",
                 searchField: "name",
                 placeholder: 'Select Participants',
+                plugins: ['remove_button'],
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -121,6 +128,7 @@
                 labelField: "name",
                 searchField: "name",
                 placeholder: 'Select Participants',
+                plugins: ['remove_button'],
                 load: (query, callback) => {
                     if (!query.length) return callback();
                     $.ajax({
@@ -160,15 +168,15 @@
                 placeholder: 'Select department',
             });
 
-            // Url
-            this.storeUrl = "{{ route('periodes.programs.store') }}"; // url store
-            this.editUrl = "{{ route('periodes.programs.edit', ':id') }}"; // url edit
-            this.deleteUrl = "{{ route('periodes.programs.destroy', ':id') }}"; // url delete
-            this.updateUrl = "{{ route('periodes.programs.update', ':id') }}"; // url update
+            // URL
+            this.storeUrl = "{{ route('periodes.programs.store') }}";
+            this.editUrl = "{{ route('periodes.programs.edit', ':id') }}";
+            this.deleteUrl = "{{ route('periodes.programs.destroy', ':id') }}";
+            this.updateUrl = "{{ route('periodes.programs.update', ':id') }}";
 
-            // Datatable
-            this.table = $('#table-programs'); // datatable selector
-            this.tableDataUrl = "{{ route('periodes.programs.index') }}"; // url datatable
+            // DataTable
+            this.table = $('#table-programs');
+            this.tableDataUrl = "{{ route('periodes.programs.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -194,22 +202,30 @@
                     title: 'Description'
                 },
                 {
-                    data: 'lead.name',
-                    name: 'lead.name',
-                    title: 'Lead By',
-                    width: '10%'
-                },
-                {
-                    data: 'participants.name',
-                    name: 'participants.name',
-                    title: 'Participants',
-                    width: '10%'
-                },
-                {
                     data: 'department.name',
                     name: 'department.name',
                     title: 'Department',
-                    width: '10%'
+                    width: '20%'
+                },
+                {
+                    data: 'lead.name',
+                    name: 'lead.name',
+                    title: 'Lead By',
+                    width: '20%'
+                },
+                {
+                    data: 'participants',
+                    name: 'participants.name',
+                    title: 'Participants',
+                    orderable: false,
+                    width: '10%',
+                    render: function(data, type, row) {
+                        let html = '';
+                        data.forEach(function(item, index) {
+                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
+                        });
+                        return html;
+                    }
                 },
                 {
                     data: null,
@@ -238,12 +254,11 @@
         }
 
         initDtEvents() {
-            // Modal Events
             $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
 
-                $(`#form-add-${this.subject}`)[0].reset(); // reset form
+                this.formAdd[0].reset();
                 this.tomSelectAddDepartment.clear();
                 this.tomSelectAddLead.clear();
                 this.tomSelectAddParticipants.clear();
@@ -253,7 +268,7 @@
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
 
-                $(`#form-edit-${this.subject}`)[0].reset(); // reset form
+                this.formEdit[0].reset();
                 this.tomSelectEditDepartment.clear();
                 this.tomSelectEditLead.clear();
                 this.tomSelectEditParticipants.clear();
@@ -280,8 +295,8 @@
                                 $('#edit-name').val(response.data.name);
                                 $('#edit-description').val(response.data.description);
                                 this.tomSelectEditDepartment.setValue(response.data.department.id);
-                                this.tomSelectEditLead.addOption(response.data.user);
-                                this.tomSelectEditLead.setValue(response.data.user.id);
+                                this.tomSelectEditLead.addOption(response.data.lead);
+                                this.tomSelectEditLead.setValue(response.data.lead.id);
                                 this.tomSelectEditParticipants.addOption(response.data.participants);
                                 this.tomSelectEditParticipants.setValue(response.data.participants.map((item) => item.id));
                                 this.modalEdit.show();
@@ -361,23 +376,14 @@
                 $(`#submit-add-${this.subject}`).attr("disabled", true);
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData(); // Membuat objek FormData
-                const participants = this.tomSelectAddParticipants.getValue();
-
-                formData.append("name", $(`#add-name`).val());
-                formData.append("description", $(`#add-description`).val());
-                formData.append("lead", $(`#add-lead`).val());
-                formData.append("department", $(`#add-department`).val());
-                participants.forEach((item) => {
-                    formData.append("participants[]", item);
-                });
+                const formData = new FormData(this.formAdd[0]);
 
                 $.ajax({
-                    url: this.storeUrl, // Assign URL
+                    url: this.storeUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-add-${this.subject}`).attr("disabled", false);
                         $(`#submit-add-${this.subject}`).removeClass("btn-loading");
@@ -390,9 +396,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalAdd.hide(); // hide modal
+                            this.modalAdd.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -429,24 +435,14 @@
                 $(`#submit-edit-${this.subject}`).attr("disabled", true);
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData();
-                const participants = this.tomSelectEditParticipants.getValue();
-
-                formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
-                formData.append("id", $(`#edit-id-${this.subject}`).val());
-                formData.append("name", $(`#edit-name`).val());
-                formData.append("description", $(`#edit-description`).val());
-                formData.append("lead", $(`#edit-lead`).val());
-                formData.append("department", $(`#edit-department`).val());
-                participants.forEach((item) => {
-                    formData.append("participants[]", item);
-                });
+                const formData = new FormData(this.formEdit[0]);
+                formData.append("_method", "PUT");
 
                 $.ajax({
-                    url: this.updateUrl.replace(":id", formData.get("id")), // Assign URL
-                    method: "POST", // With FormData we can't use PUT method in here
-                    processData: false, // Prevent jQuery from processing the data
-                    contentType: false, // Prevent jQuery from setting the content type
+                    url: this.updateUrl.replace(":id", formData.get("id")),
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
                     data: formData,
                     complete: () => {
                         $(`#submit-edit-${this.subject}`).attr("disabled", false);
@@ -460,11 +456,11 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalEdit.hide(); // hide modal
+                            this.modalEdit.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
-                            // Show Alert
+
                             $(`#card-${this.subject}`).before(`
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <strong>Success!</strong> ${response.message}

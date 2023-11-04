@@ -182,7 +182,6 @@ class DepartmentController extends Controller
             }
 
             $department->cabinets()->detach();
-            $department->users()->detach();
 
             $department->delete();
 

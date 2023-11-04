@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-add-auth-web-roles">
+                <form id="form-add-auth-web-roles">
                     <div class="mb-3">
                         <label class="form-label" for="add-name">Name</label>
                         <input name="name" type="text" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>

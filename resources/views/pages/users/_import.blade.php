@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-import-users">
+                <form id="form-import-users">
                     <div class="row">
                         <div class="col-md-12">
                             <label class="form-label" for="import-users">Users</label>

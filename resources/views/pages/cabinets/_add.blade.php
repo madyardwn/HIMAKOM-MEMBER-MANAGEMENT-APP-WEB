@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-add-cabinets">
+                <form id="form-add-cabinets">
                     <div class="row">
                         <div class="col-md-5">
                             <label class="form-label" for="add-logo">Logo</label>
@@ -22,15 +22,15 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-description">Description</label>
-                                <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
+                                <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-visi">Visi</label>
-                                <textarea name="visi" id="add-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required></textarea>
+                                <textarea name="visi" id="add-visi" class="form-control" placeholder="Enter visi" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-misi">Misi</label>
-                                <textarea name="misi" id="add-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required></textarea>
+                                <textarea name="misi" id="add-misi" class="form-control" placeholder="Enter misi" autocomplete="off" required rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="add-year">Year</label>
@@ -39,7 +39,8 @@
                             <div class="mb-3">
                                 <div class="form-label" for="add-is_active">Status</div>
                                 <label class="form-check form-switch">
-                                    <input type="checkbox" name="is_active" id="add-is_active" class="form-check-input">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input type="checkbox" name="is_active" id="add-is_active" class="form-check-input" value="1">
                                     <span class="form-check-label">Active</span>
                                 </label>
                             </div>

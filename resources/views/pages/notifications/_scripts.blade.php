@@ -1,17 +1,22 @@
 <script type="module">
     class Notification {
         constructor() {
-            this.subject = 'notifications'; // subject of modal event
+            // Subject
+            this.subject = 'notifications';
 
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-notifications`)); // modal add
+            // Modal
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-notifications`));
 
-            // Url
-            this.storeUrl = "{{ route('users-management.notifications.store') }}"; // url store
-            this.deleteUrl = "{{ route('users-management.notifications.destroy', ':id') }}"; // url delete
+            // Form
+            this.formAdd = $(`#form-add-notifications`);
 
-            // Datatable
-            this.table = $('#table-notifications'); // datatable selector
-            this.tableDataUrl = "{{ route('users-management.notifications.index') }}"; // url datatable
+            // URL
+            this.storeUrl = "{{ route('users-management.notifications.store') }}";
+            this.deleteUrl = "{{ route('users-management.notifications.destroy', ':id') }}";
+
+            // DataTable
+            this.table = $('#table-notifications');
+            this.tableDataUrl = "{{ route('users-management.notifications.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -103,23 +108,22 @@
         }
 
         initDtEvents() {
-            // Modal Events
             $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
+                $(`#preview-add-poster`).attr("src", this.emptyImage);
 
-                $(`#form-add-${this.subject}`)[0].reset(); // reset form
-                $(`#preview-add-poster`).attr("src", this.emptyImage); // reset preview image
+                this.formAdd[0].reset();
             });
 
-            // Image Preview Events
+
             $(`#add-poster`).on("change", () => {
-                const file = $(`#add-poster`)[0].files[0]; // get file
-                const name = $(`#add-poster`)[0].name; // name of input file
-                const reader = new FileReader(); // create reader
+                const file = $(`#add-poster`)[0].files[0];
+                const name = $(`#add-poster`)[0].name;
+                const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // set image source to preview image name
+
                     $(`#preview-add-${name}`).attr("src", e.target.result);
                 };
                 reader.readAsDataURL(file);
@@ -203,19 +207,14 @@
                 $(`#submit-add-${this.subject}`).attr("disabled", true);
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData(); // Membuat objek FormData
-
-                formData.append("title", $(`#add-title`).val());
-                formData.append("body", $(`#add-body`).val());
-                formData.append("poster", $(`#add-poster`)[0].files[0]);
-                formData.append("link", $(`#add-link`).val());
+                const formData = new FormData(this.formAdd[0]);
 
                 $.ajax({
-                    url: this.storeUrl, // Assign URL
+                    url: this.storeUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-add-${this.subject}`).attr("disabled", false);
                         $(`#submit-add-${this.subject}`).removeClass("btn-loading");
@@ -228,9 +227,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalAdd.hide(); // hide modal
+                            this.modalAdd.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">

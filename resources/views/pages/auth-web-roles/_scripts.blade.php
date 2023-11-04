@@ -1,39 +1,37 @@
 <script type="module">
     class AuthWebRoles {
         constructor() {
-            this.subject = 'auth-web-roles'; // subject of modal event
+            // Subject
+            this.subject = 'auth-web-roles';
 
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-auth-web-roles`)); // modal add
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-auth-web-roles`)); // modal edit
+            // Modal
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-auth-web-roles`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-auth-web-roles`));
 
-            // Special Select
-            this.tomSelectAddPermissions = new TomSelect($('#add-permissions'), { // tom select add permissions
+            // Form
+            this.formAdd = $(`#form-add-auth-web-roles`);
+            this.formEdit = $(`#form-edit-auth-web-roles`);
+
+            // Tom Select
+            this.tomSelectAddPermissions = new TomSelect($('#add-permissions'), {
                 placeholder: `Select permissions`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
+                plugins: ['remove_button'],
             })
-            this.tomSelectEditPermissions = new TomSelect($('#edit-permissions'), { // tom select edit permissions
+            this.tomSelectEditPermissions = new TomSelect($('#edit-permissions'), {
                 placeholder: `Select permissions`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
+                plugins: ['remove_button'],
             })
 
-            // Url
-            this.storeUrl = "{{ route('auth-web.roles.store') }}"; // url store
-            this.editUrl = "{{ route('auth-web.roles.edit', ':id') }}"; // url edit
-            this.deleteUrl = "{{ route('auth-web.roles.destroy', ':id') }}"; // url delete
-            this.updateUrl = "{{ route('auth-web.roles.update', ':id') }}"; // url update
+            // URL
+            this.storeUrl = "{{ route('auth-web.roles.store') }}";
+            this.editUrl = "{{ route('auth-web.roles.edit', ':id') }}";
+            this.deleteUrl = "{{ route('auth-web.roles.destroy', ':id') }}";
+            this.updateUrl = "{{ route('auth-web.roles.update', ':id') }}";
 
-            // Datatable
-            this.table = $('#table-auth-web-roles'); // datatable selector
-            this.tableDataUrl = "{{ route('auth-web.roles.index') }}"; // url datatable
-            this.tableColumns = [{ // datatable columns configuration
+            // DataTable
+            this.table = $('#table-auth-web-roles');
+            this.tableDataUrl = "{{ route('auth-web.roles.index') }}";
+            this.tableColumns = [{
                     title: 'No',
                     data: null,
                     orderable: false,
@@ -95,16 +93,16 @@
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
 
-                $(`#form-add-${this.subject}`)[0].reset(); // reset form
-                this.tomSelectAddPermissions.clear(); // clear tom select
+                this.formAdd[0].reset();
+                this.tomSelectAddPermissions.clear();
             });
 
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
 
-                $(`#form-edit-${this.subject}`)[0].reset(); // reset form
-                this.tomSelectEditPermissions.clear(); // clear tom select
+                this.formEdit[0].reset();
+                this.tomSelectEditPermissions.clear();
             });
         }
 
@@ -204,21 +202,14 @@
                 $(`#submit-add-${this.subject}`).attr("disabled", true);
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData(); // Membuat objek FormData
-                const permissions = this.tomSelectAddPermissions.getValue();
-
-                formData.append("name", $(`#add-name`).val());
-                // formData.append("permissions[]", this.tomSelectAddPermissions.getValue());
-                permissions.forEach((permission) => {
-                    formData.append("permissions[]", permission);
-                });
+                const formData = new FormData(this.formAdd[0]);
 
                 $.ajax({
-                    url: this.storeUrl, // Assign URL
+                    url: this.storeUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-add-${this.subject}`).attr("disabled", false);
                         $(`#submit-add-${this.subject}`).removeClass("btn-loading");
@@ -231,9 +222,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalAdd.hide(); // hide modal
+                            this.modalAdd.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -270,22 +261,14 @@
                 $(`#submit-edit-${this.subject}`).attr("disabled", true);
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData();
-                const permissions = this.tomSelectEditPermissions.getValue();
-
-                formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
-                formData.append("id", $(`#edit-id-${this.subject}`).val());
-                formData.append("name", $(`#edit-name`).val());
-                // formData.append("permissions[]", this.tomSelectEditPermissions.getValue());
-                permissions.forEach((permission) => {
-                    formData.append("permissions[]", permission);
-                });
+                const formData = new FormData(this.formEdit[0]);
+                formData.append("_method", "PUT");
 
                 $.ajax({
-                    url: this.updateUrl.replace(":id", formData.get("id")), // Assign URL
-                    method: "POST", // With FormData we can't use PUT method in here
-                    processData: false, // Prevent jQuery from processing the data
-                    contentType: false, // Prevent jQuery from setting the content type
+                    url: this.updateUrl.replace(":id", formData.get("id")),
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
                     data: formData,
                     complete: () => {
                         $(`#submit-edit-${this.subject}`).attr("disabled", false);
@@ -299,11 +282,11 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalEdit.hide(); // hide modal
+                            this.modalEdit.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
-                            // Show Alert
+
                             $(`#card-${this.subject}`).before(`
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <strong>Success!</strong> ${response.message}

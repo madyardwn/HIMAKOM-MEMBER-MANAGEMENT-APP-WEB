@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-edit-auth-web-roles">
+                <form id="form-edit-auth-web-roles">
                     <input type="hidden" name="id" id="edit-id-auth-web-roles">
                     <div class="mb-3">
                         <label class="form-label" for="edit-name">Name</label>

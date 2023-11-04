@@ -14,6 +14,7 @@ if (!function_exists('sendNotificationEvent')) {
                 'poster' => $event->poster,
                 'title' => $event->name,
                 'body' => $event->description,
+                'link' => $event->link,
             ]);
 
             $url = env('FCM_URL');

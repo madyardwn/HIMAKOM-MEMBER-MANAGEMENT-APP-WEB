@@ -1,39 +1,38 @@
 <script type="module">
     class Cabinet {
         constructor() {
-            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}" // empty image
-            this.subject = 'cabinets'; // subject of modal event
 
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-cabinets`)); // modal add
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-cabinets`)); // modal edit
+            // Empty image & Subject
+            this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
+            this.subject = 'cabinets';
 
-            // Special Select
-            this.tomSelectAddDepartments = new TomSelect($('#add-departments'), { // tom select add departments
+            // Modal
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-cabinets`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-cabinets`));
+
+            // Form
+            this.formAdd = $(`#form-add-cabinets`);
+            this.formEdit = $(`#form-edit-cabinets`);
+
+            // Tom Select
+            this.tomSelectAddDepartments = new TomSelect($('#add-departments'), {
                 placeholder: `Select departments`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
+                plugins: ['remove_button']
             })
-            this.tomSelectEditDepartments = new TomSelect($('#edit-departments'), { // tom select edit departments
+            this.tomSelectEditDepartments = new TomSelect($('#edit-departments'), {
                 placeholder: `Select departments`,
-                plugins: {
-                    remove_button: {
-                        title: "Remove this item",
-                    },
-                },
+                plugins: ['remove_button']
             })
 
-            // Url
-            this.storeUrl = "{{ route('periodes.cabinets.store') }}"; // url store
-            this.editUrl = "{{ route('periodes.cabinets.edit', ':id') }}"; // url edit
-            this.deleteUrl = "{{ route('periodes.cabinets.destroy', ':id') }}"; // url delete
-            this.updateUrl = "{{ route('periodes.cabinets.update', ':id') }}"; // url update
+            // URL
+            this.storeUrl = "{{ route('periodes.cabinets.store') }}";
+            this.editUrl = "{{ route('periodes.cabinets.edit', ':id') }}";
+            this.deleteUrl = "{{ route('periodes.cabinets.destroy', ':id') }}";
+            this.updateUrl = "{{ route('periodes.cabinets.update', ':id') }}";
 
-            // Datatable
-            this.table = $('#table-cabinets'); // datatable selector
-            this.tableDataUrl = "{{ route('periodes.cabinets.index') }}"; // url datatable
+            // DataTable 
+            this.table = $('#table-cabinets');
+            this.tableDataUrl = "{{ route('periodes.cabinets.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -63,45 +62,24 @@
                     data: 'name',
                     name: 'name',
                     title: 'Name',
+                    width: '20%',
                     responsivePriority: 2,
-                    width: '20%'
                 },
                 {
                     data: 'description',
                     name: 'description',
                     title: 'Description',
-                    width: '20%',
                 },
                 {
                     data: 'visi',
                     name: 'visi',
                     title: 'Visi',
-                    width: '20%',
-                    'responsivePriority': 4,
                 },
+
                 {
                     data: 'misi',
                     name: 'misi',
                     title: 'Misi',
-                    width: '20%',
-                    'responsivePriority': 4,
-                },
-                {
-                    data: 'year',
-                    name: 'year',
-                    title: 'Year',
-                    width: '20%',
-                    responsivePriority: 4,
-                },
-                {
-                    data: 'is_active',
-                    name: 'is_active',
-                    title: 'Status',
-                    width: '20%',
-                    responsivePriority: 1,
-                    render: function(data, type, row) {
-                        return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
-                    }
                 },
                 {
                     data: 'departments',
@@ -115,6 +93,21 @@
                             html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
                         });
                         return html;
+                    }
+                },
+                {
+                    data: 'year',
+                    name: 'year',
+                    title: 'Year',
+                    responsivePriority: 2,
+                },
+                {
+                    data: 'is_active',
+                    name: 'is_active',
+                    title: 'Status',
+                    responsivePriority: 1,
+                    render: function(data, type, row) {
+                        return data == 1 ? `<span class="badge bg-blue-lt">Active</span>` : `<span class="badge bg-red-lt">Inactive</span>`;
                     }
                 },
                 {
@@ -144,45 +137,44 @@
         }
 
         initDtEvents() {
-            // Modal Events
             $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
+                $(`#preview-add-logo`).attr("src", this.emptyImage);
 
-                $(`#form-add-${this.subject}`)[0].reset(); // reset form
-                $(`#preview-add-logo`).attr("src", this.emptyImage); // reset preview image
-                this.tomSelectAddDepartments.clear(); // clear tom select
+                this.formAdd[0].reset();
+                this.tomSelectAddDepartments.clear();
             });
 
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
+                $(`#preview-edit-logo`).attr("src", this.emptyImage);
 
-                $(`#form-edit-${this.subject}`)[0].reset(); // reset form
-                $(`#preview-edit-logo`).attr("src", this.emptyImage); // reset preview image
-                this.tomSelectEditDepartments.clear(); // clear tom select
+                this.formEdit[0].reset();
+                this.tomSelectEditDepartments.clear();
             });
 
-            // Image Preview Events
+
             $(`#add-logo`).on("change", () => {
-                const file = $(`#add-logo`)[0].files[0]; // get file
-                const name = $(`#add-logo`)[0].name; // name of input file
-                const reader = new FileReader(); // create reader
+                const file = $(`#add-logo`)[0].files[0];
+                const name = $(`#add-logo`)[0].name;
+                const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // set image source to preview image name
+
                     $(`#preview-add-${name}`).attr("src", e.target.result);
                 };
                 reader.readAsDataURL(file);
             });
 
             $(`#edit-logo`).on("change", () => {
-                const file = $(`#edit-logo`)[0].files[0]; // get file
-                const name = $(`#edit-logo`)[0].name; // name of input file
-                const reader = new FileReader(); // create reader
+                const file = $(`#edit-logo`)[0].files[0];
+                const name = $(`#edit-logo`)[0].name;
+                const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // set image source to preview image name
+
                     $(`#preview-edit-${name}`).attr("src", e.target.result);
                 };
                 reader.readAsDataURL(file);
@@ -291,26 +283,14 @@
                 $(`#submit-add-${this.subject}`).attr("disabled", true);
                 $(`#submit-add-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData(); // Membuat objek FormData
-                const departments = this.tomSelectAddDepartments.getValue();
-
-                formData.append("name", $(`#add-name`).val());
-                formData.append("description", $(`#add-description`).val());
-                formData.append("visi", $(`#add-visi`).val());
-                formData.append("misi", $(`#add-misi`).val());
-                formData.append("year", $(`#add-year`).val());
-                formData.append("is_active", $(`#add-is_active`).prop("checked") ? 1 : 0);
-                formData.append("logo", $(`#add-logo`)[0].files[0]);
-                departments.forEach((departments) => {
-                    formData.append("departments[]", departments);
-                });
+                const formData = new FormData(this.formAdd[0]);
 
                 $.ajax({
-                    url: this.storeUrl, // Assign URL
+                    url: this.storeUrl,
                     method: "POST",
-                    data: formData, // Menggunakan objek FormData sebagai data
-                    contentType: false, // Mengatur contentType ke false
-                    processData: false, // Mengatur processData ke false
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     complete: () => {
                         $(`#submit-add-${this.subject}`).attr("disabled", false);
                         $(`#submit-add-${this.subject}`).removeClass("btn-loading");
@@ -323,9 +303,9 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalAdd.hide(); // hide modal
+                            this.modalAdd.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -362,27 +342,14 @@
                 $(`#submit-edit-${this.subject}`).attr("disabled", true);
                 $(`#submit-edit-${this.subject}`).addClass("btn-loading");
 
-                const formData = new FormData();
-                const departments = this.tomSelectEditDepartments.getValue();
-
-                formData.append("_method", "PUT"); // Method PUT with FormData defined in Here
-                formData.append("id", $(`#edit-id-${this.subject}`).val());
-                formData.append("name", $(`#edit-name`).val());
-                formData.append("description", $(`#edit-description`).val());
-                formData.append("visi", $(`#edit-visi`).val());
-                formData.append("misi", $(`#edit-misi`).val());
-                formData.append("year", $(`#edit-year`).val());
-                formData.append("is_active", $(`#edit-is_active`).prop("checked") ? 1 : 0);
-                formData.append("logo", $(`#edit-logo`)[0].files[0]);
-                departments.forEach((departments) => {
-                    formData.append("departments[]", departments);
-                });
+                const formData = new FormData(this.formEdit[0]);
+                formData.append("_method", "PUT");
 
                 $.ajax({
-                    url: this.updateUrl.replace(":id", formData.get("id")), // Assign URL
-                    method: "POST", // With FormData we can't use PUT method in here
-                    processData: false, // Prevent jQuery from processing the data
-                    contentType: false, // Prevent jQuery from setting the content type
+                    url: this.updateUrl.replace(":id", formData.get("id")),
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
                     data: formData,
                     complete: () => {
                         $(`#submit-edit-${this.subject}`).attr("disabled", false);
@@ -396,11 +363,11 @@
                             showConfirmButton: false,
                             timer: 1500,
                         }).then(() => {
-                            this.modalEdit.hide(); // hide modal
+                            this.modalEdit.hide();
 
-                            this.table.DataTable().ajax.reload(); // reload datatable
+                            this.table.DataTable().ajax.reload();
 
-                            // Show Alert
+
                             $(`#card-${this.subject}`).before(`
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <strong>Success!</strong> ${response.message}

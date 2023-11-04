@@ -64,7 +64,7 @@ class ProgramController extends Controller
                 'department_id' => $request->department,
             ]);
 
-            $program->users()->attach($request->participants);
+            $program->participants()->attach($request->participants);
 
             return response()->json([
                 'status' => 'success',
@@ -138,7 +138,7 @@ class ProgramController extends Controller
                 'department_id' => $request->department,
             ]);
 
-            $program->users()->sync($request->participants);
+            $program->participants()->sync($request->participants);
 
             return response()->json([
                 'status' => 'success',

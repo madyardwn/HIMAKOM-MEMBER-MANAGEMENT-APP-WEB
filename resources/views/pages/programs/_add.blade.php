@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="form-add-programs">
+                <form id="form-add-programs">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
