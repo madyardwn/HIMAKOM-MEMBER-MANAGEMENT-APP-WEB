@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/events/{event}/edit', [\App\Http\Controllers\EventController::class, 'edit'])->name('events.edit')->middleware('permission:update-events');
         Route::put('/events/{event}/update', [\App\Http\Controllers\EventController::class, 'update'])->name('events.update')->middleware('permission:update-events');
         Route::delete('/events/{event}/destroy', [\App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy')->middleware('permission:delete-events');
-        Route::post('events/notification/{event}', [\App\Http\Controllers\EventController::class, 'notification'])->name('events.notification')->middleware('permission:notification-events');
+        Route::post('/events/notification/{event}', [\App\Http\Controllers\EventController::class, 'notification'])->name('events.notification')->middleware('permission:create-notifications');
     });
 
     // route logs

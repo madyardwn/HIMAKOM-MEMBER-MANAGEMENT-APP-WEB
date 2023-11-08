@@ -26,7 +26,7 @@ if (!function_exists('sendNotificationEvent')) {
             $notification = Notification::create([
                 'poster' => $new_poster_name,
                 'title' => $message->title ??  'Event ' . $event->name,
-                'body' => $message->body ?? 'Event ' . $event->name . ' will be held on ' . $event->date . ' at ' . $event->location,
+                'body' => $message->body ?? 'Event ' . $event->name . ' will be held on ' . Carbon::parse($event->date)->format('d-m-Y H:i') . ' at ' . $event->location,
                 'link' => $message->link ?? $event->link ?? '',
             ]);
 

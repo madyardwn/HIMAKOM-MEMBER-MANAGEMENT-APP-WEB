@@ -17,7 +17,10 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Program::select('*')->with('lead:id,name', 'department:id,name', 'participants:id,name');
+            $data = Program::select('*')->with('lead:id,name', 'department:id,name', 'participants:id,name')
+                ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
+                    $query->where('programs.department_id', auth()->user()->department()->first()->id);
+                });
 
             return DataTables::of($data)->make();
         }

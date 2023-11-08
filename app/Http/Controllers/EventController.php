@@ -49,9 +49,9 @@ class EventController extends Controller
                 'poster',
                 'date',
                 'link',
-                'type',
                 DB::raw($typeExpression),
-            ]);
+            ])
+                ->orderBy('date', 'desc');
 
             return DataTables::of($data)->make();
         }

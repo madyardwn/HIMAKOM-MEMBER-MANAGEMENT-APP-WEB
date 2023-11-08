@@ -34,6 +34,10 @@ class DefaultRoleSeeder extends Seeder
             'create-departments',
             'update-departments',
             'delete-departments',
+
+            // Notifications
+            'read-notifications',
+
         ]);
 
         Role::create(['name' => 'WAKIL KETUA HIMPUNAN'])->givePermissionTo([
@@ -59,7 +63,8 @@ class DefaultRoleSeeder extends Seeder
             'read-departments',
             'read-programs',
             'read-events',
-            'read-work-histories'
+            'read-work-histories',
+            'read-notifications',
         ]);
 
         Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -68,7 +73,8 @@ class DefaultRoleSeeder extends Seeder
             'read-departments',
             'read-programs',
             'read-events',
-            'read-work-histories'
+            'read-work-histories',
+            'read-notifications',
         ]);
 
         $department = Department::select(['id', 'name'])
@@ -85,7 +91,7 @@ class DefaultRoleSeeder extends Seeder
 
                 // Departments
                 'read-departments',
-                'update-departments',
+                // 'update-departments',
 
                 // Events
                 'read-events',
@@ -94,7 +100,11 @@ class DefaultRoleSeeder extends Seeder
                 'delete-events',
 
                 // Work Histories
-                'read-work-histories'
+                'read-work-histories',
+
+                // Notifications
+                'read-notifications',
+                'create-notifications',
             ]);
 
             Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
@@ -106,7 +116,7 @@ class DefaultRoleSeeder extends Seeder
 
                 // Departments
                 'read-departments',
-                'update-departments',
+                // 'update-departments',
 
                 // Events
                 'read-events',
@@ -122,9 +132,9 @@ class DefaultRoleSeeder extends Seeder
         Role::create(['name' => 'STAF AHLI'])->givePermissionTo([
             // Programs
             'read-programs',
-            'create-programs',
-            'update-programs',
-            'delete-programs',
+            // 'create-programs',
+            // 'update-programs',
+            // 'delete-programs',
 
             // Events
             'read-events',
