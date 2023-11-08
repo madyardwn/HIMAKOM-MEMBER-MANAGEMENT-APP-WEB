@@ -161,7 +161,7 @@
                 },
                 {
                     data: 'participants',
-                    name: 'participants',
+                    name: 'participants.name',
                     title: 'Participants',
                     responsivePriority: 1,
                     width: '10%',
@@ -210,7 +210,6 @@
                             method: 'GET',
                             dataType: 'JSON',
                         }).done((response) => {
-                            console.log(response.data.name);
                             $(`#modal-show-${this.subject}`).find('.modal-title').text(response.data.name);
                         });
 
