@@ -35,7 +35,7 @@ class DefaultDepartmentSeeder extends Seeder
         ]);
 
         Department::create([
-            'name' => 'PENGEMBANGAN SUMBER DAYA ANGGOTA',
+            'name' => 'DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA',
             'short_name' => 'PSDA',
             'description' => 'Departemen Pengembangan Sumber Daya Anggota merupakan sebuah departemen yang berfokus dalam mengembangkan kualitas dan potensi anggota Himpunan Mahasiswa Jurusan Teknik Komputer dan Informatika POLBAN.',
             'logo' => 'PSDA.png',

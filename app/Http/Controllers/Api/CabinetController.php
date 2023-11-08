@@ -4,81 +4,66 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cabinet;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CabinetController extends Controller
 {
-    // {
-    //     "status": "success",
-    //     "data": [
-    //       {
-    //         "id": 1,
-    //         "name": "Darma Revolusi",
-    //         "description": "Perubahan dari sosial maupun budaya yang berlangsung cepat dan melibatkan poin utama dari dasar atau kehidupan.",
-    //         "visi": "Terwujudnya anggota HIMAKOM POLBAN yang kompeten dalam bidang IPTEK maupun bakat pada dirinya,juga memiliki rasa sosial yang tinggi,beretika dengan baik, serta beradab mulia.",
-    //         "misi": "Menfasilitasi para anggota HIMAKOM POLBAN dalam mengembangkan potensi diri yang positif pada minatnya baik itu dalam akademik maupun non akademik\r\nMeningkatkan sikap melek teknologi informasi tentang perkembangan teknologi di era saat ini\r\nMeningkatkan nilai-nilai kebersamaan antar anggota HIMAKOM POLBAN agar terwujudnya rasa kepedulian sesama anggota didalam HIMAKOM maupun diluar HIMAKOM",
-    //         "logo": "http://dev.neracietas.site/storage/cabinets/logo/2023-10-03-03-17-58_Dharma Revolusi.jpg",
-    //         "filosofy": "http://dev.neracietas.site/storage/cabinets/filosofy/2023-10-03-03-17-58_Dharma Revolusi.png",
-    //         "filosofies": [
-    //           {
-    //             "id": 1,
-    //             "cabinet_id": 1,
-    //             "label": "Eagle: Elang sebagai peran yang berani tangkas dan dapat fokus pada target perkembangan teknologi, mampu meingkatkan potensi dirinya ketika di udara.",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/2HqZrkY27fdbE4fraQL8q3261d72o1AmW49jFNCp.png"
-    //           },
-    //           {
-    //             "id": 2,
-    //             "cabinet_id": 1,
-    //             "label": "Biru tua: Kesetiaan, kepercayaan dan kestabilan. Menggambarkan kabinet yang setia dan stabil serta dipercaya oleh anggota HIMAKOM.\r\n\r\nPutih: Kesucian, kejujuran dan kebersihan. Menggambarkan kabinet yang jujur, transparan dan baik.",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/CpPcDqxqt9gR96g1LWkLZdJ3qMpb78yMObGrJUop.png"
-    //           },
-    //           {
-    //             "id": 3,
-    //             "cabinet_id": 1,
-    //             "label": "Teknologi: Kemajuan dan Revolusi. Simbol kemajuan dan inovasi dapat membawa perubahan positif dalam HIMAKOM ini, yang sesuai dengan nama kabinet kita yaitu Darma Revolusi",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/2cWT4MfLqejehFuYToFxEzVKB9v26xoN23vJERhK.png"
-    //           },
-    //           {
-    //             "id": 4,
-    //             "cabinet_id": 1,
-    //             "label": "Dua sayap: Melambangkan 2 prodi yang ada di Himakom, yang berarti bila satu prodi tidak ada atau satu sayap tida ada maka elang atau HIMAKOM tidak akan bisa terbang",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/4b6pg4asosGBPXTdvE3oU7K061ts6EO38YObC0gH.png"
-    //           },
-    //           {
-    //             "id": 5,
-    //             "cabinet_id": 1,
-    //             "label": "Ujung lancip: Melambangkan ketajaman, kecepatan, dan keberanian dari HIMAKOM kabinet Darma Revolusi",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/pS6RFTpZXdh2L7vFBBneviHxXB3RHWm5D6KJyFJR.png"
-    //           },
-    //           {
-    //             "id": 6,
-    //             "cabinet_id": 1,
-    //             "label": "Menileh ke kanan: Anggapan bahwa arah kanan adalah yang baik. Harapan untuk HIMAKOM menjadi himpunan yang benar dan bermaksud agar HIMAKOM tidak menempuh jalan yang salah",
-    //             "logo": "http://dev.neracietas.site/storage/filosofy/DgfiCxMcHcX1GBqiRhYdNgqtPrXsMuu1GQNNxgof.png"
-    //           }
-    //         ]
-    //       }
-    //     ]
-    // }
-    public function cabinet(Request $request)
+    public function cabinet()
     {
         try {
-            $users = Cabinet::with('users.roles')
+            $cabinet = Cabinet::with('filosofies', 'users')
                 ->withWhereHas('users', function ($query) {
-                    $query->withWhereHas('roles', function ($query) {
-                        $query->where('name', '=', 'ketua-himpunan')
-                            ->orWhere('name', '=', 'wakil-ketua-himpunan')
-                            ->orWhere('name', '=', 'ketua-divisi')
-                            ->orWhere('name', '=', 'wakil-ketua-divisi');
-                    });
+                    $query->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+                        ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                        ->whereNotIn('roles.name', ['SUPER ADMIN', 'STAF MUDA', 'STAF AHLI'])
+                        ->orderByRaw('CASE roles.name
+                            WHEN "KETUA HIMPUNAN" THEN 1
+                            WHEN "WAKIL KETUA HIMPUNAN" THEN 2
+                            
+                            WHEN "KETUA MAJELIS PERWAKILAN ANGGOTA" THEN 3
+                            WHEN "WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA" THEN 4
+
+                            WHEN "KETUA BIRO KEUANGAN" THEN 5
+                            WHEN "WAKIL KETUA BIRO KEUANGAN" THEN 6
+
+                            WHEN "KETUA BIRO ADMINISTRASI DAN KESEKRETARIATAN" THEN 7
+                            WHEN "WAKIL KETUA BIRO ADMINISTRASI DAN KESEKRETARIATAN" THEN 8
+
+                            WHEN "KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 9
+                            WHEN "WAKIL KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 10
+
+                            WHEN "KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 11
+                            WHEN "WAKIL KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 12
+
+                            WHEN "KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 13
+                            WHEN "WAKIL KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 14
+
+                            WHEN "KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 15
+                            WHEN "WAKIL KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 16
+
+                            WHEN "KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 17
+                            WHEN "WAKIL KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 18
+
+                            WHEN "KETUA DEPARTEMEN ROHANI ISLAM" THEN 19
+                            WHEN "WAKIL KETUA DEPARTEMEN ROHANI ISLAM" THEN 20
+
+                            WHEN "KETUA UNIT KEWIRAUSAHAAN" THEN 21
+                            WHEN "WAKIL KETUA UNIT KEWIRAUSAHAAN" THEN 22
+
+                            WHEN "KETUA UNIT TEKNOLOGI" THEN 23
+                            WHEN "WAKIL KETUA UNIT TEKNOLOGI" THEN 24
+
+                            ELSE 25
+                        END')
+                        ->select('users.*', 'roles.name AS role_name');
                 })
-                ->where('is_active', '=', true)
-                ->get();
+                ->where('is_active', 1)
+                ->first();
 
             return response()->json([
                 'status' => 'success',
-                'data' => $users,
+                'data' => $cabinet,
             ]);
         } catch (\Throwable $th) {
             Log::error($th);

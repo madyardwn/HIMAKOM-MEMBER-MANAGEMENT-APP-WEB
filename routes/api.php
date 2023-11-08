@@ -22,11 +22,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/cabinet', [App\Http\Controllers\Api\CabinetController::class, 'cabinet']);
 
-    Route::get('/departments', [App\Http\Controllers\Api\DepartmentController::class, 'index']);
-
-    Route::get('/events', [App\Http\Controllers\Api\EventController::class, 'index']);
-    Route::get('/events/notification', [App\Http\Controllers\Api\EventController::class, 'notification']);
-    Route::get('/events/notification/{notification}/read', [App\Http\Controllers\Api\EventController::class, 'notificationRead']);
+    Route::get('/events', [App\Http\Controllers\Api\EventController::class, 'events']);
+    Route::get('/notifications', [App\Http\Controllers\Api\NotificationController::class, 'notifications']);
+    Route::get('/notifications/{notification}/read', [App\Http\Controllers\Api\NotificationController::class, 'read']);
 
     Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
 });

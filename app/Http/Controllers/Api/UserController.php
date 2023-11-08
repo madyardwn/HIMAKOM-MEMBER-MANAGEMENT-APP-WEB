@@ -12,7 +12,24 @@ class UserController extends Controller
 {
     public function user(Request $request)
     {
-        return $request->user()->load('roles');
+        try {
+            $user = User::select('users.*', 'roles.name AS role_name')
+                ->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+                ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->where('users.id', $request->user()->id)
+                ->first();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $user,
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get user data.',
+            ], 500);
+        }
     }
 
     public function updateDeviceToken(Request $request)
