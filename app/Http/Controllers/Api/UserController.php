@@ -10,6 +10,35 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/user",
+     *     description="Return data user profile",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to get user data.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function user(Request $request)
     {
         try {
@@ -32,6 +61,43 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/user/device-token",
+     *     description="Update device token when user login",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *          description="Update device token when user login", 
+     *          required=true,
+     *          @OA\JsonContent(
+     *             required={"device_token"},
+     *            @OA\Property(property="device_token", type="string", example="device_token"),
+     *         ),
+     *    ),
+     *    @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to update device token.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function updateDeviceToken(Request $request)
     {
         $request->validate([

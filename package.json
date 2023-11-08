@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "moment": "^2.29.4",
+        "swagger-ui-dist": "^5.9.2",
         "sweetalert2": "^11.7.31"
     }
 }

@@ -10,6 +10,35 @@ use Illuminate\Support\Facades\Log;
 
 class NotificationController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/notifications",
+     *     description="Return data notifications",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to update device token.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function notifications(Request $request)
     {
         try {
@@ -31,6 +60,45 @@ class NotificationController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/notifications/{notification}/read",
+     *     description="Update notification to read",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="notification",
+     *         in="path",
+     *         description="Notification ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to update device token.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function read(Request $request, Notification $notification)
     {
         try {

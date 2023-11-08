@@ -3,24 +3,52 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
-    // {
-    //     "user": {
-    //       "name": "Achmadya Ridwan Ilyawan",
-    //       "nim": "211511001",
-    //       "email": "achmadya.ridwan.tif21@polban.ac.id",
-    //       "na": "2136001",
-    //       "year": "2021",
-    //       "nama_bagus": "AVAST",
-    //       "role": "staf ahli",
-    //       "avatar": "http://dev.neracietas.site/storage/avatars/2136001.png"
-    //     },
-    //     "access_token": "14|BYjQGHX4sxDBoSlza5HdyP34hwdtogqcqqVc9gLl"
-    // }
+    /**
+     * @OA\Post(
+     *      path="/api/login",
+     *      description="Login user",
+     *      tags={"APP MOBILE HIMAKOM"},
+     *      @OA\RequestBody(
+     *         required=true,
+     *         description="User credentials",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              required={"email", "password"},
+     *              @OA\Property(property="email",    type="string", format="email", description="User email"),
+     *              @OA\Property(property="password", type="string", format="password", description="User password"),
+     *          )
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=200,
+     *      description="Success",
+     *      @OA\MediaType(
+     *          mediaType="application/json"
+     *     )
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="The given data was invalid.",
+     *      @OA\MediaType(
+     *          mediaType="application/json"
+     *      )
+     * ),
+     * @OA\Response(
+     *      response=500,
+     *      description="Login failed.",
+     *      @OA\MediaType(
+     *          mediaType="application/json"
+     *      )
+     *  )
+     * )
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -39,7 +67,11 @@ class AuthController extends Controller
                 ], 422);
             }
 
-            $user = $request->user()->load('roles');
+            $user = User::select('users.*', 'roles.name AS role_name')
+                ->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+                ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->where('users.id', $request->user()->id)
+                ->first();
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -59,6 +91,35 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     description="Logout user",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Logout failed.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         try {

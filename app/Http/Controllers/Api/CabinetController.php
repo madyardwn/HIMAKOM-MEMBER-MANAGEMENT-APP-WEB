@@ -9,6 +9,35 @@ use Illuminate\Support\Facades\Log;
 
 class CabinetController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/cabinet",
+     *     description="Return data cabinet",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to get cabinet data.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function cabinet()
     {
         try {

@@ -8,6 +8,35 @@ use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/events",
+     *     description="Return data events",
+     *     tags={"APP MOBILE HIMAKOM"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Failed to get events data.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated.",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
     public function events()
     {
         try {
