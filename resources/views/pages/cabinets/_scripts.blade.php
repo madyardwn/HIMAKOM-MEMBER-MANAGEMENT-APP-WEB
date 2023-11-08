@@ -96,23 +96,6 @@
                     }
                 },
                 {
-                    data: 'filosofies',
-                    name: 'filosofies',
-                    title: 'Filosofies',
-                    orderable: false,
-                    width: '30%',
-                    render: function(data, type, row) {
-                        let html = '';
-                        data.forEach(function(item, index) {
-                            html += `
-                                <img src="${item.logo}" alt="Filosofies" class="img-fluid" width="100">
-                                <span class="badge badge-outline text-blue m-1">${item.label}</span>
-                            `;
-                        });
-                        return html;
-                    }
-                },
-                {
                     data: 'year',
                     name: 'year',
                     title: 'Year',

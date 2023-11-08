@@ -8,6 +8,8 @@ use App\Models\Cabinet;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\WorkHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -109,6 +111,14 @@ class UserController extends Controller
 
             $user->assignRole($request->role);
 
+            WorkHistory::create([
+                'user_id' => $user->id,
+                'cabinet_id' => $request->cabinet,
+                'department_id' => $request->department,
+                'role_id' => $request->role,
+                'start_date' => Carbon::now(),
+            ]);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'User created successfully!',
@@ -201,6 +211,14 @@ class UserController extends Controller
             ]);
 
             $user->roles()->sync($request->role);
+
+            WorkHistory::create([
+                'user_id' => $user->id,
+                'cabinet_id' => $request->cabinet,
+                'department_id' => $request->department,
+                'role_id' => $request->role,
+                'start_date' => Carbon::now(),
+            ]);
 
             return response()->json([
                 'status' => 'success',

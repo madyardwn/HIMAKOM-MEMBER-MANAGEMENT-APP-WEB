@@ -42,6 +42,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index')->middleware('permission:read-notifications');
         Route::post('/notifications/store', [\App\Http\Controllers\NotificationController::class, 'store'])->name('notifications.store')->middleware('permission:create-notifications');
         Route::delete('/notifications/{notification}/destroy', [\App\Http\Controllers\NotificationController::class, 'destroy'])->name('notifications.destroy')->middleware('permission:delete-notifications');
+
+        // WorkHistories
+        Route::get('/work-histories', [\App\Http\Controllers\WorkHistoryController::class, 'index'])->name('work-histories.index')->middleware('permission:read-work-histories');
+        Route::get('/work-histories/{user}', [\App\Http\Controllers\WorkHistoryController::class, 'show'])->name('work-histories.show')->middleware('permission:read-work-histories');
+        Route::get('/work-histories/{user}/position', [\App\Http\Controllers\WorkHistoryController::class, 'positions'])->name('work-histories.positions')->middleware('permission:read-work-histories');
+        Route::get('/work-histories/{user}/programs', [\App\Http\Controllers\WorkHistoryController::class, 'programs'])->name('work-histories.programs')->middleware('permission:read-work-histories');
     });
 
     // route auth-web group

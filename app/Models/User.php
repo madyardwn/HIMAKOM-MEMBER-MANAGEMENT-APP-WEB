@@ -143,6 +143,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's program.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function program()
+    {
+        return $this->hasMany(Program::class, 'user_id');
+    }
+
+    /**
      * Get the user's notifications.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -150,5 +160,15 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'users_notifications', 'user_id', 'notification_id')->withPivot('id')->withTimestamps();
+    }
+
+    /**
+     * Get the user's work history.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workHistories()
+    {
+        return $this->hasMany(WorkHistory::class, 'user_id');
     }
 }

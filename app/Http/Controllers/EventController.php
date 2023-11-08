@@ -231,10 +231,7 @@ class EventController extends Controller
     {
         try {
             if (Carbon::parse($event->date)->isPast()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Event has passed!',
-                ], 422);
+                throw new \Exception('Event date is past!');
             }
 
             sendNotificationEvent($event, $request->message ?? '');

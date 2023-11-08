@@ -1,5 +1,7 @@
 <?php
 
+use function Laravel\Prompts\text;
+
 return [
 
     /*
@@ -150,7 +152,7 @@ return [
         [
             'text' => 'User Management',
             'icon' => 'ti ti-user',
-            'hasAnyPermission' => ['read-users', 'read-notifications'],
+            'hasAnyPermission' => ['read-users', 'read-notifications', 'read-work-histories'],
             'submenu' => [
                 [
                     'text' => 'User',
@@ -164,6 +166,12 @@ return [
                     'route' => 'users-management.notifications.index',
                     'hasAnyPermission' => ['read-notifications'],
                 ],
+                [
+                    'text' => 'Work History',
+                    'icon' => 'ti ti-briefcase',
+                    'route' => 'users-management.work-histories.index',
+                    'hasAnyPermission' => ['read-work-histories'],
+                ]
             ],
         ],
         [

@@ -48,6 +48,9 @@ class DefaultRoleSeeder extends Seeder
             'create-departments',
             'update-departments',
             'delete-departments',
+
+            // Work Histories
+            'read-work-histories'
         ]);
 
         Role::create(['name' => 'KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -56,6 +59,7 @@ class DefaultRoleSeeder extends Seeder
             'read-departments',
             'read-programs',
             'read-events',
+            'read-work-histories'
         ]);
 
         Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -64,6 +68,7 @@ class DefaultRoleSeeder extends Seeder
             'read-departments',
             'read-programs',
             'read-events',
+            'read-work-histories'
         ]);
 
         $department = Department::select(['id', 'name'])
@@ -87,6 +92,9 @@ class DefaultRoleSeeder extends Seeder
                 'create-events',
                 'update-events',
                 'delete-events',
+
+                // Work Histories
+                'read-work-histories'
             ]);
 
             Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
@@ -105,6 +113,9 @@ class DefaultRoleSeeder extends Seeder
                 'create-events',
                 'update-events',
                 'delete-events',
+
+                // Work Histories
+                'read-work-histories'
             ]);
         }
 
@@ -120,11 +131,17 @@ class DefaultRoleSeeder extends Seeder
             'create-events',
             'update-events',
             'delete-events',
+
+            // Work Histories
+            'read-work-histories'
         ]);
 
         Role::create(['name' => 'STAF MUDA'])->givePermissionTo([
             // Programs
-            'read-programs'
+            'read-programs',
+
+            // Work Histories
+            'read-work-histories'
         ]);
     }
 }

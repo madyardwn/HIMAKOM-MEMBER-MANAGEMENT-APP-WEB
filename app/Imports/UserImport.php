@@ -6,6 +6,8 @@ use App\Models\Cabinet;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\WorkHistory;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class UserImport implements ToModel
@@ -37,7 +39,6 @@ class UserImport implements ToModel
         }
 
         $user = User::where('nim', $row[0])->first();
-
         $cabinet = Cabinet::where('name', $row[9])->first();
         $department = Department::where('short_name', $row[10])->first();
         $roles = Role::where('name', $row[11])->first();
@@ -63,6 +64,15 @@ class UserImport implements ToModel
             // Add new Role
             $user->roles()->sync($roles->id);
 
+            // Add new WorkHistory
+            WorkHistory::create([
+                'user_id' => $user->id,
+                'cabinet_id' => $cabinet->id,
+                'department_id' => $department->id ?? null,
+                'role_id' => $roles->id,
+                'start_date' => Carbon::now(),
+            ]);
+
             return null;
         }
 
@@ -81,6 +91,14 @@ class UserImport implements ToModel
         ]);
 
         $user->roles()->sync($roles->id);
+
+        WorkHistory::create([
+            'user_id' => $user->id,
+            'cabinet_id' => $cabinet->id,
+            'department_id' => $department->id ?? null,
+            'role_id' => $roles->id,
+            'start_date' => Carbon::now(),
+        ]);
 
         return $user;
     }
