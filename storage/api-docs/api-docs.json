@@ -336,9 +336,10 @@
     "components": {
         "securitySchemes": {
             "sanctum": {
-                "type": "http",
-                "name": "Authorization Control",
-                "scheme": "bearer"
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     }

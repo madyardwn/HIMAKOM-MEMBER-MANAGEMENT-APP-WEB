@@ -45,7 +45,7 @@ class CabinetController extends Controller
                 ->withWhereHas('users', function ($query) {
                     $query->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
                         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
-                        ->whereNotIn('roles.name', ['SUPER ADMIN', 'STAF MUDA', 'STAF AHLI'])
+                        ->whereNotIn('roles.name', ['SUPER ADMIN', 'STAF MUDA', 'STAF AHLI', 'NON ACTIVE'])
                         ->orderByRaw('CASE roles.name
                             WHEN "KETUA HIMPUNAN" THEN 1
                             WHEN "WAKIL KETUA HIMPUNAN" THEN 2
