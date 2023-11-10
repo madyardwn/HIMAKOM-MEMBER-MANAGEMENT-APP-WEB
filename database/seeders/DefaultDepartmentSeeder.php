@@ -88,5 +88,12 @@ class DefaultDepartmentSeeder extends Seeder
             'description' => 'Departemen Luar Himpunan merupakan departemen yang berfokus dalam menjalin hubungan dan kerjasama antara HIMAKOM POLBAN dengan pihak eksternal dan alumni HIMAKOM POLBAN sehingga terbentuk forum bilateral maupun multilateral.',
             'logo' => 'LUHIM.png',
         ]);
+
+        Department::create([
+            'name' => 'MANAJEMEN SUMBER DAYA HIMPUNAN',
+            'short_name' => 'MSDH',
+            'description' => '',
+            'logo' => 'LUHIM.png',
+        ]);
     }
 }
