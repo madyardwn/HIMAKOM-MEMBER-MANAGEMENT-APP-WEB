@@ -71,10 +71,6 @@ class UserImport implements ToModel, WithHeadingRow
             $user->npa = $row['npa'] ?? null;
         }
 
-        if ($user->picture !== $row['picture'] ?? null) {
-            $user->picture = $row['picture'] ?? null;
-        }
-
         if ($user->department_id !== $department->id ?? null) {
             $user->department_id = $department->id ?? null;
         }
@@ -82,6 +78,14 @@ class UserImport implements ToModel, WithHeadingRow
         if ($user->cabinet_id !== $cabinet->id) {
             $user->cabinet_id = $cabinet->id;
         }
+
+        $user->picture = $row['picture'] ?? null;
+
+        $user->name = $row['name'];
+        $user->email = $row['email'];
+        $user->password = bcrypt($row['password']);
+        $user->year = $row['year'];
+        $user->gender = $row['gender'];
 
         $user->save();
 
