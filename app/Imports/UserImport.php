@@ -8,9 +8,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\WorkHistory;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class UserImport implements ToModel
+class UserImport implements WithHeadingRow
 {
     /**
      * @param array $row
@@ -19,29 +19,10 @@ class UserImport implements ToModel
      */
     public function model(array $row)
     {
-        // ignore header or first row
-        if (
-            $row[0] == 'nim'
-            && $row[1] == 'name'
-            && $row[2] == 'email'
-            && $row[3] == 'password'
-            && $row[4] == 'year'
-            && $row[5] == 'nama_bagus'
-            && $row[6] == 'npa'
-            && $row[7] == 'picture'
-            && $row[8] == 'gender'
-
-            && $row[9] == 'cabinet_name'
-            && $row[10] == 'department_name'
-            && $row[11] == 'role_name'
-        ) {
-            return null;
-        }
-
-        $user = User::where('nim', $row[0])->first();
-        $cabinet = Cabinet::where('name', $row[9])->first();
-        $department = Department::where('short_name', $row[10])->first();
-        $roles = Role::where('name', $row[11])->first();
+        $user = User::where('nim', $row['nim'])->first();
+        $cabinet = Cabinet::where('name', $row['cabinet'])->first();
+        $department = Department::where('short_name', $row['department'])->first();
+        $roles = Role::where('name', $row['role'])->first();
 
         if (!$cabinet) {
             throw new \Exception('Cabinet with name ' . $row[9] . ' not found!');
@@ -54,9 +35,9 @@ class UserImport implements ToModel
         if ($user) { // Import at second time, for add missing data or regeneration
 
             // Update user
-            $user->name_bagus = $row[5] ?? null;
-            $user->npa = $row[6] ?? null;
-            $user->picture = $row[7] ?? null;
+            $user->name_bagus = $row['nama bagus'] ?? null; // 'nama bagus' is 'name_bagus
+            $user->npa = $row['npa'] ?? null;
+            $user->picture = $row['picture'] ?? null;
             $user->department_id = $department->id ?? null;
             $user->cabinet_id = $cabinet->id;
             $user->save();
@@ -77,15 +58,15 @@ class UserImport implements ToModel
         }
 
         $user = User::create([
-            'nim' => $row[0],
-            'name' => $row[1],
-            'email' => $row[2],
-            'password' => bcrypt($row[3]),
-            'year' => $row[4],
-            'name_bagus' => $row[5] ?? null,
-            'npa' => $row[6] ?? null,
-            'picture' => $row[7] ?? null,
-            'gender' => $row[8],
+            'nim' => $row['nim'], // 'nim' is 'nim
+            'name' => $row['nama'], // 'nama' is 'name
+            'email' => $row['email'],
+            'password' => bcrypt($row['password']), // 'password' is 'password
+            'year' => $row['year'],
+            'name_bagus' => $row['nama bagus'] ?? null, // 'nama bagus' is 'name_bagus
+            'npa' => $row['npa'] ?? null,
+            'picture' => $row['picture'] ?? null,
+            'gender' => $row['gender'],
             'department_id' => $department->id ?? null,
             'cabinet_id' => $cabinet->id,
         ]);
