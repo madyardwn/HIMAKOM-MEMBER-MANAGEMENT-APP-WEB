@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Department;
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DefaultRoleSeeder extends Seeder
@@ -52,6 +50,36 @@ class DefaultRoleSeeder extends Seeder
             'create-departments',
             'update-departments',
             'delete-departments',
+
+            // Work Histories
+            'read-work-histories'
+        ]);
+
+        // Bendahara umum
+        Role::create(['name' => 'BENDAHARA UMUM'])->givePermissionTo([
+            // Cabinets
+            'read-cabinets',
+
+            // Departments
+            'read-departments',
+
+            // Notifications
+            'read-notifications',
+
+            // Work Histories
+            'read-work-histories'
+        ]);
+
+        // Sekretaris umum
+        Role::create(['name' => 'SEKRETARIS UMUM'])->givePermissionTo([
+            // Cabinets
+            'read-cabinets',
+
+            // Departments
+            'read-departments',
+
+            // Notifications
+            'read-notifications',
 
             // Work Histories
             'read-work-histories'

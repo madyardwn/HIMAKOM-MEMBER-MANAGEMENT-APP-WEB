@@ -53,37 +53,40 @@ class CabinetController extends Controller
                             WHEN "KETUA MAJELIS PERWAKILAN ANGGOTA" THEN 3
                             WHEN "WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA" THEN 4
 
-                            WHEN "KETUA BIRO KEUANGAN" THEN 5
-                            WHEN "WAKIL KETUA BIRO KEUANGAN" THEN 6
+                            WHEN "BENDAHARA UMUM" THEN 5
+                            WHEN "SEKRETARIS UMUM" THEN 6
 
                             WHEN "KETUA BIRO ADMINISTRASI DAN KESEKRETARIATAN" THEN 7
                             WHEN "WAKIL KETUA BIRO ADMINISTRASI DAN KESEKRETARIATAN" THEN 8
 
-                            WHEN "KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 9
-                            WHEN "WAKIL KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 10
+                            WHEN "KETUA BIRO KEUANGAN" THEN 9
+                            WHEN "WAKIL KETUA BIRO KEUANGAN" THEN 10
 
-                            WHEN "KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 11
-                            WHEN "WAKIL KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 12
+                            WHEN "KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 11
+                            WHEN "WAKIL KETUA BIRO KOMUNIKASI DAN INFORMASI" THEN 12
 
-                            WHEN "KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 13
-                            WHEN "WAKIL KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 14
+                            WHEN "KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 13
+                            WHEN "WAKIL KETUA DEPARTEMEN RISET, PENDIDIKAN, DAN TEKNOLOGI" THEN 14
 
-                            WHEN "KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 15
-                            WHEN "WAKIL KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 16
+                            WHEN "KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 15
+                            WHEN "WAKIL KETUA DEPARTEMEN PENGEMBANGAN SUMBER DAYA ANGGOTA" THEN 16
 
-                            WHEN "KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 17
-                            WHEN "WAKIL KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 18
+                            WHEN "KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 17
+                            WHEN "WAKIL KETUA DEPARTEMEN SENI DAN OLAHRAGA" THEN 18
 
-                            WHEN "KETUA DEPARTEMEN ROHANI ISLAM" THEN 19
-                            WHEN "WAKIL KETUA DEPARTEMEN ROHANI ISLAM" THEN 20
+                            WHEN "KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 19
+                            WHEN "WAKIL KETUA DEPARTEMEN LUAR HIMPUNAN" THEN 20
 
-                            WHEN "KETUA UNIT KEWIRAUSAHAAN" THEN 21
-                            WHEN "WAKIL KETUA UNIT KEWIRAUSAHAAN" THEN 22
+                            WHEN "KETUA DEPARTEMEN ROHANI ISLAM" THEN 21
+                            WHEN "WAKIL KETUA DEPARTEMEN ROHANI ISLAM" THEN 22
 
-                            WHEN "KETUA UNIT TEKNOLOGI" THEN 23
-                            WHEN "WAKIL KETUA UNIT TEKNOLOGI" THEN 24
+                            WHEN "KETUA UNIT KEWIRAUSAHAAN" THEN 23
+                            WHEN "WAKIL KETUA UNIT KEWIRAUSAHAAN" THEN 24
 
-                            ELSE 25
+                            WHEN "KETUA UNIT TEKNOLOGI" THEN 25
+                            WHEN "WAKIL KETUA UNIT TEKNOLOGI" THEN 26
+
+                            ELSE 27
                         END')
                         ->select('users.*', 'roles.name AS role_name');
                 })
