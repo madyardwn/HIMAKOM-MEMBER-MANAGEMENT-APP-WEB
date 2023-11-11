@@ -66,15 +66,17 @@ class UserController extends Controller
      *     path="/api/user/device-token",
      *     description="Update device token when user login",
      *     tags={"APP MOBILE HIMAKOM"},
-     *     security={{"sanctum":{}}},
-     *     @OA\RequestBody(
-     *          description="Update device token when user login", 
-     *          required=true,
-     *          @OA\JsonContent(
-     *             required={"device_token"},
-     *            @OA\Property(property="device_token", type="string", example="device_token"),
-     *         ),
-     *    ),
+     *     security={{"sanctum":{}}},     
+     *    @OA\RequestBody(
+     *         required=true,
+     *         description="Update device token when user login",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              required={"device_token"},
+     *              @OA\Property(property="device_token", type="string", example="device_token"),
+     *          )
+     *      ),
      *    @OA\Response(
      *         response=200,
      *         description="Success",
