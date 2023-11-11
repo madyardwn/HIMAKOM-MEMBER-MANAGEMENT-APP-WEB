@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
@@ -41,6 +42,7 @@ class EventController extends Controller
     {
         try {
             $events = Event::select('*')
+                ->where('date', '>=', Carbon::now())
                 ->orderBy('date', 'ASC')
                 ->get();
 
