@@ -210,13 +210,21 @@ class UserController extends Controller
 
             $user->roles()->sync($request->role);
 
-            WorkHistory::create([
-                'user_id' => $user->id,
-                'cabinet_id' => $request->cabinet,
-                'department_id' => $request->department,
-                'role_id' => $request->role,
-                'start_date' => Carbon::now(),
-            ]);
+            $workHistory = WorkHistory::where('user_id', $user->id)
+                ->where('cabinet_id', $request->cabinet)
+                ->where('department_id', $request->department)
+                ->where('role_id', $request->role)
+                ->first();
+
+            if (!$workHistory) {
+                WorkHistory::create([
+                    'user_id' => $user->id,
+                    'cabinet_id' => $request->cabinet,
+                    'department_id' => $request->department,
+                    'role_id' => $request->role,
+                    'start_date' => Carbon::now(),
+                ]);
+            }
 
             return response()->json([
                 'status' => 'success',

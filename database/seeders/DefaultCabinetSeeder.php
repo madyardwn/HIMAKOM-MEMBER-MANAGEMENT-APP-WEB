@@ -15,7 +15,7 @@ class DefaultCabinetSeeder extends Seeder
     public function run(): void
     {
         $cabinet = Cabinet::create([
-            'name' => 'DHARMA REVOLUSI',
+            'name' => 'DARMA REVOLUSI',
             'description' => 'Perubahan dari sosial maupun budaya yang berlangsung cepat dan melibatkan poin utama dari dasar atau kehidupan.',
             'logo' => config('tablar.default.logo.path'),
             'year' => 2022,
