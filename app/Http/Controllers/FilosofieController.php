@@ -149,10 +149,10 @@ class FilosofieController extends Controller
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $cabinet->name . '.' . $logo->extension();
                 $logo->storeAs($this->path_logo_filosofies, $logo_name, 'public');
+                $filosofie->logo = $logo_name;
             }
 
             $filosofie->update([
-                'logo' => $logo_name,
                 'cabinet_id' => $request->cabinet,
                 'label' => $request->label,
             ]);
