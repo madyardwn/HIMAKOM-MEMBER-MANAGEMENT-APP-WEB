@@ -71,18 +71,35 @@
                     responsivePriority: 1,
                     width: '1%',
                     render: function(data, type, row) {
-                        let html = `
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                    <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
-                                </ul>
-                            </div>
-                        `;
-                        return data.id == 1 ? '' : html;
+                        let html = '';
+                        let btn = '';
+
+                        @can('update-auth-web-roles')
+                            btn += `
+                                <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                            `;
+                        @endcan
+
+                        @can('delete-auth-web-roles')
+                            btn += `
+                                <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                            `;
+                        @endcan
+
+                        @if (auth()->user()->hasAnyPermission(['update-auth-web-roles', 'delete-auth-web-roles']))
+                            html = `
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu">                                    
+                                        ${btn}
+                                    </ul>
+                                </div>
+                            `;
+                        @endif
+
+                        return html;
                     }
                 },
             ];

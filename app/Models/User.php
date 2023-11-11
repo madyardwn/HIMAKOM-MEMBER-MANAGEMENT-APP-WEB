@@ -171,4 +171,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(WorkHistory::class, 'user_id');
     }
+
+    /**
+     * Get the user's complaints.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class, 'user_id');
+    }
 }

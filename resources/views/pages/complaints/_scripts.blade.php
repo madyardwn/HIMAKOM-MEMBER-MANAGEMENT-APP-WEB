@@ -1,27 +1,29 @@
 <script type="module">
-    class Department {
+    class Complaint {
         constructor() {
+
             // Empty image & Subject
             this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
-            this.subject = 'departments';
+            this.subject = 'complaints';
 
             // Modal
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-departments`));
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-departments`));
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-complaints`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-complaints`));
 
             // Form
-            this.formAdd = $(`#form-add-${this.subject}`);
-            this.formEdit = $(`#form-edit-${this.subject}`);
+            this.formAdd = $(`#form-add-complaints`);
+            this.formEdit = $(`#form-edit-complaints`);
 
             // URL
-            this.storeUrl = "{{ route('periodes.departments.store') }}";
-            this.editUrl = "{{ route('periodes.departments.edit', ':id') }}";
-            this.deleteUrl = "{{ route('periodes.departments.destroy', ':id') }}";
-            this.updateUrl = "{{ route('periodes.departments.update', ':id') }}";
+            this.storeUrl = "{{ route('complaints.store') }}";
+            this.editUrl = "{{ route('complaints.edit', ':id') }}";
+            this.deleteUrl = "{{ route('complaints.destroy', ':id') }}";
+            this.updateUrl = "{{ route('complaints.update', ':id') }}";
+            this.resolveUrl = "{{ route('complaints.resolve', ':id') }}";
 
-            // DataTable
-            this.table = $('#table-departments');
-            this.tableDataUrl = "{{ route('periodes.departments.index') }}";
+            // DataTable 
+            this.table = $('#table-complaints');
+            this.tableDataUrl = "{{ route('complaints.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -35,36 +37,39 @@
                     }
                 },
                 {
-                    data: 'logo',
-                    name: 'logo',
-                    title: 'Logo',
+                    data: 'screenshot',
+                    name: 'screenshot',
+                    title: 'Screenshoot',
                     orderable: false,
                     searchable: false,
                     className: 'dt-center',
-                    responsivePriority: 2,
-                    width: '10%',
+                    responsivePriority: 1,
+                    width: '20%',
                     render: function(data, type, row) {
-                        return `<img src="${data}" alt="Logo" class="img-fluid" width="100">`;
+                        return `<img src="${data}" alt="screenshot" class="img-fluid" width="100">`;
                     }
                 },
                 {
                     data: 'name',
                     name: 'name',
-                    title: 'Name',
-                    responsivePriority: 3,
-                    width: '10%'
+                    title: 'Complaints Name',
+                    width: '20%',
+                    responsivePriority: 2,
                 },
                 {
-                    data: 'short_name',
-                    name: 'short_name',
-                    title: 'Short Name',
+                    data: 'complaint',
+                    name: 'complaint',
+                    title: 'Complaints Description',
+                },
+                {
+                    data: 'is_resolve',
+                    name: 'is_resolve',
+                    title: 'Status',
                     responsivePriority: 1,
-                    width: '10%'
-                },
-                {
-                    data: 'description',
-                    name: 'description',
-                    title: 'Description'
+                    width: '5%',
+                    render: function(data, type, row) {
+                        return data == 1 ? `<span class="badge bg-blue-lt">Resolve</span>` : `<span class="badge bg-red-lt">Not Resolve</span>`;
+                    }
                 },
                 {
                     data: null,
@@ -77,19 +82,20 @@
                         let html = '';
                         let btn = '';
 
-                        @can('update-departments')
+                        @can('update-complaints')
                             btn += `
                                 <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                <li><a class="dropdown-item btn-resolve" href="" data-id="${data.id}"><i class="ti ti-check"></i>&nbsp; Resolve</a></li>
                             `;
                         @endcan
 
-                        @can('delete-departments')
+                        @can('delete-complaints')
                             btn += `
                                 <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                             `;
                         @endcan
 
-                        @if (auth()->user()->hasAnyPermission(['update-departments', 'delete-departments']))
+                        @if (auth()->user()->hasAnyPermission(['update-complaints', 'delete-complaints']))
                             html = `
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -105,14 +111,14 @@
                         return html;
                     }
                 },
-            ]
+            ];
         }
 
         initDtEvents() {
             $(`#modal-add-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
-                $(`#preview-add-logo`).attr("src", this.emptyImage);
+                $(`#preview-add-screenshot`).attr("src", this.emptyImage);
 
                 this.formAdd[0].reset();
             });
@@ -120,15 +126,15 @@
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
                 $(".is-invalid").removeClass("is-invalid");
                 $(".invalid-feedback").remove();
-                $(`#preview-edit-logo`).attr("src", this.emptyImage);
+                $(`#preview-edit-screenshot`).attr("src", this.emptyImage);
 
                 this.formEdit[0].reset();
             });
 
 
-            $(`#add-logo`).on("change", () => {
-                const file = $(`#add-logo`)[0].files[0];
-                const name = $(`#add-logo`)[0].name;
+            $(`#add-screenshot`).on("change", () => {
+                const file = $(`#add-screenshot`)[0].files[0];
+                const name = $(`#add-screenshot`)[0].name;
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
@@ -138,9 +144,9 @@
                 reader.readAsDataURL(file);
             });
 
-            $(`#edit-logo`).on("change", () => {
-                const file = $(`#edit-logo`)[0].files[0];
-                const name = $(`#edit-logo`)[0].name;
+            $(`#edit-screenshot`).on("change", () => {
+                const file = $(`#edit-screenshot`)[0].files[0];
+                const name = $(`#edit-screenshot`)[0].name;
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
@@ -163,20 +169,61 @@
                         e.preventDefault();
 
                         $(`#edit-id-${this.subject}`).val($(e.currentTarget).data("id"));
-
+                        console.log($(e.currentTarget).data("id"));
                         $.ajax({
                             url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data.name);
-                                $('#edit-short_name').val(response.data.short_name);
-                                $('#edit-description').val(response.data.description);
-                                $(`#preview-edit-logo`).attr("src", response.data.logo);
+                                $('#edit-name').val(response.data?.name);
+                                $('#edit-complaint').val(response.data?.complaint);
+                                $('#edit-is_resolve').prop("checked", response.data?.is_resolve);
+                                $(`#preview-edit-screenshot`).attr("src", response.data?.screenshot);
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 Swal.fire("Error!", thrownError, "error");
                             },
+                        });
+                    });
+
+                    $('.btn-resolve').on('click', (e) => {
+                        e.preventDefault();
+
+                        const id = $(e.currentTarget).data("id");
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, resolve it!",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: this.resolveUrl.replace(":id", id),
+                                    method: "PUT",
+                                    success: (response) => {
+                                        if (response.status === "success") {
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "Berhasil",
+                                                text: response.message,
+                                                showConfirmButton: false,
+                                                timer: 1500,
+                                            }).then(() => {
+                                                this.table.DataTable().ajax.reload();
+                                            });
+                                        } else {
+                                            Swal.fire("Error!", response.message, "error");
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        Swal.fire("Error!", thrownError, "error");
+                                    },
+                                });
+                            }
                         });
                     });
 
@@ -334,11 +381,11 @@
                             this.table.DataTable().ajax.reload();
 
                             $(`#card-${this.subject}`).before(`
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Success!</strong> ${response.message}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            `);
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success!</strong> ${response.message}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                `);
 
                             $(".alert").delay(3000).slideUp(300);
                         });
@@ -363,9 +410,9 @@
     }
 
     $(document).ready(function() {
-        const department = new Department();
-        department.initDtEvents();
-        department.initDtTable();
-        department.initDtSubmit();
+        const complaint = new Complaint();
+        complaint.initDtEvents();
+        complaint.initDtTable();
+        complaint.initDtSubmit();
     });
 </script>

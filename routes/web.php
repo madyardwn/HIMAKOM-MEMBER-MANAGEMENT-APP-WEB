@@ -29,6 +29,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
 
+    // Complaints
+    Route::get('/complaints', [\App\Http\Controllers\ComplaintController::class, 'index'])->name('complaints.index')->middleware('permission:read-complaints');
+    Route::post('/complaints/store', [\App\Http\Controllers\ComplaintController::class, 'store'])->name('complaints.store')->middleware('permission:create-complaints');
+    Route::get('/complaints/{complaint}/edit', [\App\Http\Controllers\ComplaintController::class, 'edit'])->name('complaints.edit')->middleware('permission:update-complaints');
+    Route::put('/complaints/{complaint}/update', [\App\Http\Controllers\ComplaintController::class, 'update'])->name('complaints.update')->middleware('permission:update-complaints');
+    Route::delete('/complaints/{complaint}/destroy', [\App\Http\Controllers\ComplaintController::class, 'destroy'])->name('complaints.destroy')->middleware('permission:delete-complaints');
+    Route::put('/complaints/{complaint}/resolve', [\App\Http\Controllers\ComplaintController::class, 'resolve'])->name('complaints.resolve')->middleware('permission:update-complaints');
+
     // route users-management group
     Route::group(['prefix' => 'users-management', 'as' => 'users-management.'], function () {
         // Users
@@ -53,14 +61,14 @@ Route::group(['middleware' => ['auth']], function () {
     // route auth-web group
     Route::group(['prefix' => 'auth-web', 'as' => 'auth-web.'], function () {
         // Permissions
-        Route::get('/permissions', [\App\Http\Controllers\AuthWebPermissionController::class, 'index'])->name('permissions.index')->middleware('permission:read-permissions');
+        Route::get('/permissions', [\App\Http\Controllers\AuthWebPermissionController::class, 'index'])->name('permissions.index')->middleware('permission:read-auth-web-permissions');
 
         // Roles
-        Route::get('/roles', [\App\Http\Controllers\AuthWebRoleController::class, 'index'])->name('roles.index')->middleware('permission:read-roles');
-        Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store')->middleware('permission:create-roles');
-        Route::get('/roles/{role}/edit', [\App\Http\Controllers\AuthWebRoleController::class, 'edit'])->name('roles.edit')->middleware('permission:update-roles');
-        Route::put('/roles/{role}/update', [\App\Http\Controllers\AuthWebRoleController::class, 'update'])->name('roles.update')->middleware('permission:update-roles');
-        Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebRoleController::class, 'destroy'])->name('roles.destroy')->middleware('permission:delete-roles');
+        Route::get('/roles', [\App\Http\Controllers\AuthWebRoleController::class, 'index'])->name('roles.index')->middleware('permission:read-auth-web-roles');
+        Route::post('/roles/store', [\App\Http\Controllers\AuthWebRoleController::class, 'store'])->name('roles.store')->middleware('permission:create-auth-web-roles');
+        Route::get('/roles/{role}/edit', [\App\Http\Controllers\AuthWebRoleController::class, 'edit'])->name('roles.edit')->middleware('permission:update-auth-web-roles');
+        Route::put('/roles/{role}/update', [\App\Http\Controllers\AuthWebRoleController::class, 'update'])->name('roles.update')->middleware('permission:update-auth-web-roles');
+        Route::delete('/roles/{role}/destroy', [\App\Http\Controllers\AuthWebRoleController::class, 'destroy'])->name('roles.destroy')->middleware('permission:delete-auth-web-roles');
     });
 
     // route periodes

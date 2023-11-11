@@ -119,17 +119,33 @@
                     width: '1%',
                     render: function(data, type, row) {
                         let html = '';
-                        html = `
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu">                                    
-                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                                    <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
-                                </ul>
-                            </div>
-                        `;
+                        let btn = '';
+
+                        @can('update-cabinets')
+                            btn += `
+                                <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                            `;
+                        @endcan
+
+                        @can('delete-cabinets')
+                            btn += `
+                                <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
+                            `;
+                        @endcan
+
+                        @if (auth()->user()->hasAnyPermission(['update-cabinets', 'delete-cabinets']))
+                            html = `
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu">                                    
+                                        ${btn}
+                                    </ul>
+                                </div>
+                            `;
+                        @endif
+
                         return html;
                     }
                 },

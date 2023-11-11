@@ -22,4 +22,7 @@ return [
     'notifications' => [
         'posters' => 'notifications/posters',
     ],
+    'complaints' => [
+        'screenshots' => 'complaints/screenshots',
+    ],
 ];

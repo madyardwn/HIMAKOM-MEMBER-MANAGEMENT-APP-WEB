@@ -36,6 +36,8 @@ class DefaultRoleSeeder extends Seeder
             // Notifications
             'read-notifications',
 
+            'read-complaints',
+            'create-complaints',
         ]);
 
         Role::create(['name' => 'WAKIL KETUA HIMPUNAN'])->givePermissionTo([
@@ -52,7 +54,11 @@ class DefaultRoleSeeder extends Seeder
             'delete-departments',
 
             // Work Histories
-            'read-work-histories'
+            'read-work-histories',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         // Bendahara umum
@@ -67,7 +73,11 @@ class DefaultRoleSeeder extends Seeder
             'read-notifications',
 
             // Work Histories
-            'read-work-histories'
+            'read-work-histories',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         // Sekretaris umum
@@ -82,7 +92,11 @@ class DefaultRoleSeeder extends Seeder
             'read-notifications',
 
             // Work Histories
-            'read-work-histories'
+            'read-work-histories',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         Role::create(['name' => 'KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -93,6 +107,10 @@ class DefaultRoleSeeder extends Seeder
             'read-events',
             'read-work-histories',
             'read-notifications',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -103,6 +121,10 @@ class DefaultRoleSeeder extends Seeder
             'read-events',
             'read-work-histories',
             'read-notifications',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         $department = Department::select(['id', 'name'])
@@ -133,6 +155,10 @@ class DefaultRoleSeeder extends Seeder
                 // Notifications
                 'read-notifications',
                 'create-notifications',
+
+                // Complaints
+                'read-complaints',
+                'create-complaints',
             ]);
 
             Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
@@ -153,7 +179,11 @@ class DefaultRoleSeeder extends Seeder
                 'delete-events',
 
                 // Work Histories
-                'read-work-histories'
+                'read-work-histories',
+
+                // Complaints
+                'read-complaints',
+                'create-complaints',
             ]);
         }
 
@@ -164,6 +194,10 @@ class DefaultRoleSeeder extends Seeder
             // 'update-programs',
             // 'delete-programs',
 
+            // Notifications
+            'read-notifications',
+            'create-notifications',
+
             // Events
             'read-events',
             'create-events',
@@ -171,7 +205,11 @@ class DefaultRoleSeeder extends Seeder
             'delete-events',
 
             // Work Histories
-            'read-work-histories'
+            'read-work-histories',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
 
         Role::create(['name' => 'STAF MUDA'])->givePermissionTo([
@@ -179,7 +217,11 @@ class DefaultRoleSeeder extends Seeder
             'read-programs',
 
             // Work Histories
-            'read-work-histories'
+            'read-work-histories',
+
+            // Complaints
+            'read-complaints',
+            'create-complaints',
         ]);
     }
 }

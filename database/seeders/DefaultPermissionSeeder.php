@@ -109,6 +109,11 @@ class DefaultPermissionSeeder extends Seeder
             // 'delete-cv-himakom',
 
             'read-work-histories',
+
+            'read-complaints',
+            'create-complaints',
+            'update-complaints',
+            'delete-complaints',
         ];
 
         foreach ($permissions as $permission) {
