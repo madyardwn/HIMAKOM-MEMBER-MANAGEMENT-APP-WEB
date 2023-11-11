@@ -27,6 +27,9 @@ class ComplaintController extends Controller
     {
         if ($request->ajax()) {
             $data = Complaint::with('user:id,name')
+                ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })
                 ->orderBy('created_at', 'desc');
 
             return DataTables::of($data)

@@ -50,16 +50,23 @@
                     }
                 },
                 {
+                    data: 'user.name',
+                    name: 'user.name',
+                    title: 'From',
+                    width: '20%',
+                    responsivePriority: 2,
+                },
+                {
                     data: 'name',
                     name: 'name',
-                    title: 'Complaints Name',
+                    title: 'Subject',
                     width: '20%',
                     responsivePriority: 2,
                 },
                 {
                     data: 'complaint',
                     name: 'complaint',
-                    title: 'Complaints Description',
+                    title: 'Description',
                 },
                 {
                     data: 'is_resolve',

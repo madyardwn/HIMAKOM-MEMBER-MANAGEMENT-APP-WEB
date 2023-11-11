@@ -18,11 +18,11 @@
                         </div>
                         <div class="col-md-7">
                             <div class="mb-3">
-                                <label class="form-label" for="edit-name">Complaint Name</label>
+                                <label class="form-label" for="edit-name">Subject</label>
                                 <input type="text" name="name" id="edit-name" class="form-control" placeholder="Enter name" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="edit-complaint">Complaint Description</label>
+                                <label class="form-label" for="edit-complaint">Description</label>
                                 <textarea name="complaint" id="edit-complaint" class="form-control" placeholder="Enter complaint" autocomplete="off" required rows="5"></textarea>
                             </div>
                         </div>

@@ -17,11 +17,11 @@
                         </div>
                         <div class="col-md-7">
                             <div class="mb-3">
-                                <label class="form-label" for="add-name">Complaint Name</label>
+                                <label class="form-label" for="add-name">Subject</label>
                                 <input type="text" name="name" id="add-name" class="form-control" placeholder="Enter name" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-complaint">Complaint Description</label>
+                                <label class="form-label" for="add-complaint">Description</label>
                                 <textarea name="complaint" id="add-complaint" class="form-control" placeholder="Enter complaint" autocomplete="off" required rows="5"></textarea>
                             </div>
                         </div>
