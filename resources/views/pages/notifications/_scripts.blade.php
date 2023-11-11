@@ -54,7 +54,6 @@
                     data: 'body',
                     name: 'body',
                     title: 'Body',
-                    width: '40%',
                     responsivePriority: 1,
                 },
                 {
