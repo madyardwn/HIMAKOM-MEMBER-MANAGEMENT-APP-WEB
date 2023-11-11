@@ -71,12 +71,13 @@ class UserController extends Controller
      *         required=true,
      *         description="Update device token when user login",
      *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *          @OA\Schema(
-     *              required={"device_token"},
-     *              @OA\Property(property="device_token", type="string", example="device_token"),
-     *          )
-     *      ),
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  required={"device_token"},
+     *                  @OA\Property(property="device_token", type="string", example="device_token"),
+     *              )
+     *          ),
+     *    ),
      *    @OA\Response(
      *         response=200,
      *         description="Success",
