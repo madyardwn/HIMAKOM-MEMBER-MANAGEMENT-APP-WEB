@@ -49,14 +49,15 @@
                         return `<img src="${data}" alt="screenshot" class="img-fluid" width="100">`;
                     }
                 },
-                {
-                    data: 'user.name',
-                    name: 'user.name',
-                    title: 'From',
-                    width: '20%',
-                    responsivePriority: 2,
-                },
-                {
+                @hasanyrole('SUPER ADMIN')
+                    {
+                        data: 'user.name',
+                        name: 'user.name',
+                        title: 'From',
+                        width: '20%',
+                        responsivePriority: 2,
+                    },
+                @endhasanyrole {
                     data: 'name',
                     name: 'name',
                     title: 'Subject',
