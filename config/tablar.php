@@ -12,11 +12,11 @@ return [
     |
     */
 
-    'title' => 'Himakom',
+    'title' => 'HIMAKOM',
     'title_prefix' => '',
     'title_postfix' => '',
-    'bottom_title' => 'Himakom Polban',
-    'current_version' => 'v0.9.1',
+    'bottom_title' => 'UNIT TEKNOLOGI - HIMPUNAN MAHASISWA KOMPUTER',
+    'current_version' => 'v1.0.0',
 
 
     /*
