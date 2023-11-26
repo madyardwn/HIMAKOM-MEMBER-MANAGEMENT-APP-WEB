@@ -52,7 +52,11 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::attemptWhen($credentials, fn (User $user) => !$user->hasRole('non-active-users'))) {
+        if (Auth::attemptWhen(
+            $credentials,
+            fn (User $user) => !$user->hasRole('non-active-users'),
+            $request->filled('remember')
+        )) {
             $request->session()->regenerate();
 
             return redirect()->intended('dashboard');
