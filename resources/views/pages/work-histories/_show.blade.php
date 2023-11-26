@@ -7,13 +7,21 @@
             </div>
             <div class="modal-body">
                 <span class="text-muted">Positions</span>
-                <table id="table-positions-work-histories" class="table table-bordered responsive w-100">
-                </table>
+                <div class="card" id="card-work-histories">
+                    <div class="card-body">
+                        <table id="table-positions-work-histories" class="table table-bordered responsive w-100">
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-body">
                 <span class="text-muted">Programs</span>
-                <table id="table-programs-work-histories" class="table table-bordered responsive w-100">
-                </table>
+                <div class="card" id="card-work-histories">
+                    <div class="card-body">
+                        <table id="table-programs-work-histories" class="table table-bordered responsive w-100">
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

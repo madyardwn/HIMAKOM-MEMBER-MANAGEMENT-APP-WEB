@@ -221,7 +221,7 @@
                             columns: this.tablePositionColumns,
                         });
 
-                        $('#table-programs-work-histories').DataTable({
+                        this.tableProgram.DataTable({
                             processing: true,
                             serverSide: true,
                             responsive: true,
