@@ -77,7 +77,7 @@
                     render: function(data, type, row) {
                         let html = '';
                         data.forEach(function(item, index) {
-                            html += `<span class="badge badge-outline text-grey">${item.name}</span>`;
+                            html += `<span class="badge badge-outline text-grey m-1">${item.name}</span>`;
                         });
                         return html;
                     }
