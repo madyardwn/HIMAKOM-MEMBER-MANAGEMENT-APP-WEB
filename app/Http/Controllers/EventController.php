@@ -234,7 +234,9 @@ class EventController extends Controller
                 throw new \Exception('Event date is past!');
             }
 
-            sendNotificationEvent($event, $request->message ?? '');
+            $message = $request->anyFilled(['title', 'body', 'link']) ? $request : null;
+
+            sendNotificationEvent($event, $message);
 
             return response()->json([
                 'status' => 'success',
