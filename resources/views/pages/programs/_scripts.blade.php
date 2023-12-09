@@ -347,6 +347,7 @@
                             success: (response) => {
                                 $('#edit-name').val(response.data?.name);
                                 $('#edit-description').val(response.data?.description);
+                                $('#edit-date').val(moment(response.data.date).format('YYYY-MM-DDTHH:mm'));
                                 this.tomSelectEditDepartment.setValue(response.data?.department?.id);
                                 this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
                                 this.tomSelectEditLead.addOption(response.data?.lead);
