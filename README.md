@@ -6,53 +6,45 @@ HIMAKOM Member Management Application is an organizational management applicatio
 
 ### Requirements and Versions
 
-| Requirement | Version |
-|-------------|---------|
-| PHP         | 8.1     |
-| Laravel     | 10      |
-| MySQL       | 10.10   |
-| Node.js     | 16      |
+- **PHP:** 8.1
+- **Laravel:** 10
+- **MySQL:** 10.10
+- **Node.js:** 16
 
 ### PHP Extensions
 
-| PHP Extension | 
-|--------------|
-| curl         |
-| gd           |
-| iconv        |
-| pdo_mysql    |
-| zip          |
+- curl
+- gd
+- iconv
+- pdo_mysql
+- zip
 
 ### Integrations
 
-| Integration             |
-|-------------------------|
-| Yajra Datatable         |
-| Admin Tabler            |
-| Tom-Select              |
-| Bootstrap 5             |
-| Maatwebsite Excel       |
-| Swagger Documentation   |
-| Laravel Sanctum         |
-| Laravel Spatie Permission|
-| Laravel Spatie Log       |
-| Telescope               |
-| Firebase Cloud Messaging|
+- Yajra Datatable
+- Admin Tabler
+- Tom-Select
+- Bootstrap 5
+- Maatwebsite Excel
+- Swagger Documentation
+- Laravel Sanctum
+- Laravel Spatie Permission
+- Laravel Spatie Log
+- Telescope
+- Firebase Cloud Messaging
 
-### Provided
+### Provided Features
 
-| Feature                        |
-|--------------------------------|
-| Authentication                 |
-| Role-Based Access Control      |
-| Broadcast Notification         |
-| Regeneration Via Import        |
-| Logging                        |
-| Debugger Telescope             |
-| Dark Mode                      |
-| Responsive Web Design          |
-| API For Mobile App              |
-| API Documentation              |
+- Authentication
+- Role-Based Access Control
+- Broadcast Notification
+- Regeneration Via Import
+- Logging
+- Debugger Telescope
+- Dark Mode
+- Responsive Web Design
+- API For Mobile App
+- API Documentation
 
 ## License
 
