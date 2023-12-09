@@ -1,8 +1,11 @@
 <div class="nav-item dropdown">
     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-        <img src="{{ Auth()->user()->picture }}" class="avatar avatar-sm rounded-circle" alt="{{ Auth()->user()->name }}">
+        <img src="{{ Auth()->user()->picture }}" class="avatar avatar-sm img-thumbnail rounded-circle" alt="{{ Auth()->user()->name }}">
         <div class="d-none d-lg-block px-2">
-            <div>{{ Auth()->user()->name }} ({{ substr(Auth()->user()->roles->first()->name,0,10) }})</div>
+            <div>
+                {{ strlen(Auth()->user()->name) > 11 ? substr(Auth()->user()->name, 0, 11) . '...' : Auth()->user()->name }}
+                ({{ strlen(Auth()->user()->roles->first()->name) > 11? substr(Auth()->user()->roles->first()->name,0,11) . '...': Auth()->user()->roles->first()->name }})
+            </div>
             <div class="mt-1 small text-muted">{{ Auth()->user()->email }}</div>
         </div>
     </a>
