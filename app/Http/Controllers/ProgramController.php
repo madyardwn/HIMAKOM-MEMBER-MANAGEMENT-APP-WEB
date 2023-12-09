@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cabinet;
 use App\Models\Department;
 use App\Models\Program;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Program::select('*')->with('lead:id,name', 'department:id,name', 'participants:id,name')
+            $data = Program::select('*')
+                ->with('lead:id,name', 'department:id,name', 'participants:id,name', 'cabinet:id,name')
                 ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
                     $query->where('programs.department_id', auth()->user()->department()->first()->id);
                 });
@@ -27,6 +29,7 @@ class ProgramController extends Controller
 
         return view('pages.programs.index', [
             'departments' => Department::all(['id', 'name']),
+            'cabinets' => Cabinet::where('is_active', true)->get(['id', 'name']),
         ]);
     }
 
@@ -49,6 +52,8 @@ class ProgramController extends Controller
             'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
             'participants' => 'required|array|exists:users,id|not_in:1',
+            'cabinet' => 'nullable|numeric|exists:cabinets,id',
+            'end_at' => 'nullable|date|after_or_equal:today',
         ]);
 
         if ($validator->fails()) {
@@ -65,6 +70,8 @@ class ProgramController extends Controller
                 'description' => $request->description,
                 'user_id' => $request->lead,
                 'department_id' => $request->department,
+                'cabinet_id' => $request->cabinet,
+                'end_at' => $request->end_at,
             ]);
 
             $program->participants()->attach($request->participants);
@@ -97,7 +104,7 @@ class ProgramController extends Controller
     public function edit(Program $program)
     {
         try {
-            $program->load('lead:id,name', 'department:id,name', 'participants:id,name');
+            $program->load('lead:id,name', 'department:id,name', 'participants:id,name', 'cabinet:id,name');
 
             return response()->json([
                 'status' => 'success',
@@ -123,6 +130,8 @@ class ProgramController extends Controller
             'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
             'participants' => 'required|array|exists:users,id|not_in:1',
+            'cabinet' => 'nullable|numeric|exists:cabinets,id',
+            'end_at' => 'nullable|date|after_or_equal:today',
         ]);
 
         if ($validator->fails()) {
@@ -139,6 +148,8 @@ class ProgramController extends Controller
                 'description' => $request->description,
                 'user_id' => $request->lead,
                 'department_id' => $request->department,
+                'cabinet_id' => $request->cabinet,
+                'end_at' => $request->end_at,
             ]);
 
             $program->participants()->sync($request->participants);

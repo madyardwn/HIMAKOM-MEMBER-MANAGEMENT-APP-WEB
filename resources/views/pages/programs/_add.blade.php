@@ -17,6 +17,10 @@
                                 <label class="form-label" for="add-description">Description</label>
                                 <textarea name="description" id="add-description" class="form-control" placeholder="Enter description" autocomplete="off" required></textarea>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-end_at">End At</label>
+                                <input type="datetime-local" name="end_at" id="add-end_at" class="form-control" placeholder="Enter End At" autocomplete="off" required>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
@@ -25,6 +29,19 @@
                                             <option value="" selected disabled></option>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="add-cabinet">Cabinet</label>
+                                        <select name="cabinet" id="add-cabinet">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($cabinets as $cabinet)
+                                                <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

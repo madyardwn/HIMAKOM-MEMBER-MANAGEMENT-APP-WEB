@@ -20,6 +20,8 @@ class Program extends Model
         'description',
         'department_id',
         'user_id',
+        'cabinet_id',
+        'end_at',
     ];
 
     /**
@@ -35,7 +37,7 @@ class Program extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'description', 'department_id', 'user_id'])
+            ->logOnly(['name', 'description', 'department_id', 'user_id', 'cabinet_id', 'end_at'])
             ->logOnlyDirty()
             ->useLogName('Program')
             ->setDescriptionForEvent(function (string $eventName) {
@@ -80,5 +82,15 @@ class Program extends Model
     public function participants()
     {
         return $this->belongsToMany(User::class, 'users_programs', 'program_id', 'user_id');
+    }
+
+    /**
+     * Get the cabinet for the program.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cabinet()
+    {
+        return $this->belongsTo(Cabinet::class, 'cabinet_id');
     }
 }

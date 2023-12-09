@@ -168,6 +168,14 @@
                 placeholder: 'Select department',
             });
 
+            this.tomSelectAddCabinet = new TomSelect($('#add-cabinet'), {
+                placeholder: 'Select cabinet',
+            });
+
+            this.tomSelectEditCabinet = new TomSelect($('#edit-cabinet'), {
+                placeholder: 'Select cabinet',
+            });
+
             // URL
             this.storeUrl = "{{ route('periodes.programs.store') }}";
             this.editUrl = "{{ route('periodes.programs.edit', ':id') }}";
@@ -202,16 +210,25 @@
                     title: 'Description'
                 },
                 {
+                    data: 'cabinet.name',
+                    name: 'cabinet.name',
+                    title: 'Cabinet',
+                    width: '20%',
+                    orderable: false,
+                },
+                {
                     data: 'department.name',
                     name: 'department.name',
                     title: 'Department',
-                    width: '20%'
+                    width: '20%',
+                    orderable: false,
                 },
                 {
                     data: 'lead.name',
                     name: 'lead.name',
                     title: 'Lead By',
-                    width: '20%'
+                    width: '20%',
+                    orderable: false,
                 },
                 {
                     data: 'participants',
@@ -226,6 +243,24 @@
                         });
                         return html;
                     }
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
+                    title: 'Created At',
+                    width: '10%',
+                    orderable: false,
+                    responsivePriority: 1,
+                    render: (data) => moment(data).format('DD MMMM YYYY')
+                },
+                {
+                    data: 'end_at',
+                    name: 'end_at',
+                    title: 'End At',
+                    width: '10%',
+                    orderable: false,
+                    responsivePriority: 1,
+                    render: (data) => moment(data).format('DD MMMM YYYY')
                 },
                 {
                     data: null,
@@ -276,6 +311,7 @@
 
                 this.formAdd[0].reset();
                 this.tomSelectAddDepartment.clear();
+                this.tomSelectAddCabinet.clear();
                 this.tomSelectAddLead.clear();
                 this.tomSelectAddParticipants.clear();
             });
@@ -286,6 +322,7 @@
 
                 this.formEdit[0].reset();
                 this.tomSelectEditDepartment.clear();
+                this.tomSelectEditCabinet.clear();
                 this.tomSelectEditLead.clear();
                 this.tomSelectEditParticipants.clear();
             });
@@ -311,6 +348,7 @@
                                 $('#edit-name').val(response.data?.name);
                                 $('#edit-description').val(response.data?.description);
                                 this.tomSelectEditDepartment.setValue(response.data?.department?.id);
+                                this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
                                 this.tomSelectEditLead.addOption(response.data?.lead);
                                 this.tomSelectEditLead.setValue(response.data?.lead?.id);
                                 this.tomSelectEditParticipants.addOption(response.data?.participants);
