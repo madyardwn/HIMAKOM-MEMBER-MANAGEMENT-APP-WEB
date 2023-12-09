@@ -92,11 +92,11 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: function ($value) {
-                if (file_exists(storage_path('app/public/' . config('dirpath.users.pictures') . '/' . $value))) {
+                if (file_exists(storage_path('app/public/' . config('dirpath.users.pictures') . '/' . $value)) && $value != null) {
                     return asset('storage/' . config('dirpath.users.pictures') . '/' . $value);
-                } else if ($this->gender) {
+                } else if ($this->gender == 1) {
                     return asset(config('tablar.default.male_avatar.path'));
-                } else {
+                } else if ($this->gender == 0) {
                     return asset(config('tablar.default.female_avatar.path'));
                 }
             },

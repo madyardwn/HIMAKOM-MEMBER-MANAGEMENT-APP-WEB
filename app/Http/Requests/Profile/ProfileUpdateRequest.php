@@ -14,9 +14,17 @@ class ProfileUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'string', 'max:255', Rule::unique('users')->ignore(Auth::user())],
             'password' => ['nullable', 'string', 'confirmed', 'min:8'],
+        ];
+    }
+
+    /**
+     * Return an array of custom messages for validation rules.
+     */
+    public function messages()
+    {
+        return [
+            'password.confirmed' => 'The password confirmation does not match.',
         ];
     }
 
