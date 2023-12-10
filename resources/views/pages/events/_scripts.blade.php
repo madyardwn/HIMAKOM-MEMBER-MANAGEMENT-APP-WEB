@@ -114,9 +114,11 @@
                         let btn = '';
 
                         @can('create-notifications')
-                            btn += `
-                                <li><a class="dropdown-item btn-notification" href="" data-id="${data.id}"><i class="ti ti-bell"></i>&nbsp; Notification</a></li>
-                            `;
+                            if (moment(data.date).isAfter(moment())) {
+                                btn += `
+                                    <li><a class="dropdown-item btn-notification" href="" data-id="${data.id}"><i class="ti ti-bell"></i>&nbsp; Notification</a></li>
+                                `;
+                            }
                         @endcan
 
                         @can('update-events')

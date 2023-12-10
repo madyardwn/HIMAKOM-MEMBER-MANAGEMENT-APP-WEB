@@ -11,7 +11,8 @@ if (!function_exists('sendNotificationEvent')) {
     function sendNotificationEvent($event, $message = null)
     {
         $cabinet = Cabinet::where('is_active', 1)->first();
-        if (!$cabinet || Carbon::parse($event->date)->isPast()) {
+
+        if (!$cabinet) {
             return;
         }
 
@@ -31,7 +32,6 @@ if (!function_exists('sendNotificationEvent')) {
             ]);
 
             $url = env('FCM_URL');
-
             $serverKey = env('FCM_SERVER_KEY');
 
             $headers = [

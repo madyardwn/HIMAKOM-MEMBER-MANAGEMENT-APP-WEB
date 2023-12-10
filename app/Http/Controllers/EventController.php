@@ -79,7 +79,7 @@ class EventController extends Controller
             'description' => 'required|max:255',
             'location' => 'required|max:255',
             'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'required|date',
+            'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
         ]);
@@ -160,7 +160,7 @@ class EventController extends Controller
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'location' => 'required|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
         ]);
