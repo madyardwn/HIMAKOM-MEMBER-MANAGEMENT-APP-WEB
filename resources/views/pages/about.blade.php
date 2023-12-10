@@ -18,6 +18,8 @@
                 <div class="card-body">
                     <p class="card-text">
                         {{ __('Aplikasi Pengelolaan Anggota Himakom, yang dikembangkan oleh UNIT TEKNOLOGI, dirancang untuk membantu efisiensi dan efektivitas dalam manajemen anggota Himpunan Mahasiswa Komputer. Aplikasi ini menyediakan berbagai fitur yang memungkinkan pengurus dan anggota Himakom untuk dengan mudah mengelola data anggota, memantau keaktifan, serta merencanakan dan melacak berbagai kegiatan yang terkait dengan himpunan.') }}
+                        <br>
+                        {{ __('Untuk informasi lebih lanjut, kunjungi <a href="https://drive.google.com/drive/folders/1sGpSNjsDc1RXRsZmel6hzlsF-q_MRrak?usp=sharing" target="_blank">link ini</a>.') }}
                     </p>
                 </div>
             </div>
