@@ -20,7 +20,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="edit-end_at">End At</label>
-                                <input type="datetime-local" name="end_at" id="edit-end_at" class="form-control" placeholder="Enter End At" autocomplete="off" required>
+                                <input type="date" name="end_at" id="edit-end_at" class="form-control" placeholder="Enter End At" autocomplete="off" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
