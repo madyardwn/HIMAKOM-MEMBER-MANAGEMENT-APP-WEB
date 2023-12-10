@@ -188,6 +188,9 @@ class DefaultRoleSeeder extends Seeder
         }
 
         Role::create(['name' => 'STAF AHLI'])->givePermissionTo([
+            // Cabinets
+            'read-cabinets',
+
             // Programs
             'read-programs',
             // 'create-programs',
@@ -213,6 +216,9 @@ class DefaultRoleSeeder extends Seeder
         ]);
 
         Role::create(['name' => 'STAF MUDA'])->givePermissionTo([
+            // Cabinets
+            'read-cabinets',
+
             // Programs
             'read-programs',
 
