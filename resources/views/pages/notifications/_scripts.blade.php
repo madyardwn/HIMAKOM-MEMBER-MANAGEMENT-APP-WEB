@@ -78,7 +78,7 @@
                     width: '5%',
                     orderable: false,
                     searchable: false,
-                    render: (data) => `<button class="btn" disabled>users<span class="badge bg-blue text-blue-fg ms-2">200</span></button>`
+                    render: (data) => `<button class="btn" disabled>users<span class="badge bg-blue text-blue-fg ms-2">${data}</span></button>`
                 },
                 {
                     data: null,
