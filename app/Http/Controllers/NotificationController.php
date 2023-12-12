@@ -50,7 +50,7 @@ class NotificationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:50',
-            'body' => 'required|max:255',
+            'body' => 'required',
             'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'nullable|url',
         ]);

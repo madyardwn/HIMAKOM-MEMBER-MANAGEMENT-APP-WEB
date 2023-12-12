@@ -66,11 +66,6 @@
                     responsivePriority: 2,
                 },
                 {
-                    data: 'description',
-                    name: 'description',
-                    title: 'Description',
-                },
-                {
                     data: 'visi',
                     name: 'visi',
                     title: 'Visi',

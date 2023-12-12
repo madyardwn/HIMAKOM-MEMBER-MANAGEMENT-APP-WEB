@@ -61,21 +61,14 @@
                     name: 'name',
                     title: 'Name',
                     responsivePriority: 1,
-                    width: '10%'
+                    width: '20%'
                 },
                 {
                     data: 'type',
                     name: 'type',
                     title: 'Type',
-                    width: '10%',
                     responsivePriority: 2,
-                },
-                {
-                    data: 'description',
-                    name: 'description',
-                    title: 'Description',
-                    responsivePriority: 4,
-                    width: '30%',
+                    width: '10%',
                 },
                 {
                     data: 'location',
@@ -96,13 +89,15 @@
                     name: 'date',
                     title: 'Date',
                     responsivePriority: 2,
-                    render: (data, type, row) => moment(data).format('DD MMMM YYYY HH:mm')
+                    render: (data, type, row) => moment(data).format('DD MMMM YYYY HH:mm'),
+                    width: '10%',
                 },
                 {
                     data: 'link',
                     name: 'link',
                     title: 'Link',
                     responsivePriority: 4,
+                    width: '30%',
                 },
                 {
                     data: null,

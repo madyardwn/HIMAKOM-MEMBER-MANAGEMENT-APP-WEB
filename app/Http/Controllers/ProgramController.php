@@ -48,7 +48,7 @@ class ProgramController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name|max:50',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
             'participants' => 'required|array|exists:users,id|not_in:1',
@@ -126,7 +126,7 @@ class ProgramController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:programs,name,' . $program->id . '|max:50',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'lead' => 'required|numeric|exists:users,id|not_in:1',
             'department' => 'required|numeric|exists:departments,id',
             'participants' => 'required|array|exists:users,id|not_in:1',

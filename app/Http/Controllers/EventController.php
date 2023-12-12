@@ -73,7 +73,7 @@ class EventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'location' => 'required|max:255',
             'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date|after_or_equal:today',
@@ -159,7 +159,7 @@ class EventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'location' => 'required|max:255',
             'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),

@@ -22,16 +22,6 @@ class AutoDeleteNotifications extends Command
     protected $description = 'Auto delete notifications';
 
     /**
-     * Path to Notification logos.
-     */
-    protected $path_poster_notifications;
-
-    public function __construct()
-    {
-        $this->path_poster_notifications = config('dirpath.notifications.posters');
-    }
-
-    /**
      * Execute the console command.
      */
     public function handle()
@@ -39,7 +29,7 @@ class AutoDeleteNotifications extends Command
         $this->info('Auto delete notifications...');
         $notifications = Notification::where('created_at', '<', now()->subMonth())->get();
         foreach ($notifications as $notification) {
-            deleteFile($this->path_poster_notifications . '/' . $notification->getAttributes()['poster']);
+            deleteFile(config('dirpath.notifications.posters') . '/' . $notification->getAttributes()['poster']);
 
             $notification->users()->detach();
 

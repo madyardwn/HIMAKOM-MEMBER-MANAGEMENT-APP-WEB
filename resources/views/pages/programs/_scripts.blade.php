@@ -205,11 +205,6 @@
                     width: '10%'
                 },
                 {
-                    data: 'description',
-                    name: 'description',
-                    title: 'Description'
-                },
-                {
                     data: 'cabinet.name',
                     name: 'cabinet.name',
                     title: 'Cabinet',

@@ -62,11 +62,6 @@
                     width: '10%'
                 },
                 {
-                    data: 'description',
-                    name: 'description',
-                    title: 'Description'
-                },
-                {
                     data: null,
                     title: 'Action',
                     orderable: false,

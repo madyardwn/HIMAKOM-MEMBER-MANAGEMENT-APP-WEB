@@ -55,7 +55,7 @@ class FilosofieController extends Controller
         $validator = Validator::make($request->all(), [
             'cabinet' => 'required|exists:cabinets,id',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'label' => 'required|max:255',
+            'label' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -130,7 +130,7 @@ class FilosofieController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'cabinet' => 'required|exists:cabinets,id',
-            'label' => 'required|max:255',
+            'label' => 'required',
         ]);
 
         if ($validator->fails()) {

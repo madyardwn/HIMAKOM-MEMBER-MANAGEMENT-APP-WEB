@@ -53,7 +53,7 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:departments,name|max:50',
             'short_name' => 'required|unique:departments,short_name|max:10',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -127,7 +127,7 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:departments,name,' . $department->id . '|max:50',
             'short_name' => 'required|unique:departments,short_name,' . $department->id . '|max:10',
-            'description' => 'required|max:255',
+            'description' => 'required',
         ]);
 
         if ($validator->fails()) {
