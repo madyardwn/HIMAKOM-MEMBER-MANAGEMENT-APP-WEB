@@ -49,7 +49,7 @@ class Cabinet extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'logo', 'year', 'is_active', 'visi', 'misi'])
+            ->logOnly(['name', 'logo', 'year', 'is_active', 'visi', 'misi', 'description'])
             ->logOnlyDirty()
             ->useLogName('Cabinet')
             ->setDescriptionForEvent(function (string $eventName) {

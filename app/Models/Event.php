@@ -59,7 +59,7 @@ class Event extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'description', 'location', 'poster', 'date', 'time', 'type'])
+            ->logOnly(['name', 'description', 'location', 'poster', 'date', 'type'])
             ->logOnlyDirty()
             ->useLogName('Events')
             ->setDescriptionForEvent(function (string $eventName) {

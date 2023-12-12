@@ -47,7 +47,7 @@ class Department extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'short_name', 'description', 'logo', 'is_active'])
+            ->logOnly(['name', 'short_name', 'description', 'logo'])
             ->logOnlyDirty()
             ->useLogName('Department')
             ->setDescriptionForEvent(function (string $eventName) {

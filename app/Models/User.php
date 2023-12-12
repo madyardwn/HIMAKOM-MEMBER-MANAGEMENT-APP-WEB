@@ -75,7 +75,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'nim', 'npa', 'nama_bagus', 'picture', 'year', 'device_token', 'cabinet_id', 'department_id', 'gender'])
+            ->logOnly(['name', 'email', 'nim', 'npa', 'name_bagus', 'picture', 'year', 'device_token', 'cabinet_id', 'department_id', 'gender'])
             ->logOnlyDirty()
             ->useLogName('User')
             ->setDescriptionForEvent(function (string $eventName) {
