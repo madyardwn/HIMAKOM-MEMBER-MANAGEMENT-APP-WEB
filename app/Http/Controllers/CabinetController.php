@@ -169,8 +169,7 @@ class CabinetController extends Controller
         }
 
         if ($request->is_active) {
-            $active_cabinet = Cabinet::where('is_active', true)->first();
-            if ($active_cabinet) {
+            if (Cabinet::where('is_active', true)->count() > 1) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'There is already an active cabinet!',

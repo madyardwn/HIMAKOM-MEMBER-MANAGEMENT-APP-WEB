@@ -64,13 +64,6 @@
                     width: '20%'
                 },
                 {
-                    data: 'type',
-                    name: 'type',
-                    title: 'Type',
-                    responsivePriority: 2,
-                    width: '10%',
-                },
-                {
                     data: 'location',
                     name: 'location',
                     title: 'Location',
@@ -83,6 +76,7 @@
                     title: 'Type',
                     width: '10%',
                     responsivePriority: 3,
+                    render: (data) => data.charAt(0).toUpperCase() + data.slice(1),
                 },
                 {
                     data: 'date',
