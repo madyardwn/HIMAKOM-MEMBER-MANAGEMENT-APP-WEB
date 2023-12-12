@@ -383,5 +383,15 @@ return [
             'name' => 'Error Image',
             'alt' => 'Error Image',
         ],
+        'event' => [
+            'path' => 'assets/images/undraw_Newspaper_re_syf5.png',
+            'name' => 'Event Image',
+            'alt' => 'Event Image',
+        ],
+        'notification' => [
+            'path' => 'assets/images/undraw_Newspaper_re_syf5.png',
+            'name' => 'Notification Image',
+            'alt' => 'Notification Image',
+        ],
     ],
 ];

@@ -17,12 +17,16 @@ if (!function_exists('sendNotificationEvent')) {
         }
 
         try {
-            $poster_name = $event->getAttributes()['poster']; // x.png
-            $path_events_posters = config('dirpath.events.posters'); // events/posters
-            $path_poster_notifications = config('dirpath.notifications.posters'); // notifications/posters
+            $new_poster_name = null;
 
-            $new_poster_name = date('Y-m-d-H-i-s') . '_FROM_EVENT_' . $event->getAttributes()['poster']; // 20200101_x.png
-            Storage::disk('public')->copy($path_events_posters . '/' . $poster_name, $path_poster_notifications . '/' . $new_poster_name);
+            if ($event->poster) {
+                $poster_name = $event->getAttributes()['poster']; // x.png
+                $path_events_posters = config('dirpath.events.posters'); // events/posters
+                $path_poster_notifications = config('dirpath.notifications.posters'); // notifications/posters
+
+                $new_poster_name = date('Y-m-d-H-i-s') . '_FROM_EVENT_' . $event->getAttributes()['poster']; // 20200101_x.png
+                Storage::disk('public')->copy($path_events_posters . '/' . $poster_name, $path_poster_notifications . '/' . $new_poster_name);
+            }
 
             $notification = Notification::create([
                 'poster' => $new_poster_name,

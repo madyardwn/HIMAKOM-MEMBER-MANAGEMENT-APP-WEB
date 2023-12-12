@@ -67,13 +67,15 @@
                     data: 'type',
                     name: 'type',
                     title: 'Type',
+                    width: '10%',
                     responsivePriority: 2,
                 },
                 {
                     data: 'description',
                     name: 'description',
                     title: 'Description',
-                    responsivePriority: 2,
+                    responsivePriority: 4,
+                    width: '30%',
                 },
                 {
                     data: 'location',

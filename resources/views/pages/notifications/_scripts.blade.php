@@ -54,20 +54,19 @@
                     data: 'body',
                     name: 'body',
                     title: 'Body',
-                    responsivePriority: 1,
+                    width: '30%',
                 },
                 {
                     data: 'link',
                     name: 'link',
                     title: 'Link',
                     width: '20%',
-                    responsivePriority: 2,
                 },
                 {
                     data: 'created_at',
                     name: 'created_at',
                     title: 'Created At',
-                    responsivePriority: 3,
+                    width: '10%',
                     render: (data) => moment(data).format('DD MMMM YYYY HH:mm')
                 },
                 {

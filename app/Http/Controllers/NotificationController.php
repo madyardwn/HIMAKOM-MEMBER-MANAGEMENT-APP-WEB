@@ -51,7 +51,7 @@ class NotificationController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:50',
             'body' => 'required|max:255',
-            'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'nullable|url',
         ]);
 
@@ -71,9 +71,13 @@ class NotificationController extends Controller
                 throw new \Exception('Cabinet or users not found!');
             }
 
-            $poster = $request->file('poster');
-            $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
-            $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
+            $poster_name = null;
+
+            if ($request->hasFile('poster')) {
+                $poster = $request->file('poster');
+                $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
+                $poster->storeAs($this->path_poster_notifications, $poster_name, 'public');
+            }
 
             $notification = Notification::create([
                 'poster' => $poster_name,
@@ -170,7 +174,9 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         try {
-            deleteFile($this->path_poster_notifications . '/' . $notification->getAttributes()['poster']);
+            if ($notification->getAttributes()['poster']) {
+                deleteFile($this->path_poster_notifications . '/' . $notification->getAttributes()['poster']);
+            }
 
             $notification->users()->detach();
 

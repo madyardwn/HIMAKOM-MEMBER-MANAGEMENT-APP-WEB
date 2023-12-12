@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cabinet;
 use App\Models\Event;
-use App\Models\Notification;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -78,7 +75,7 @@ class EventController extends Controller
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'location' => 'required|max:255',
-            'poster' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
@@ -93,9 +90,13 @@ class EventController extends Controller
         }
 
         try {
-            $poster = $request->file('poster');
-            $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
-            $poster->storeAs($this->path_poster_events, $poster_name, 'public');
+            $poster_name = null;
+
+            if ($request->hasFile('poster')) {
+                $poster = $request->file('poster');
+                $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
+                $poster->storeAs($this->path_poster_events, $poster_name, 'public');
+            }
 
             $event = Event::create([
                 'poster' => $poster_name,
@@ -163,6 +164,7 @@ class EventController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -175,7 +177,9 @@ class EventController extends Controller
 
         try {
             if ($request->hasFile('poster')) {
-                deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
+                if ($event->getAttributes()['poster']) {
+                    deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
+                }
                 $poster = $request->file('poster');
                 $poster_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $poster->extension();
                 $poster->storeAs($this->path_poster_events, $poster_name, 'public');
@@ -211,7 +215,9 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         try {
-            deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
+            if ($event->getAttributes()['poster']) {
+                deleteFile($this->path_poster_events . '/' .  $event->getAttributes()['poster']);
+            }
             $event->delete();
 
             return response()->json([

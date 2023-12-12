@@ -45,9 +45,9 @@ class Event extends Model
     protected function poster(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.events.posters') . '/' . $value))
+            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.events.posters') . '/' . $value)) && $value != null
                 ? asset('storage/' . config('dirpath.events.posters') . '/' . $value)
-                : asset(config('tablar.default.logo.path')),
+                : asset(config('tablar.default.event.path')),
         );
     }
 
