@@ -67,6 +67,21 @@ class AuthController extends Controller
                 ], 422);
             }
 
+            if (auth()->guard('sanctum')->check() && auth()->guard('sanctum')->user()->hasRole('NON ACTIVE')) {
+                // Hapus semua token pengguna
+                auth()->guard('sanctum')->user()->tokens()->delete();
+
+                // Hapus token perangkat (jika diperlukan)
+                auth()->guard('sanctum')->user()->device_token = null;
+                auth()->guard('sanctum')->user()->save();
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Your Account is suspended, please contact Admin.',
+                ], 421);
+            }
+
+
             $user = User::select('users.*', 'roles.name AS role_name')
                 ->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
                 ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
