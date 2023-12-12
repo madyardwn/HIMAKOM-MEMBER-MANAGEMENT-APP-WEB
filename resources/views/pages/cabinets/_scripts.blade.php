@@ -343,8 +343,10 @@
                                     $(`#add-${key}`).after(`<div class="invalid-feedback">${element[0]}</div>`);
                                 }
                             }
-                        } else {
+                        } else if (response.status === 500) {
                             Swal.fire("Error!", "Something went wrong!", "error");
+                        } else {
+                            Swal.fire("Error!", response.responseJSON.message, "error");
                         }
                     },
                 });
@@ -404,8 +406,10 @@
                                     $(`#edit-${key}`).after(`<div class="invalid-feedback">${element[0]}</div>`);
                                 }
                             }
-                        } else {
+                        } else if (response.status === 500) {
                             Swal.fire("Error!", "Something went wrong!", "error");
+                        } else {
+                            Swal.fire("Error!", response.responseJSON.message, "error");
                         }
                     },
                 });

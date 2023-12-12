@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:send-notification-events')->dailyAt('20:00')->timezone('Asia/Jakarta');
+        $schedule->command('app:auto-delete-notifications')->dailyAt('00:00')->timezone('Asia/Jakarta');
     }
 
     /**

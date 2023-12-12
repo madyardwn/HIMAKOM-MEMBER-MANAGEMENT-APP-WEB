@@ -74,6 +74,16 @@ class CabinetController extends Controller
             ], 422);
         }
 
+        if ($request->is_active) {
+            $active_cabinet = Cabinet::where('is_active', true)->first();
+            if ($active_cabinet) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'There is already an active cabinet!',
+                ], 412);
+            }
+        }
+
         try {
 
             $logo = $request->file('logo');
@@ -156,6 +166,16 @@ class CabinetController extends Controller
                 'message' => 'Validation error!',
                 'errors' => $validator->errors(),
             ], 422);
+        }
+
+        if ($request->is_active) {
+            $active_cabinet = Cabinet::where('is_active', true)->first();
+            if ($active_cabinet) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'There is already an active cabinet!',
+                ], 412);
+            }
         }
 
         try {

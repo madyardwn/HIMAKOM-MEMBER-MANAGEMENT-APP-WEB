@@ -71,16 +71,15 @@
                     render: (data) => moment(data).format('DD MMMM YYYY HH:mm')
                 },
                 {
-                    data: 'users',
-                    name: 'users.name',
+                    data: 'users_count',
+                    name: 'users_count',
                     title: 'Sent To',
-                    render: function(data, type, row) {
-                        let html = '';
-                        data.forEach(function(item, index) {
-                            html += `<span class="badge badge-outline text-grey m-1">${item.name}</span>`;
-                        });
-                        return html;
-                    }
+                    responsivePriority: 4,
+                    className: 'dt-center',
+                    width: '5%',
+                    orderable: false,
+                    searchable: false,
+                    render: (data) => `<button class="btn" disabled>users<span class="badge bg-blue text-blue-fg ms-2">200</span></button>`
                 },
                 {
                     data: null,

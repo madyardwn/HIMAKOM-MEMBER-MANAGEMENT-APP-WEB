@@ -32,8 +32,8 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Notification::with('users:id,name')
-                ->select('*')
+            // count users
+            $data = Notification::withCount('users')
                 ->orderBy('created_at', 'desc');
 
             return DataTables::of($data)
@@ -151,6 +151,17 @@ class NotificationController extends Controller
                 'message' => 'Something went wrong!',
             ], 500);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Notification $notification)
+    {
+        return response()->json([
+            'status' => 'success',
+            'data' => $notification->load('users'),
+        ], 200);
     }
 
     /**

@@ -23,7 +23,7 @@ class SendNotificationEvents extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send notification events';
 
     public function handle()
     {
