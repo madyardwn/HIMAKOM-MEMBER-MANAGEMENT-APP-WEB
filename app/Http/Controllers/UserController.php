@@ -203,7 +203,7 @@ class UserController extends Controller
                 'gender' => $request->gender,
                 'year' => $request->year,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'password' => $request->password ? bcrypt($request->password) : $user->password,
                 'department_id' => $request->department,
                 'cabinet_id' => $request->cabinet,
             ]);
