@@ -76,50 +76,50 @@
                         <div class="col-md-7">
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
-                                <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly disabled>
+                                <input type="text" class="form-control" value="{{ auth()->user()->name ?? '' }}" readonly disabled>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Gender</label>
-                                    <input type="text" class="form-control" value="{{ $gender[auth()->user()->gender] }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ $gender[auth()->user()->gender]  ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" value="{{ auth()->user()->email }}" readonly disabled>
+                                <input type="email" class="form-control" value="{{ auth()->user()->email  ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">NIM</label>
-                                <input type="number" class="form-control" value="{{ auth()->user()->nim }}" readonly disabled>
+                                <input type="number" class="form-control" value="{{ auth()->user()->nim  ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">NPA</label>
-                                <input type="number" class="form-control" value="{{ auth()->user()->npa }}" readonly disabled>
+                                <input type="number" class="form-control" value="{{ auth()->user()->npa  ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Name Bagus</label>
-                                <input type="text" class="form-control" value="{{ auth()->user()->name_bagus }}" readonly disabled>
+                                <input type="text" class="form-control" value="{{ auth()->user()->name_bagus  ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Year</label>
-                                <input type="text" class="form-control" value="{{ auth()->user()->year }}" readonly disabled>
+                                <input type="text" class="form-control" value="{{ auth()->user()->year  ?? '' }}" readonly disabled>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Role</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->roles->first()->name }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->roles->first()->name  ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Cabinet</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->cabinet->name }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->cabinet->name ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->department->name }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->department->name ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="row">
