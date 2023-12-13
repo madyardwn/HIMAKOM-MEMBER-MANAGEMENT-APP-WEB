@@ -38,6 +38,20 @@ class Notification extends Model
     }
 
     /**
+     * The attributes that be casted to native types.
+     * 
+     * @return array
+     */
+    protected function link(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value != null
+                ? $value
+                : '-',
+        );
+    }
+
+    /**
      * The attributes that are logged.
      *
      * @return LogOptions
