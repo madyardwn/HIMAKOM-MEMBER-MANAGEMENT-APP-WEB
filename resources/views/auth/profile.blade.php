@@ -81,33 +81,33 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Gender</label>
-                                    <input type="text" class="form-control" value="{{ $gender[auth()->user()->gender]  ?? '' }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ $gender[auth()->user()->gender] ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" value="{{ auth()->user()->email  ?? '' }}" readonly disabled>
+                                <input type="email" class="form-control" value="{{ auth()->user()->email ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">NIM</label>
-                                <input type="number" class="form-control" value="{{ auth()->user()->nim  ?? '' }}" readonly disabled>
+                                <input type="number" class="form-control" value="{{ auth()->user()->nim ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">NPA</label>
-                                <input type="number" class="form-control" value="{{ auth()->user()->npa  ?? '' }}" readonly disabled>
+                                <input type="number" class="form-control" value="{{ auth()->user()->npa ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Name Bagus</label>
-                                <input type="text" class="form-control" value="{{ auth()->user()->name_bagus  ?? '' }}" readonly disabled>
+                                <input type="text" class="form-control" value="{{ auth()->user()->name_bagus ?? '' }}" readonly disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Year</label>
-                                <input type="text" class="form-control" value="{{ auth()->user()->year  ?? '' }}" readonly disabled>
+                                <input type="text" class="form-control" value="{{ auth()->user()->year ?? '' }}" readonly disabled>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Role</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->roles->first()->name  ?? '' }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->roles->first()->name ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -127,7 +127,7 @@
                                     <div class="mb-3">
                                         <label class="form-label required">{{ __('New password') }}</label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('New password') }}">
+                                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror type-password" placeholder="{{ __('New password') }}">
                                             <span class="input-group-text">
                                                 <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -144,7 +144,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">{{ __('New password confirmation') }}</label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('New password confirmation') }}" autocomplete="new-password">
+                                            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror type-password" placeholder="{{ __('New password confirmation') }}" autocomplete="new-password">
                                             <span class="input-group-text">
                                                 <a href="#" class="link-secondary" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
