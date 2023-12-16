@@ -197,39 +197,68 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: this.tableDataUrl,
+                ajax: {
+                    url: this.tableDataUrl,
+                    type: 'GET',
+                    dataType: 'JSON',
+                },
                 columns: this.tableColumns,
-                drawCallback: () => {
-                    $('.btn-show').on('click', (e) => {
+                drawCallback: async () => {
+                    $('.btn-show').on('click', async (e) => {
                         e.preventDefault();
+
+                        $(e.currentTarget).attr('disabled', true);
+                        $(e.currentTarget).addClass('btn-loading');
+
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
 
                         const id = $(e.currentTarget).data('bs-id');
 
-                        $.ajax({
-                            url: this.userDataUrl.replace(':id', id),
-                            method: 'GET',
-                            dataType: 'JSON',
-                        }).done((response) => {
-                            $(`#modal-show-${this.subject}`).find('.modal-title').text(response.data.name);
-                        });
+                        try {
+                            // Using fetch for AJAX call and wait until it's finished
+                            const response = await fetch(this.userDataUrl.replace(':id', id));
+                            const data = await response.json();
 
-                        this.tablePosition.DataTable({
-                            processing: true,
-                            serverSide: true,
-                            responsive: true,
-                            ajax: this.tablePositionDataUrl.replace(':id', id),
-                            columns: this.tablePositionColumns,
-                        });
+                            // Set user data to modal
+                            $(`#modal-show-${this.subject}`).find('.modal-title').text(data.data.name);
+                        } catch (error) {
+                            console.error('Error fetching user data:', error);
+                        }
 
-                        this.tableProgram.DataTable({
-                            processing: true,
-                            serverSide: true,
-                            responsive: true,
-                            ajax: this.tableProgramDataUrl.replace(':id', id),
-                            columns: this.tableProgramColumns,
-                        });
+                        try {
+                            // Using fetch for AJAX call and wait until it's finished
+                            await this.tablePosition.DataTable({
+                                processing: true,
+                                serverSide: true,
+                                responsive: true,
+                                ajax: this.tablePositionDataUrl.replace(':id', id),
+                                columns: this.tablePositionColumns,
+                            });
 
-                        this.modalShow.show();
+                            // Using fetch for AJAX call and wait until it's finished
+                            await this.tableProgram.DataTable({
+                                processing: true,
+                                serverSide: true,
+                                responsive: true,
+                                ajax: this.tableProgramDataUrl.replace(':id', id),
+                                columns: this.tableProgramColumns,
+                            });
+
+                            this.modalShow.show();
+                        } catch (error) {
+                            console.error('Error fetching position or program data:', error);
+                        }
+
+                        $(e.currentTarget).attr('disabled', false);
+                        $(e.currentTarget).removeClass('btn-loading');
+
+                        Swal.close();
                     });
                 }
             });
