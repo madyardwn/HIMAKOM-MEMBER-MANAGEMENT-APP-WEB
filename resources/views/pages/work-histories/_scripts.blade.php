@@ -210,14 +210,6 @@
                         $(e.currentTarget).attr('disabled', true);
                         $(e.currentTarget).addClass('btn-loading');
 
-                        Swal.fire({
-                            title: 'Loading...',
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
-
                         const id = $(e.currentTarget).data('bs-id');
 
                         try {
@@ -257,8 +249,6 @@
 
                         $(e.currentTarget).attr('disabled', false);
                         $(e.currentTarget).removeClass('btn-loading');
-
-                        Swal.close();
                     });
                 }
             });
