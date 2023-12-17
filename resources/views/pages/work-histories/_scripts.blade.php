@@ -223,6 +223,8 @@
                             console.error('Error fetching user data:', error);
                         }
 
+			this.modalShow.show();
+
                         try {
                             // Using fetch for AJAX call and wait until it's finished
                             await this.tablePosition.DataTable({
@@ -240,9 +242,11 @@
                                 responsive: true,
                                 ajax: this.tableProgramDataUrl.replace(':id', id),
                                 columns: this.tableProgramColumns,
-                            });
+			    });
 
-                            this.modalShow.show();
+			    this.tablePosition.DataTable().ajax.reload();
+			    this.tableProgram.DataTable().ajax.reload();
+
                         } catch (error) {
                             console.error('Error fetching position or program data:', error);
                         }
