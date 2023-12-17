@@ -92,6 +92,7 @@
                     title: 'Link',
                     responsivePriority: 4,
                     width: '30%',
+		    render: (data, type, row) => data ? `<a href="${data}" target="_blank">${data}</a>` : '-',
                 },
                 {
                     data: null,
