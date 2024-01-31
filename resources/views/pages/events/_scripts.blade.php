@@ -105,6 +105,7 @@
                     name: 'dbu.name',
                     title: 'DBU',
                     orderable: false,
+                    responsivePriority: 2,
                     render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
                 },
                 {

@@ -50,7 +50,7 @@ class EventController extends Controller
                 'dbu_id',
                 DB::raw($typeExpression),
             ])
-                ->with('dbus:id,name')
+                ->with('dbu:id,name')
                 ->orderBy('date', 'desc');
 
             return DataTables::of($data)->make();
@@ -83,6 +83,7 @@ class EventController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
+            'dbu' => 'nullable|exists:dbus,id',
         ]);
 
         if ($validator->fails()) {
@@ -110,6 +111,7 @@ class EventController extends Controller
                 'date' => $request->date,
                 'type' => $request->type,
                 'link' => $request->link ?? '',
+                'dbu_id' => $request->dbu
             ]);
 
             sendNotificationEvent($event);
@@ -169,6 +171,7 @@ class EventController extends Controller
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
             'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dbu' => 'nullable|exists:dbus,id',
         ]);
 
         if ($validator->fails()) {
@@ -197,6 +200,7 @@ class EventController extends Controller
                 'date' => $request->date,
                 'type' => $request->type,
                 'link' => $request->link ?? '',
+                'dbu_id' => $request->dbu
             ]);
 
             return response()->json([

@@ -24,6 +24,7 @@ class Event extends Model
         'date',
         'type',
         'link',
+        'dbu_id'
     ];
 
     /**
@@ -65,5 +66,10 @@ class Event extends Model
             ->setDescriptionForEvent(function (string $eventName) {
                 return "{$this->name} has been {$eventName}";
             });
+    }
+
+    public function dbu()
+    {
+        return $this->belongsTo(DBU::class, 'dbu_id');
     }
 }
