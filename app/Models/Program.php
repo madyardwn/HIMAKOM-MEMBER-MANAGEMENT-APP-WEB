@@ -18,7 +18,7 @@ class Program extends Model
     protected $fillable = [
         'name',
         'description',
-        'department_id',
+        'dbu_id',
         'user_id',
         'cabinet_id',
         'end_at',
@@ -37,7 +37,7 @@ class Program extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'description', 'department_id', 'user_id', 'cabinet_id', 'end_at'])
+            ->logOnly(['name', 'description', 'dbu_id', 'user_id', 'cabinet_id', 'end_at'])
             ->logOnlyDirty()
             ->useLogName('Program')
             ->setDescriptionForEvent(function (string $eventName) {
@@ -55,13 +55,13 @@ class Program extends Model
     */
 
     /**
-     * Get the department that owns the program.
+     * Get the dbu that owns the program.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function department()
+    public function dbu()
     {
-        return $this->belongsTo(Department::class, 'department_id');
+        return $this->belongsTo(DBU::class, 'dbu_id');
     }
 
     /**

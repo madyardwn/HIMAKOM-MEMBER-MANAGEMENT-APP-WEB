@@ -19,7 +19,7 @@ class WorkHistory extends Model
     protected $fillable = [
         'user_id',
         'cabinet_id',
-        'department_id',
+        'dbu_id',
         'role_id',
         'start_date',
     ];
@@ -32,7 +32,7 @@ class WorkHistory extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['user_id', 'cabinet_id', 'department_id', 'role_id', 'start_date'])
+            ->logOnly(['user_id', 'cabinet_id', 'dbu_id', 'role_id', 'start_date'])
             ->logOnlyDirty()
             ->useLogName('User')
             ->setDescriptionForEvent(function (string $eventName) {
@@ -64,9 +64,9 @@ class WorkHistory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function department()
+    public function dbu()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(DBU::class);
     }
 
     /**

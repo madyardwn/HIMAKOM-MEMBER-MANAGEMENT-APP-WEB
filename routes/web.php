@@ -87,12 +87,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/filosofies/{filosofie}/update', [\App\Http\Controllers\FilosofieController::class, 'update'])->name('filosofies.update')->middleware('permission:update-filosofies');
         Route::delete('/filosofies/{filosofie}/destroy', [\App\Http\Controllers\FilosofieController::class, 'destroy'])->name('filosofies.destroy')->middleware('permission:delete-filosofies');
 
-        // Departments
-        Route::get('/departments', [\App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index')->middleware('permission:read-departments');
-        Route::post('/departments/store', [\App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store')->middleware('permission:create-departments');
-        Route::get('/departments/{department}/edit', [\App\Http\Controllers\DepartmentController::class, 'edit'])->name('departments.edit')->middleware('permission:update-departments');
-        Route::put('/departments/{department}/update', [\App\Http\Controllers\DepartmentController::class, 'update'])->name('departments.update')->middleware('permission:update-departments');
-        Route::delete('/departments/{department}/destroy', [\App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy')->middleware('permission:delete-departments');
+        // DBUs
+        Route::get('/dbus', [\App\Http\Controllers\DBUController::class, 'index'])->name('dbus.index')->middleware('permission:read-dbus');
+        Route::post('/dbus/store', [\App\Http\Controllers\DBUController::class, 'store'])->name('dbus.store')->middleware('permission:create-dbus');
+        Route::get('/dbus/{dbu}/edit', [\App\Http\Controllers\DBUController::class, 'edit'])->name('dbus.edit')->middleware('permission:update-dbus');
+        Route::put('/dbus/{dbu}/update', [\App\Http\Controllers\DBUController::class, 'update'])->name('dbus.update')->middleware('permission:update-dbus');
+        Route::delete('/dbus/{dbu}/destroy', [\App\Http\Controllers\DBUController::class, 'destroy'])->name('dbus.destroy')->middleware('permission:delete-dbus');
 
         // Programs
         Route::get('/programs', [\App\Http\Controllers\ProgramController::class, 'index'])->name('programs.index')->middleware('permission:read-programs');

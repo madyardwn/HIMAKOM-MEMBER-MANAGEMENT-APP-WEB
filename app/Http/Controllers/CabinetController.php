@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cabinet;
-use App\Models\Department;
+use App\Models\DBU;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +30,7 @@ class CabinetController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Cabinet::with('departments:id,name')
+            $data = Cabinet::with('dbus:id,name')
                 ->orderBy('year', 'desc');
 
             return DataTables::of($data)
@@ -38,7 +38,7 @@ class CabinetController extends Controller
         }
 
         return view('pages.cabinets.index', [
-            'departments' => Department::all(['id', 'name']),
+            'dbus' => DBU::all(['id', 'name']),
         ]);
     }
 
@@ -63,7 +63,7 @@ class CabinetController extends Controller
             'is_active' => 'required|boolean',
             'visi' => 'required',
             'misi' => 'required',
-            'departments' => 'required|array|exists:departments,id',
+            'dbus' => 'required|array|exists:dbus,id',
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +100,7 @@ class CabinetController extends Controller
                 'misi' => $request->misi,
             ]);
 
-            $cabinet->departments()->attach($request->departments);
+            $cabinet->dbus()->attach($request->dbus);
 
             return response()->json([
                 'status' => 'success',
@@ -130,7 +130,7 @@ class CabinetController extends Controller
     public function edit(Cabinet $cabinet)
     {
         try {
-            $cabinet->load('departments:id,name');
+            $cabinet->load('dbus:id,name');
 
             return response()->json([
                 'status' => 'success',
@@ -157,7 +157,7 @@ class CabinetController extends Controller
             'is_active' => 'required|boolean',
             'visi' => 'required',
             'misi' => 'required',
-            'departments' => 'required|array',
+            'dbus' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -195,7 +195,7 @@ class CabinetController extends Controller
                 'misi' => $request->misi,
             ]);
 
-            $cabinet->departments()->sync($request->departments);
+            $cabinet->dbus()->sync($request->dbus);
 
             return response()->json([
                 'status' => 'success',
@@ -217,7 +217,7 @@ class CabinetController extends Controller
     public function destroy(Cabinet $cabinet)
     {
         try {
-            $cabinet->departments()->detach();
+            $cabinet->dbus()->detach();
 
             deleteFile($this->path_logo_cabinets . '/' .  $cabinet->getAttributes()['logo']);
             $cabinet->delete();

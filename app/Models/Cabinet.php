@@ -87,12 +87,12 @@ class Cabinet extends Model
     }
 
     /**
-     * Get the departments for the cabinet.
+     * Get the dbus for the cabinet.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function departments()
+    public function dbus()
     {
-        return $this->belongsToMany(Department::class, 'cabinets_departments', 'cabinet_id', 'department_id')->withPivot('id')->withTimestamps();
+        return $this->belongsToMany(DBU::class, 'cabinets_dbus', 'cabinet_id', 'dbu_id')->withPivot('id')->withTimestamps();
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('cabinet_id')->constrained('cabinets')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('dbu_id')->nullable()->constrained('dbus')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->date('start_date');
             $table->timestamps();

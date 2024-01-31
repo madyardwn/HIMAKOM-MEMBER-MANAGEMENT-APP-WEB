@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-add-departments" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-add-dbus" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-add-departments">
+                <form id="form-add-dbus">
                     <div class="row">
                         <div class="col-md-5">
                             <label class="form-label" for="add-logo">Logo</label>
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary ms-auto" id="submit-add-departments">
+                <button type="button" class="btn btn-primary ms-auto" id="submit-add-dbus">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />

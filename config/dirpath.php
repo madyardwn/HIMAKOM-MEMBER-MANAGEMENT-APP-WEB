@@ -10,8 +10,8 @@ return [
         'logo' => 'cabinets/logos',
         'filosofies' => 'cabinets/filosofies',
     ],
-    'departments' => [
-        'logo' => 'departments/logos',
+    'dbus' => [
+        'logo' => 'dbus/logos',
     ],
     'events' => [
         'posters' => 'events/posters',

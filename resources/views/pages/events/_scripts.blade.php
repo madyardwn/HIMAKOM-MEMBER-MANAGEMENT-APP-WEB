@@ -20,6 +20,12 @@
             this.tomSelectEditType = new TomSelect($('#edit-type'), {
                 placeholder: `Select type`,
             })
+            this.tomSelectAddDBU = new TomSelect($('#add-dbu'), {
+                placeholder: 'Select DBU',
+            })
+            this.tomSelectEditDBU = new TomSelect($('#edit-dbu'), {
+                placeholder: 'Select DBU',
+            })
 
             // URL
             this.storeUrl = "{{ route('periodes.events.store') }}";
@@ -92,7 +98,14 @@
                     title: 'Link',
                     responsivePriority: 4,
                     width: '30%',
-		    render: (data, type, row) => data ? `<a href="${data}" target="_blank">${data}</a>` : '-',
+                    render: (data, type, row) => data ? `<a href="${data}" target="_blank">${data}</a>` : '-',
+                },
+                {
+                    data: 'dbu',
+                    name: 'dbu.name',
+                    title: 'DBU',
+                    orderable: false,
+                    render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
                 },
                 {
                     data: null,
@@ -296,6 +309,7 @@
                                 $('#edit-date').val(moment(response.data.date).format('YYYY-MM-DDTHH:mm'));
                                 $('#edit-location').val(response.data.location);
                                 $('#edit-link').val(response.data.link);
+                                $('#edit-dbu').val(response.data.dbu);
                                 $(`#preview-edit-poster`).attr("src", response.data.poster);
                                 this.tomSelectEditType.setValue(response.data.type);
                                 this.modalEdit.show();

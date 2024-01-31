@@ -50,6 +50,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="edit-dbu">DBU</label>
+                                        <select name="dbu" id="edit-dbu">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($dbus as $dbu)
+                                                <option value="{{ $dbu->id }}">{{ $dbu->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cabinet;
-use App\Models\Department;
+use App\Models\DBU;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,16 +19,16 @@ class ProgramController extends Controller
     {
         if ($request->ajax()) {
             $data = Program::select('*')
-                ->with('lead:id,name', 'department:id,name', 'participants:id,name', 'cabinet:id,name')
+                ->with('lead:id,name', 'dbu:id,name', 'participants:id,name', 'cabinet:id,name')
                 ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
-                    $query->where('programs.department_id', auth()->user()->department()->first()->id);
+                    $query->where('programs.dbu_id', auth()->user()->dbu()->first()->id);
                 });
 
             return DataTables::of($data)->make();
         }
 
         return view('pages.programs.index', [
-            'departments' => Department::all(['id', 'name']),
+            'dbus' => DBU::all(['id', 'name']),
             'cabinets' => Cabinet::where('is_active', true)->get(['id', 'name']),
         ]);
     }
@@ -50,7 +50,7 @@ class ProgramController extends Controller
             'name' => 'required|unique:programs,name|max:50',
             'description' => 'required',
             'lead' => 'required|numeric|exists:users,id|not_in:1',
-            'department' => 'required|numeric|exists:departments,id',
+            'dbu' => 'required|numeric|exists:dbus,id',
             'participants' => 'required|array|exists:users,id|not_in:1',
             'cabinet' => 'nullable|numeric|exists:cabinets,id',
             'end_at' => 'nullable|date|after_or_equal:today',
@@ -69,7 +69,7 @@ class ProgramController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'user_id' => $request->lead,
-                'department_id' => $request->department,
+                'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
                 'end_at' => $request->end_at,
             ]);
@@ -104,7 +104,7 @@ class ProgramController extends Controller
     public function edit(Program $program)
     {
         try {
-            $program->load('lead:id,name', 'department:id,name', 'participants:id,name', 'cabinet:id,name');
+            $program->load('lead:id,name', 'dbu:id,name', 'participants:id,name', 'cabinet:id,name');
 
             return response()->json([
                 'status' => 'success',
@@ -128,7 +128,7 @@ class ProgramController extends Controller
             'name' => 'required|unique:programs,name,' . $program->id . '|max:50',
             'description' => 'required',
             'lead' => 'required|numeric|exists:users,id|not_in:1',
-            'department' => 'required|numeric|exists:departments,id',
+            'dbu' => 'required|numeric|exists:dbus,id',
             'participants' => 'required|array|exists:users,id|not_in:1',
             'cabinet' => 'nullable|numeric|exists:cabinets,id',
             'end_at' => 'nullable|date|after_or_equal:today',
@@ -147,7 +147,7 @@ class ProgramController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'user_id' => $request->lead,
-                'department_id' => $request->department,
+                'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
                 'end_at' => $request->end_at,
             ]);

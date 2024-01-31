@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Cabinet;
-use App\Models\Department;
+use App\Models\DBU;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\WorkHistory;
@@ -22,7 +22,7 @@ class UserImport implements ToModel, WithHeadingRow
     {
         $user = User::where('nim', $row['nim'])->first();
         $cabinet = Cabinet::where('name', $row['cabinet'])->first();
-        $department = Department::where('short_name', $row['department'])->first();
+        $dbu = DBU::where('short_name', $row['dbu'])->first();
         $role = Role::where('name', $row['role'])->first();
 
         if (!$cabinet) {
@@ -44,7 +44,7 @@ class UserImport implements ToModel, WithHeadingRow
                 'cabinet_id' => $cabinet->id,
 
                 // NULLABLE DATA
-                'department_id' => $department->id ?? null,
+                'dbu_id' => $dbu->id ?? null,
                 'name_bagus' => $row['name_bagus'] ?? null,
                 'npa' => $row['npa'] ?? null,
                 'picture' => $row['picture'] ?? null,
@@ -55,7 +55,7 @@ class UserImport implements ToModel, WithHeadingRow
             WorkHistory::create([
                 'user_id' => $user->id,
                 'cabinet_id' => $cabinet->id,
-                'department_id' => $department->id ?? null,
+                'dbu_id' => $dbu->id ?? null,
                 'role_id' => $role->id,
                 'start_date' => Carbon::now(),
             ]);
@@ -71,8 +71,8 @@ class UserImport implements ToModel, WithHeadingRow
             $user->npa = $row['npa'] ?? null;
         }
 
-        if ($user->department_id !== $department->id ?? null) {
-            $user->department_id = $department->id ?? null;
+        if ($user->dbu_id !== $dbu->id ?? null) {
+            $user->dbu_id = $dbu->id ?? null;
         }
 
         if ($user->cabinet_id !== $cabinet->id) {
@@ -95,7 +95,7 @@ class UserImport implements ToModel, WithHeadingRow
 
         $workHistory = WorkHistory::where('user_id', $user->id)
             ->where('cabinet_id', $cabinet->id)
-            ->where('department_id', $department->id ?? null)
+            ->where('dbu_id', $dbu->id ?? null)
             ->where('role_id', $role->id)
             ->first();
 
@@ -103,7 +103,7 @@ class UserImport implements ToModel, WithHeadingRow
             WorkHistory::create([
                 'user_id' => $user->id,
                 'cabinet_id' => $cabinet->id,
-                'department_id' => $department->id ?? null,
+                'dbu_id' => $dbu->id ?? null,
                 'role_id' => $role->id,
                 'start_date' => Carbon::now(),
             ]);

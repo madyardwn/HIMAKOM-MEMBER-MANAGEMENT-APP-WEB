@@ -160,12 +160,12 @@
                 },
             });
 
-            this.tomSelectAddDepartment = new TomSelect($('#add-department'), {
-                placeholder: 'Select department',
+            this.tomSelectAddDBU = new TomSelect($('#add-dbu'), {
+                placeholder: 'Select dbu',
             });
 
-            this.tomSelectEditDepartment = new TomSelect($('#edit-department'), {
-                placeholder: 'Select department',
+            this.tomSelectEditDBU = new TomSelect($('#edit-dbu'), {
+                placeholder: 'Select dbu',
             });
 
             this.tomSelectAddCabinet = new TomSelect($('#add-cabinet'), {
@@ -212,9 +212,9 @@
                     orderable: false,
                 },
                 {
-                    data: 'department.name',
-                    name: 'department.name',
-                    title: 'Department',
+                    data: 'dbu.name',
+                    name: 'dbu.name',
+                    title: 'DBU',
                     width: '20%',
                     orderable: false,
                 },
@@ -305,7 +305,7 @@
                 $(".invalid-feedback").remove();
 
                 this.formAdd[0].reset();
-                this.tomSelectAddDepartment.clear();
+                this.tomSelectAddDBU.clear();
                 this.tomSelectAddCabinet.clear();
                 this.tomSelectAddLead.clear();
                 this.tomSelectAddParticipants.clear();
@@ -316,7 +316,7 @@
                 $(".invalid-feedback").remove();
 
                 this.formEdit[0].reset();
-                this.tomSelectEditDepartment.clear();
+                this.tomSelectEditDBU.clear();
                 this.tomSelectEditCabinet.clear();
                 this.tomSelectEditLead.clear();
                 this.tomSelectEditParticipants.clear();
@@ -343,7 +343,7 @@
                                 $('#edit-name').val(response.data?.name);
                                 $('#edit-description').val(response.data?.description);
                                 $('#edit-end_at').val(response.data?.end_at);
-                                this.tomSelectEditDepartment.setValue(response.data?.department?.id);
+                                this.tomSelectEditDBU.setValue(response.data?.dbu?.id);
                                 this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
                                 this.tomSelectEditLead.addOption(response.data?.lead);
                                 this.tomSelectEditLead.setValue(response.data?.lead?.id);

@@ -177,7 +177,7 @@ return [
         [
             'text' => 'Periodes',
             'icon' => 'ti ti-category-filled',
-            'hasAnyPermission' => ['read-cabinets', 'read-filosofies', 'read-departments', 'read-programs', 'read-events'],
+            'hasAnyPermission' => ['read-cabinets', 'read-filosofies', 'read-dbus', 'read-programs', 'read-events'],
             'submenu' => [
                 [
                     'text' => 'Cabinet',
@@ -192,10 +192,10 @@ return [
                     'hasAnyPermission' => ['read-filosofies'],
                 ],
                 [
-                    'text' => 'Department',
+                    'text' => 'DBU',
                     'icon' => 'ti ti-building-bank',
-                    'route' => 'periodes.departments.index',
-                    'hasAnyPermission' => ['read-departments'],
+                    'route' => 'periodes.dbus.index',
+                    'hasAnyPermission' => ['read-dbus'],
                 ],
                 [
                     'text' => 'Program',

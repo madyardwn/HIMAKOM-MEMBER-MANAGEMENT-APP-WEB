@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\DBU;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
-class DepartmentController extends Controller
+class DBUController extends Controller
 {
     /**
-     * Path to department logos.
+     * Path to dbu logos.
      */
-    protected $path_logo_departments;
+    protected $path_logo_dbus;
 
     /**
      * Create a new controller instance.
      */
     public function __construct()
     {
-        $this->path_logo_departments = config('dirpath.departments.logo');
+        $this->path_logo_dbus = config('dirpath.dbus.logo');
     }
 
     /**
@@ -29,12 +29,12 @@ class DepartmentController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Department::select('*');
+            $data = DBU::select('*');
 
             return DataTables::of($data)->make(true);
         }
 
-        return view('pages.departments.index');
+        return view('pages.dbus.index');
     }
 
     /**
@@ -51,8 +51,8 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:departments,name|max:50',
-            'short_name' => 'required|unique:departments,short_name|max:10',
+            'name' => 'required|unique:dbus,name|max:50',
+            'short_name' => 'required|unique:dbus,short_name|max:10',
             'description' => 'required',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -69,9 +69,9 @@ class DepartmentController extends Controller
 
             $logo = $request->file('logo');
             $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
-            $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
+            $logo->storeAs($this->path_logo_dbus, $logo_name, 'public');
 
-            $department = Department::create([
+            $dbu = DBU::create([
                 'name' => $request->name,
                 'short_name' => $request->short_name,
                 'description' => $request->description,
@@ -80,8 +80,8 @@ class DepartmentController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Department created successfully!',
-                'data' => $department,
+                'message' => 'DBU created successfully!',
+                'data' => $dbu,
             ], 201);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -95,7 +95,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(DBU $dbu)
     {
         //
     }
@@ -103,12 +103,12 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit(DBU $dbu)
     {
         try {
             return response()->json([
                 'status' => 'success',
-                'data' => $department,
+                'data' => $dbu,
             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -122,11 +122,11 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, DBU $dbu)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:departments,name,' . $department->id . '|max:50',
-            'short_name' => 'required|unique:departments,short_name,' . $department->id . '|max:10',
+            'name' => 'required|unique:dbus,name,' . $dbu->id . '|max:50',
+            'short_name' => 'required|unique:dbus,short_name,' . $dbu->id . '|max:10',
             'description' => 'required',
         ]);
 
@@ -140,14 +140,14 @@ class DepartmentController extends Controller
 
         try {
             if ($request->hasFile('logo')) {
-                deleteFile($this->path_logo_departments . '/' . $department->getAttributes()['logo']);
+                deleteFile($this->path_logo_dbus . '/' . $dbu->getAttributes()['logo']);
                 $logo = $request->file('logo');
                 $logo_name = date('Y-m-d-H-i-s') . '_' . $request->name . '.' . $logo->extension();
-                $logo->storeAs($this->path_logo_departments, $logo_name, 'public');
-                $department->logo = $logo_name;
+                $logo->storeAs($this->path_logo_dbus, $logo_name, 'public');
+                $dbu->logo = $logo_name;
             }
 
-            $department->update([
+            $dbu->update([
                 'name' => $request->name,
                 'short_name' => $request->short_name,
                 'description' => $request->description,
@@ -155,8 +155,8 @@ class DepartmentController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Department updated successfully!',
-                'data' => $department,
+                'message' => 'DBU updated successfully!',
+                'data' => $dbu,
             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -170,17 +170,17 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(DBU $dbu)
     {
         try {
-            $department->cabinets()->detach();
+            $dbu->cabinets()->detach();
 
-            deleteFile($this->path_logo_departments . '/' . $department->getAttributes()['logo']);
-            $department->delete();
+            deleteFile($this->path_logo_dbus . '/' . $dbu->getAttributes()['logo']);
+            $dbu->delete();
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Department deleted successfully!',
+                'message' => 'DBU deleted successfully!',
             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

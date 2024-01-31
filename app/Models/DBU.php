@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Department extends Model
+class DBU extends Model
 {
+
+    protected $table = "dbus";
+
     use HasFactory, LogsActivity;
 
     /**
@@ -33,8 +36,8 @@ class Department extends Model
     protected function logo(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.departments.logo') . '/' . $value))
-                ? asset('storage/' . config('dirpath.departments.logo') . '/' . $value)
+            get: fn ($value) => file_exists(storage_path('app/public/' . config('dirpath.dbus.logo') . '/' . $value))
+                ? asset('storage/' . config('dirpath.dbus.logo') . '/' . $value)
                 : asset(config('tablar.default.logo.path')),
         );
     }
@@ -49,7 +52,7 @@ class Department extends Model
         return LogOptions::defaults()
             ->logOnly(['name', 'short_name', 'description', 'logo'])
             ->logOnlyDirty()
-            ->useLogName('Department')
+            ->useLogName('DBU')
             ->setDescriptionForEvent(function (string $eventName) {
                 return "{$this->name} has been {$eventName}";
             });
@@ -65,22 +68,22 @@ class Department extends Model
     */
 
     /**
-     * Get the cabinet that owns the department.
+     * Get the cabinet that owns the dbu.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function cabinets()
     {
-        return $this->belongsToMany(Cabinet::class, 'cabinets_departments', 'department_id', 'cabinet_id')->withPivot('id')->withTimestamps();
+        return $this->belongsToMany(Cabinet::class, 'cabinets_dbus', 'dbu_id', 'cabinet_id')->withPivot('id')->withTimestamps();
     }
 
     /**
-     * Get the users that owns the department.
+     * Get the users that owns the dbu.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function users()
     {
-        return $this->hasMany(User::class, 'department_id');
+        return $this->hasMany(User::class, 'dbu_id');
     }
 }

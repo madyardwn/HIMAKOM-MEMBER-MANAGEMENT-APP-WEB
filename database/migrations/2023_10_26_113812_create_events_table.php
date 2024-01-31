@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('poster')->nullable();
             $table->dateTime('date');
+            $table->foreignId('dbu_id')->nullable()->constrained('dbus')->onDelete('cascade');
             $table->integer('type')->comment('1:kegiatan, 2:proker, 3:lomba, 4:project')->default(1);
             $table->timestamps();
         });

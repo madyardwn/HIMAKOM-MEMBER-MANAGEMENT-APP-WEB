@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cabinets_departments', function (Blueprint $table) {
+        Schema::create('cabinets_dbus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cabinet_id')->nullable()->constrained('cabinets')->onDelete('set null');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('set null');
+            $table->foreignId('dbu_id')->nullable()->constrained('dbus')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cabinets_departments');
+        Schema::dropIfExists('cabinets_dbus');
     }
 };

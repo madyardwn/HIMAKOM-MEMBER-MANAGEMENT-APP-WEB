@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(DefaultPermissionSeeder::class); // Create Permissions
-        $this->call(DefaultDepartmentSeeder::class); // Create Departments
+        $this->call(DefaultDBUSeeder::class); // Create DBUs
         if (app()->environment('local')) {
             $this->call(DefaultCabinetSeeder::class); // Create Cabinets
         }

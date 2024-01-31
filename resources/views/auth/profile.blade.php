@@ -118,8 +118,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->department->name ?? '' }}" readonly disabled>
+                                    <label class="form-label">DBU</label>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->dbu->name ?? '' }}" readonly disabled>
                                 </div>
                             </div>
                             <div class="row">

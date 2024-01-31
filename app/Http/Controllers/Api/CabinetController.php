@@ -41,7 +41,7 @@ class CabinetController extends Controller
     public function cabinet()
     {
         try {
-            $cabinet = Cabinet::with('filosofies', 'users', 'departments')
+            $cabinet = Cabinet::with('filosofies', 'users', 'dbus')
                 ->withWhereHas('users', function ($query) {
                     $query->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
                         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')

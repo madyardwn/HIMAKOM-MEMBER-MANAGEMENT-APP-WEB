@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cabinet;
-use App\Models\Department;
+use App\Models\DBU;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,6 +25,6 @@ class DefaultCabinetSeeder extends Seeder
             Meningkatkan sikap melek teknologi informasi tentang perkembangan teknologi di era saat ini
             Meningkatkan nilai-nilai kebersamaan antar anggota HIMAKOM POLBAN agar terwujudnya rasa kepedulian sesama anggota didalam HIMAKOM maupun diluar HIMAKOM',
         ]);
-        $cabinet->departments()->attach(Department::all('id'));
+        $cabinet->dbus()->attach(DBU::all('id'));
     }
 }

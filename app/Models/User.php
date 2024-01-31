@@ -43,7 +43,7 @@ class User extends Authenticatable
         'year',
         'device_token',
         'gender',
-        'department_id',
+        'dbu_id',
         'cabinet_id',
     ];
 
@@ -75,7 +75,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'nim', 'npa', 'name_bagus', 'picture', 'year', 'device_token', 'cabinet_id', 'department_id', 'gender'])
+            ->logOnly(['name', 'email', 'nim', 'npa', 'name_bagus', 'picture', 'year', 'device_token', 'cabinet_id', 'dbu_id', 'gender'])
             ->logOnlyDirty()
             ->useLogName('User')
             ->setDescriptionForEvent(function (string $eventName) {
@@ -127,9 +127,9 @@ class User extends Authenticatable
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function department()
+    public function dbu()
     {
-        return $this->belongsTo(Department::class, 'department_id');
+        return $this->belongsTo(DBU::class, 'dbu_id');
     }
 
     /**

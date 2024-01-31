@@ -47,10 +47,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="add-departments">Departments</label>
-                                        <select name="departments[]" id="add-departments" multiple>
-                                            @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        <label class="form-label" for="add-dbus">DBUs</label>
+                                        <select name="dbus[]" id="add-dbus" multiple>
+                                            @foreach ($dbus as $dbu)
+                                                <option value="{{ $dbu->id }}">{{ $dbu->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

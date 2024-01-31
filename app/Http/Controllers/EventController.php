@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DBU;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -46,8 +47,10 @@ class EventController extends Controller
                 'poster',
                 'date',
                 'link',
+                'dbu_id',
                 DB::raw($typeExpression),
             ])
+                ->with('dbus:id,name')
                 ->orderBy('date', 'desc');
 
             return DataTables::of($data)->make();
@@ -55,6 +58,7 @@ class EventController extends Controller
 
         return view('pages.events.index', [
             'types' => Event::EVENT_TYPE,
+            'dbus' => DBU::all(['id', 'name']),
         ]);
     }
 

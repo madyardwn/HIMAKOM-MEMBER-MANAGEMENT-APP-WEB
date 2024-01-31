@@ -53,10 +53,10 @@ class DefaultPermissionSeeder extends Seeder
             'update-filosofies',
             'delete-filosofies',
 
-            'read-departments',
-            'create-departments',
-            'update-departments',
-            'delete-departments',
+            'read-dbus',
+            'create-dbus',
+            'update-dbus',
+            'delete-dbus',
 
             'read-programs',
             'create-programs',

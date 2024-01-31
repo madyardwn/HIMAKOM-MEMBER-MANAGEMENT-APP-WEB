@@ -16,11 +16,11 @@
             this.formImport = $(`#form-import-users`);
 
             // Tom Select
-            this.tomSelectAddDepartment = new TomSelect($('#add-department'), {
-                placeholder: 'Select Department',
+            this.tomSelectAddDBU = new TomSelect($('#add-dbu'), {
+                placeholder: 'Select DBU',
             })
-            this.tomSelectEditDepartment = new TomSelect($('#edit-department'), {
-                placeholder: 'Select Department',
+            this.tomSelectEditDBU = new TomSelect($('#edit-dbu'), {
+                placeholder: 'Select DBU',
             })
             this.tomSelectAddRole = new TomSelect($('#add-role'), {
                 placeholder: 'Select Role',
@@ -134,9 +134,9 @@
                     render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
                 },
                 {
-                    data: 'department',
-                    name: 'department.name',
-                    title: 'Department',
+                    data: 'dbu',
+                    name: 'dbu.name',
+                    title: 'DBU',
                     orderable: false,
                     render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
                 },
@@ -203,7 +203,7 @@
 
                 this.formAdd[0].reset();
                 this.tomSelectAddGender.clear();
-                this.tomSelectAddDepartment.clear();
+                this.tomSelectAddDBU.clear();
                 this.tomSelectAddCabinet.clear();
                 this.tomSelectAddRole.clear();
             });
@@ -215,7 +215,7 @@
 
                 this.formEdit[0].reset();
                 this.tomSelectEditGender.clear();
-                this.tomSelectEditDepartment.clear();
+                this.tomSelectEditDBU.clear();
                 this.tomSelectEditCabinet.clear();
                 this.tomSelectEditRole.clear();
             });
@@ -279,7 +279,7 @@
                                 $('#edit-year').val(response.data?.year);
                                 $(`#preview-edit-picture`).attr("src", response.data?.picture);
                                 this.tomSelectEditGender.setValue(response.data?.gender);
-                                this.tomSelectEditDepartment.setValue(response.data?.department?.id);
+                                this.tomSelectEditDBU.setValue(response.data?.dbu?.id);
                                 this.tomSelectEditCabinet.setValue(response.data?.cabinet?.id);
                                 this.tomSelectEditRole.setValue(response.data?.roles.map((item) => item?.id));
                                 this.modalEdit.show();

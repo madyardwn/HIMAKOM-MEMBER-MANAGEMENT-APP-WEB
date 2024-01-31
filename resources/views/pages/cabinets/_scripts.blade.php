@@ -15,12 +15,12 @@
             this.formEdit = $(`#form-edit-cabinets`);
 
             // Tom Select
-            this.tomSelectAddDepartments = new TomSelect($('#add-departments'), {
-                placeholder: `Select departments`,
+            this.tomSelectAddDBUs = new TomSelect($('#add-dbus'), {
+                placeholder: `Select dbus`,
                 plugins: ['remove_button']
             })
-            this.tomSelectEditDepartments = new TomSelect($('#edit-departments'), {
-                placeholder: `Select departments`,
+            this.tomSelectEditDBUs = new TomSelect($('#edit-dbus'), {
+                placeholder: `Select dbus`,
                 plugins: ['remove_button']
             })
 
@@ -77,9 +77,9 @@
                     title: 'Misi',
                 },
                 {
-                    data: 'departments',
-                    name: 'departments.name',
-                    title: 'Departments',
+                    data: 'dbus',
+                    name: 'dbus.name',
+                    title: 'DBUs',
                     orderable: false,
                     width: '30%',
                     render: function(data, type, row) {
@@ -154,7 +154,7 @@
                 $(`#preview-add-logo`).attr("src", this.emptyImage);
 
                 this.formAdd[0].reset();
-                this.tomSelectAddDepartments.clear();
+                this.tomSelectAddDBUs.clear();
             });
 
             $(`#modal-edit-${this.subject}`).on("hidden.bs.modal", (e) => {
@@ -163,7 +163,7 @@
                 $(`#preview-edit-logo`).attr("src", this.emptyImage);
 
                 this.formEdit[0].reset();
-                this.tomSelectEditDepartments.clear();
+                this.tomSelectEditDBUs.clear();
             });
 
 
@@ -216,7 +216,7 @@
                                 $('#edit-year').val(response.data?.year);
                                 $('#edit-is_active').prop("checked", response.data?.is_active);
                                 $(`#preview-edit-logo`).attr("src", response.data?.logo);
-                                this.tomSelectEditDepartments.setValue(response.data?.departments.map((item) => item?.id));
+                                this.tomSelectEditDBUs.setValue(response.data?.dbus.map((item) => item?.id));
                                 this.modalEdit.show();
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

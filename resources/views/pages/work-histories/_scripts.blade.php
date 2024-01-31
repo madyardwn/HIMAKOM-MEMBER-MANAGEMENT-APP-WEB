@@ -99,9 +99,9 @@
                     width: '10%'
                 },
                 {
-                    data: 'department.name',
-                    name: 'department.name',
-                    title: 'Department',
+                    data: 'dbu.name',
+                    name: 'dbu.name',
+                    title: 'DBU',
                     responsivePriority: 1,
                     width: '10%'
                 },
@@ -145,9 +145,9 @@
                     width: '10%'
                 },
                 {
-                    data: 'department.name',
-                    name: 'department.name',
-                    title: 'Department',
+                    data: 'dbu.name',
+                    name: 'dbu.name',
+                    title: 'DBU',
                     responsivePriority: 1,
                     width: '10%'
                 },
@@ -223,7 +223,7 @@
                             console.error('Error fetching user data:', error);
                         }
 
-			this.modalShow.show();
+                        this.modalShow.show();
 
                         try {
                             // Using fetch for AJAX call and wait until it's finished
@@ -242,10 +242,10 @@
                                 responsive: true,
                                 ajax: this.tableProgramDataUrl.replace(':id', id),
                                 columns: this.tableProgramColumns,
-			    });
+                            });
 
-			    this.tablePosition.DataTable().ajax.reload();
-			    this.tableProgram.DataTable().ajax.reload();
+                            this.tablePosition.DataTable().ajax.reload();
+                            this.tableProgram.DataTable().ajax.reload();
 
                         } catch (error) {
                             console.error('Error fetching position or program data:', error);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cabinet;
-use App\Models\Department;
+use App\Models\DBU;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\WorkHistory;
@@ -35,7 +35,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with('cabinet:id,name', 'roles:id,name', 'department:id,name')
+            $data = User::with('cabinet:id,name', 'roles:id,name', 'dbu:id,name')
                 ->where('id', '!=', 1);
 
             return DataTables::of($data)
@@ -45,7 +45,7 @@ class UserController extends Controller
 
         return view('pages.users.index', [
             'gender' => User::GENDER_TYPE,
-            'departments' => Department::all(['id', 'name']),
+            'dbus' => DBU::all(['id', 'name']),
             'roles' => Role::all(['id', 'name'])->whereNotIn('name', ['SUPER ADMIN']),
             'cabinets' => Cabinet::all(['id', 'name']),
         ]);
@@ -75,7 +75,7 @@ class UserController extends Controller
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8|confirmed',
             'cabinet' => 'required|exists:cabinets,id',
-            'department' => 'required|exists:departments,id',
+            'dbu' => 'required|exists:dbus,id',
             'role' => 'required|exists:roles,id|not_in:1',
         ]);
 
@@ -103,7 +103,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'picture' => $picture_name,
                 'password' => bcrypt($request->password),
-                'department_id' => $request->department,
+                'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
             ]);
 
@@ -112,7 +112,7 @@ class UserController extends Controller
             WorkHistory::create([
                 'user_id' => $user->id,
                 'cabinet_id' => $request->cabinet,
-                'department_id' => $request->department,
+                'dbu_id' => $request->dbu,
                 'role_id' => $request->role,
                 'start_date' => Carbon::now(),
             ]);
@@ -145,7 +145,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         try {
-            $user->load('cabinet:id,name', 'department:id,name', 'roles:id,name');
+            $user->load('cabinet:id,name', 'dbu:id,name', 'roles:id,name');
             return response()->json([
                 'status' => 'success',
                 'data' => $user,
@@ -174,7 +174,7 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'gender' => 'required|in:0,1',
             'cabinet' => 'required|exists:cabinets,id',
-            'department' => 'required|exists:departments,id',
+            'dbu' => 'required|exists:dbus,id',
             'role' => 'required|exists:roles,id|not_in:1',
         ]);
 
@@ -204,7 +204,7 @@ class UserController extends Controller
                 'year' => $request->year,
                 'email' => $request->email,
                 'password' => $request->password ? bcrypt($request->password) : $user->password,
-                'department_id' => $request->department,
+                'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
             ]);
 
@@ -212,7 +212,7 @@ class UserController extends Controller
 
             $workHistory = WorkHistory::where('user_id', $user->id)
                 ->where('cabinet_id', $request->cabinet)
-                ->where('department_id', $request->department)
+                ->where('dbu_id', $request->dbu)
                 ->where('role_id', $request->role)
                 ->first();
 
@@ -220,7 +220,7 @@ class UserController extends Controller
                 WorkHistory::create([
                     'user_id' => $user->id,
                     'cabinet_id' => $request->cabinet,
-                    'department_id' => $request->department,
+                    'dbu_id' => $request->dbu,
                     'role_id' => $request->role,
                     'start_date' => Carbon::now(),
                 ]);

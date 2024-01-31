@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\DBU;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class WorkHistoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with('workHistories.cabinet:id,name', 'workHistories.department:id,name', 'workHistories.role:id,name')
+            $data = User::with('workHistories.cabinet:id,name', 'workHistories.dbu:id,name', 'workHistories.role:id,name')
                 ->with('workHistories')
                 ->where('id', '!=', 1);
 
@@ -39,7 +39,7 @@ class WorkHistoryController extends Controller
     public function positions(Request $request, User $user)
     {
         if ($request->ajax()) {
-            $data = $user->workHistories()->with('cabinet:id,name', 'department:id,name', 'role:id,name');
+            $data = $user->workHistories()->with('cabinet:id,name', 'dbu:id,name', 'role:id,name');
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -50,7 +50,7 @@ class WorkHistoryController extends Controller
     public function programs(Request $request, User $user)
     {
         if ($request->ajax()) {
-            $data = Program::with('lead:id,name', 'department:id,name', 'participants:id,name')
+            $data = Program::with('lead:id,name', 'dbu:id,name', 'participants:id,name')
                 ->where('user_id', $user->id)
                 ->orWhereHas('participants', function ($query) use ($user) {
                     $query->where('user_id', $user->id);

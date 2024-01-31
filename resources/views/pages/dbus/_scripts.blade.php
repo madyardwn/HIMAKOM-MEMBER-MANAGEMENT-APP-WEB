@@ -1,27 +1,27 @@
 <script type="module">
-    class Department {
+    class DBU {
         constructor() {
             // Empty image & Subject
             this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
-            this.subject = 'departments';
+            this.subject = 'dbus';
 
             // Modal
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-departments`));
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-departments`));
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-dbus`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-dbus`));
 
             // Form
             this.formAdd = $(`#form-add-${this.subject}`);
             this.formEdit = $(`#form-edit-${this.subject}`);
 
             // URL
-            this.storeUrl = "{{ route('periodes.departments.store') }}";
-            this.editUrl = "{{ route('periodes.departments.edit', ':id') }}";
-            this.deleteUrl = "{{ route('periodes.departments.destroy', ':id') }}";
-            this.updateUrl = "{{ route('periodes.departments.update', ':id') }}";
+            this.storeUrl = "{{ route('periodes.dbus.store') }}";
+            this.editUrl = "{{ route('periodes.dbus.edit', ':id') }}";
+            this.deleteUrl = "{{ route('periodes.dbus.destroy', ':id') }}";
+            this.updateUrl = "{{ route('periodes.dbus.update', ':id') }}";
 
             // DataTable
-            this.table = $('#table-departments');
-            this.tableDataUrl = "{{ route('periodes.departments.index') }}";
+            this.table = $('#table-dbus');
+            this.tableDataUrl = "{{ route('periodes.dbus.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -72,19 +72,19 @@
                         let html = '';
                         let btn = '';
 
-                        @can('update-departments')
+                        @can('update-dbus')
                             btn += `
                                 <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                             `;
                         @endcan
 
-                        @can('delete-departments')
+                        @can('delete-dbus')
                             btn += `
                                 <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                             `;
                         @endcan
 
-                        @if (auth()->user()->hasAnyPermission(['update-departments', 'delete-departments']))
+                        @if (auth()->user()->hasAnyPermission(['update-dbus', 'delete-dbus']))
                             html = `
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -358,9 +358,9 @@
     }
 
     $(document).ready(function() {
-        const department = new Department();
-        department.initDtEvents();
-        department.initDtTable();
-        department.initDtSubmit();
+        const dbu = new DBU();
+        dbu.initDtEvents();
+        dbu.initDtTable();
+        dbu.initDtSubmit();
     });
 </script>

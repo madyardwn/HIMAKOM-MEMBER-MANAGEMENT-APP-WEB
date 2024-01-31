@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Department;
+use App\Models\DBU;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
@@ -27,11 +27,11 @@ class DefaultRoleSeeder extends Seeder
             'update-cabinets',
             'delete-cabinets',
 
-            // Departments
-            'read-departments',
-            'create-departments',
-            'update-departments',
-            'delete-departments',
+            // DBUs
+            'read-dbus',
+            'create-dbus',
+            'update-dbus',
+            'delete-dbus',
 
             // Notifications
             'read-notifications',
@@ -47,11 +47,11 @@ class DefaultRoleSeeder extends Seeder
             'update-cabinets',
             'delete-cabinets',
 
-            // Departments
-            'read-departments',
-            'create-departments',
-            'update-departments',
-            'delete-departments',
+            // DBUs
+            'read-dbus',
+            'create-dbus',
+            'update-dbus',
+            'delete-dbus',
 
             // Work Histories
             'read-work-histories',
@@ -66,8 +66,8 @@ class DefaultRoleSeeder extends Seeder
             // Cabinets
             'read-cabinets',
 
-            // Departments
-            'read-departments',
+            // DBUs
+            'read-dbus',
 
             // Notifications
             'read-notifications',
@@ -85,8 +85,8 @@ class DefaultRoleSeeder extends Seeder
             // Cabinets
             'read-cabinets',
 
-            // Departments
-            'read-departments',
+            // DBUs
+            'read-dbus',
 
             // Notifications
             'read-notifications',
@@ -102,7 +102,7 @@ class DefaultRoleSeeder extends Seeder
         Role::create(['name' => 'KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
             'read-users',
             'read-cabinets',
-            'read-departments',
+            'read-dbus',
             'read-programs',
             'read-events',
             'read-work-histories',
@@ -116,7 +116,7 @@ class DefaultRoleSeeder extends Seeder
         Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
             'read-users',
             'read-cabinets',
-            'read-departments',
+            'read-dbus',
             'read-programs',
             'read-events',
             'read-work-histories',
@@ -127,11 +127,11 @@ class DefaultRoleSeeder extends Seeder
             'create-complaints',
         ]);
 
-        $department = Department::select(['id', 'name'])
+        $dbu = DBU::select(['id', 'name'])
             ->whereNotIn('short_name', ['MPA'])
             ->get();
 
-        foreach ($department as $dept) {
+        foreach ($dbu as $dept) {
             Role::create(['name' => 'KETUA ' . $dept->name])->givePermissionTo([
                 // Programs
                 'read-programs',
@@ -139,9 +139,9 @@ class DefaultRoleSeeder extends Seeder
                 'update-programs',
                 'delete-programs',
 
-                // Departments
-                'read-departments',
-                // 'update-departments',
+                // DBUs
+                'read-dbus',
+                // 'update-dbus',
 
                 // Events
                 'read-events',
@@ -168,9 +168,9 @@ class DefaultRoleSeeder extends Seeder
                 'update-programs',
                 'delete-programs',
 
-                // Departments
-                'read-departments',
-                // 'update-departments',
+                // DBUs
+                'read-dbus',
+                // 'update-dbus',
 
                 // Events
                 'read-events',
