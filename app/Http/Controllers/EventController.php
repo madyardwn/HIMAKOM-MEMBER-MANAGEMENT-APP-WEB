@@ -6,6 +6,7 @@ use App\Models\DBU;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -50,6 +51,9 @@ class EventController extends Controller
                 'dbu_id',
                 DB::raw($typeExpression),
             ])
+                ->when(!auth()->user()->hasRole('SUPER ADMIN'), function ($query) {
+                    return $query->where('dbu_id', '==', Auth::user()->dbu_id);
+                })
                 ->with('dbu:id,name')
                 ->orderBy('date', 'desc');
 
@@ -83,7 +87,7 @@ class EventController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
-            'dbu' => 'nullable|exists:dbus,id',
+            'dbu' => 'required|exists:dbus,id',
         ]);
 
         if ($validator->fails()) {
@@ -171,7 +175,7 @@ class EventController extends Controller
             'type' => 'required|in:' . implode(',', array_keys(Event::EVENT_TYPE)),
             'link' => 'nullable|url',
             'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'dbu' => 'nullable|exists:dbus,id',
+            'dbu' => 'required|exists:dbus,id',
         ]);
 
         if ($validator->fails()) {
