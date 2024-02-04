@@ -128,9 +128,11 @@
                         @endcan
 
                         @can('update-events')
-                            btn += `
-                                <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
-                            `;
+                            if (moment(data.date).isAfter(moment())) {
+                                btn += `
+                                    <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
+                                `;
+                            }
                         @endcan
 
                         @can('delete-events')
