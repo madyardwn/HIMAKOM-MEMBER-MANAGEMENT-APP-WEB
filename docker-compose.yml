@@ -1,0 +1,59 @@
+services:
+    app:
+        build:
+            args:
+                user: ${USER}
+                uid: ${UID}
+            context: ./
+            dockerfile: Dockerfile
+        image: himakom-app
+        container_name: himakom-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - himakom-app-net
+    db:
+        image: mysql:8.0
+        container_name: himakom-app-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - data-himakom-app:/var/lib/mysql
+            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+        networks:
+            - himakom-app-net
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: himakom-app-phpmyadmin
+        restart: unless-stopped
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - 8080:80
+        networks:
+            - himakom-app-net
+    nginx:
+        image: nginx:alpine
+        container_name: himakom-app-nginx
+        restart: unless-stopped
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        networks:
+            - himakom-app-net
+networks:
+    himakom-app-net:
+        driver: bridge
+volumes:
+    data-himakom-app:
